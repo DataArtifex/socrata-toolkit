@@ -46,9 +46,19 @@ class DcatGenerator:
     def get_graph(self) -> Graph:
         g = Graph()
         
+        #
+        # Initialize Catalog
+        #
         dcat_catalog = dcat.Catalog()
         dcat_catalog.set_uri(self.server.get_urn())
+        dcat_catalog.add_title(self.server.name)
+        dcat_catalog.add_publisher(f"https://{self.server.host}")
+        for value in self.server.publisher:
+            dcat_catalog.add_publisher(value)
+        for value in self.server.spatial_coverage:
+            dcat_catalog.add_spatial(value)
         
+        # Loop over datasets
         for socrata_ds in self.datasets:
             #
             # populate DCAT dataset
@@ -106,7 +116,7 @@ class DcatGenerator:
             dcat_api.add_endpoint_url(socrata_ds.api_endpoint_url)
             dcat_api.add_type("http://rdf.highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")
             
-            # add resources to graph
+            # add dataset resources to graph
             dcat_ds.add_to_rdf_graph(g)
             dcat_csv.add_to_rdf_graph(g)
             dcat_api.add_to_rdf_graph(g)

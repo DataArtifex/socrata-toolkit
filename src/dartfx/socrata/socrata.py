@@ -28,38 +28,51 @@ class SocrataApiError(Exception):
 
 KNOWN_SERVERS = {
     "data.calgary.ca": {
+        "name": "Calgary Open Data",
         "publisher": ["City of Calgary"],
         "spatial_coverage": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"]
     },
-    "data.cityofchicago.org	": {
+    "data.cityofchicago.org": {
+        "name": "Chicago Data Portal",
         "publisher": ["City of Chicago"],
         "spatial_coverage": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
     },
-    "data.cityofnewyork.us	": {
+    "data.cityofnewyork.us": {
+        "name": "NYC Open Data",
         "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
         "spatial_coverage": ["New York City, New York, USA", "http://sws.geonames.org/5128581"]
     },
     "data.edmonton.ca": {
+        "name": "City of Edmonton's Open Data Portal",
         "publisher": ["City of Edmonton"],
         "spatial_coverage": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"]
     },
-    "data.ny.org": {
+    "data.ny.gov": {
+        "name": "New York State Open Data",
         "publisher": ["New York State"],
         "spatial_coverage": ["New York, USA", "http://sws.geonames.org/5128638"]
     },
     "data.sfgov.org": {
+        "name": "DataSF",
         "publisher": ["City of San Francisco"],
         "spatial_coverage": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
     },
     "opendata.utah.gov": {
+        "name": "State of Utah Open Data Catalog",
         "publisher": ["State of Utah"],
         "spatial_coverage": ["Utah, USA", "http://sws.geonames.org/5549030"]
+    },
+    "data.wa.gov": {
+        "name": "Washington State Open Data Portal",
+        "publisher": ["Washington state government"],
+        "spatial_coverage": ["Washington, USA", "http://sws.geonames.org/5815135"]
     }
 }
 
 @dataclass
 class SocrataServer:
     host: str
+    name: Optional[str] = field(default=None)
     disk_cache_root: Optional[str] = field(default=None)
     in_memory_cache: dict = field(default_factory=dict, init=False, repr=False)
     
@@ -71,8 +84,12 @@ class SocrataServer:
         self.memory_cache = {}
         # set metadata for know servers
         if self.host in KNOWN_SERVERS:
+            self.name = KNOWN_SERVERS[self.host].get("name",self.host)
             self.publisher = KNOWN_SERVERS[self.host].get("publisher",[])
             self.spatial_coverage = KNOWN_SERVERS[self.host].get("spatial_coverage",[])
+        else:
+            self.name = self.host
+            self.publisher = [self.host_url]
 
     @property
     def disk_cache_dir(self):
@@ -85,6 +102,10 @@ class SocrataServer:
             else:
                 raise ValueError(f"Cache root directory does not exist: {self.disk_cache_root}")
 
+    @property
+    def host_url(self):
+        return f"https://{self.host}"
+    
     def get_dataset_info(self, dataset_id, refresh=False):
         # check if in memory cache
         if dataset_id in self.memory_cache and not refresh:
