@@ -1,0 +1,3016 @@
+{
+    "approvals": [
+        {
+            "reviewedAt": 1709067872,
+            "reviewedAutomatically": false,
+            "reviewer": {
+                "displayName": "Dan Tonkovich",
+                "id": "7zrh-3i2w"
+            },
+            "state": "approved",
+            "submissionDetails": {
+                "permissionType": "read"
+            },
+            "submissionId": 6548372,
+            "submissionObject": "public_audience_request",
+            "submissionOutcome": "change_audience",
+            "submissionOutcomeApplication": {
+                "endedAt": 1709067872,
+                "failureCount": 0,
+                "startedAt": 1709067872,
+                "status": "success"
+            },
+            "submittedAt": 1709067861,
+            "submitter": {
+                "displayName": "Dan Tonkovich",
+                "id": "7zrh-3i2w"
+            },
+            "targetAudience": "public",
+            "workflowId": 2546
+        },
+        {
+            "message": "The `strict_permissions` and `enable_internal_approvals` flags must be on to enable internal approvals.",
+            "state": "unsubmittable",
+            "targetAudience": "internal",
+            "workflowId": 5264
+        }
+    ],
+    "assetType": "dataset",
+    "attribution": "San Francisco 311",
+    "attributionLink": "http://www.sf311.org",
+    "averageRating": 0,
+    "category": "City Infrastructure",
+    "clientContext": {
+        "clientContextVariables": [],
+        "inheritedVariables": {}
+    },
+    "columns": [
+        {
+            "cachedContents": {
+                "cardinality": "7178546",
+                "count": "7178546",
+                "largest": "101000681721",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "240215",
+                "top": [
+                    {
+                        "count": "1",
+                        "item": "240216"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240220"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240221"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240222"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240224"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240226"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240227"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240228"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240230"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240232"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240234"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240235"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240237"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240238"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240240"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240243"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240245"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240246"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240247"
+                    },
+                    {
+                        "count": "1",
+                        "item": "240248"
+                    }
+                ]
+            },
+            "dataTypeName": "number",
+            "description": "The unique ID of the service request created.",
+            "fieldName": "service_request_id",
+            "format": {
+                "align": "right",
+                "noCommas": "true",
+                "precisionStyle": "standard"
+            },
+            "id": 599267137,
+            "name": "CaseID",
+            "position": 1,
+            "renderTypeName": "number",
+            "tableColumnId": 1563799,
+            "width": 134
+        },
+        {
+            "cachedContents": {
+                "cardinality": "5447999",
+                "count": "7178546",
+                "largest": "2024-09-10T23:20:01.000",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "2008-07-01T00:13:13.000",
+                "top": [
+                    {
+                        "count": "46",
+                        "item": "2024-03-11T11:18:00.000"
+                    },
+                    {
+                        "count": "42",
+                        "item": "2024-03-11T11:15:00.000"
+                    },
+                    {
+                        "count": "40",
+                        "item": "2019-05-15T21:03:00.000"
+                    },
+                    {
+                        "count": "38",
+                        "item": "2024-03-11T11:14:00.000"
+                    },
+                    {
+                        "count": "37",
+                        "item": "2024-03-11T11:16:00.000"
+                    },
+                    {
+                        "count": "33",
+                        "item": "2019-05-15T20:58:00.000"
+                    },
+                    {
+                        "count": "32",
+                        "item": "2024-03-11T11:17:00.000"
+                    },
+                    {
+                        "count": "30",
+                        "item": "2019-05-15T21:00:00.000"
+                    },
+                    {
+                        "count": "30",
+                        "item": "2019-04-20T03:37:00.000"
+                    },
+                    {
+                        "count": "29",
+                        "item": "2019-05-15T21:02:00.000"
+                    },
+                    {
+                        "count": "28",
+                        "item": "2019-10-21T08:47:00.000"
+                    },
+                    {
+                        "count": "28",
+                        "item": "2019-05-15T20:48:00.000"
+                    },
+                    {
+                        "count": "28",
+                        "item": "2019-05-15T20:59:00.000"
+                    },
+                    {
+                        "count": "27",
+                        "item": "2021-06-11T09:12:00.000"
+                    },
+                    {
+                        "count": "27",
+                        "item": "2024-06-04T10:02:00.000"
+                    },
+                    {
+                        "count": "27",
+                        "item": "2021-06-11T08:33:00.000"
+                    },
+                    {
+                        "count": "27",
+                        "item": "2021-06-11T09:15:00.000"
+                    },
+                    {
+                        "count": "26",
+                        "item": "2022-04-16T17:30:00.000"
+                    },
+                    {
+                        "count": "26",
+                        "item": "2021-06-11T08:39:00.000"
+                    },
+                    {
+                        "count": "26",
+                        "item": "2018-05-20T00:19:00.000"
+                    }
+                ]
+            },
+            "dataTypeName": "calendar_date",
+            "description": "The date and time when the service request was made",
+            "fieldName": "requested_datetime",
+            "format": {
+                "align": "left",
+                "view": "date_time"
+            },
+            "id": 599267138,
+            "name": "Opened",
+            "position": 2,
+            "renderTypeName": "calendar_date",
+            "tableColumnId": 1563800,
+            "width": 149
+        },
+        {
+            "cachedContents": {
+                "cardinality": "5399205",
+                "count": "7178546",
+                "largest": "2024-09-13T00:00:00.000",
+                "non_null": "7050769",
+                "null": "127777",
+                "smallest": "2008-07-01T06:10:23.000",
+                "top": [
+                    {
+                        "count": "1983",
+                        "item": "2023-03-06T10:15:03.000"
+                    },
+                    {
+                        "count": "1934",
+                        "item": "2024-05-15T10:43:47.000"
+                    },
+                    {
+                        "count": "1540",
+                        "item": "2020-09-16T13:56:22.000"
+                    },
+                    {
+                        "count": "1227",
+                        "item": "2015-08-07T12:00:00.000"
+                    },
+                    {
+                        "count": "1063",
+                        "item": "2015-11-17T12:00:00.000"
+                    },
+                    {
+                        "count": "766",
+                        "item": "2016-02-25T12:00:00.000"
+                    },
+                    {
+                        "count": "734",
+                        "item": "2019-12-20T06:37:43.000"
+                    },
+                    {
+                        "count": "634",
+                        "item": "2024-01-31T15:48:52.000"
+                    },
+                    {
+                        "count": "499",
+                        "item": "2023-09-23T02:00:01.000"
+                    },
+                    {
+                        "count": "497",
+                        "item": "2023-09-22T23:00:01.000"
+                    },
+                    {
+                        "count": "496",
+                        "item": "2023-09-23T01:00:01.000"
+                    },
+                    {
+                        "count": "496",
+                        "item": "2023-09-23T03:00:01.000"
+                    },
+                    {
+                        "count": "495",
+                        "item": "2023-09-20T21:00:01.000"
+                    },
+                    {
+                        "count": "494",
+                        "item": "2023-09-22T03:00:01.000"
+                    },
+                    {
+                        "count": "494",
+                        "item": "2023-09-21T01:00:00.000"
+                    },
+                    {
+                        "count": "493",
+                        "item": "2023-09-22T22:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-22T00:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-20T22:00:04.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-20T23:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-21T21:00:02.000"
+                    }
+                ]
+            },
+            "dataTypeName": "calendar_date",
+            "description": "The date and time when the service request was closed",
+            "fieldName": "closed_date",
+            "format": {
+                "align": "left",
+                "view": "date_time"
+            },
+            "id": 599267139,
+            "name": "Closed",
+            "position": 3,
+            "renderTypeName": "calendar_date",
+            "tableColumnId": 1563801,
+            "width": 143
+        },
+        {
+            "cachedContents": {
+                "cardinality": "5530804",
+                "count": "7178546",
+                "largest": "2024-09-10T23:56:21.000",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "2008-07-01T06:10:23.000",
+                "top": [
+                    {
+                        "count": "1983",
+                        "item": "2023-03-06T10:15:03.000"
+                    },
+                    {
+                        "count": "1934",
+                        "item": "2024-05-15T10:43:47.000"
+                    },
+                    {
+                        "count": "1540",
+                        "item": "2020-09-16T13:56:22.000"
+                    },
+                    {
+                        "count": "1227",
+                        "item": "2015-08-07T12:00:00.000"
+                    },
+                    {
+                        "count": "1063",
+                        "item": "2015-11-17T12:00:00.000"
+                    },
+                    {
+                        "count": "766",
+                        "item": "2016-02-25T12:00:00.000"
+                    },
+                    {
+                        "count": "734",
+                        "item": "2019-12-20T06:37:43.000"
+                    },
+                    {
+                        "count": "634",
+                        "item": "2024-01-31T15:48:52.000"
+                    },
+                    {
+                        "count": "499",
+                        "item": "2023-09-23T02:00:01.000"
+                    },
+                    {
+                        "count": "497",
+                        "item": "2023-09-22T23:00:01.000"
+                    },
+                    {
+                        "count": "496",
+                        "item": "2023-09-23T03:00:01.000"
+                    },
+                    {
+                        "count": "496",
+                        "item": "2023-09-23T01:00:01.000"
+                    },
+                    {
+                        "count": "495",
+                        "item": "2023-09-20T21:00:01.000"
+                    },
+                    {
+                        "count": "494",
+                        "item": "2023-09-21T01:00:00.000"
+                    },
+                    {
+                        "count": "494",
+                        "item": "2023-09-22T03:00:01.000"
+                    },
+                    {
+                        "count": "493",
+                        "item": "2023-09-22T22:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-20T23:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-20T22:00:04.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-22T00:00:01.000"
+                    },
+                    {
+                        "count": "492",
+                        "item": "2023-09-21T21:00:02.000"
+                    }
+                ]
+            },
+            "dataTypeName": "calendar_date",
+            "description": "The date and time when the service request was last modified. For requests with status=closed, this will be the date the request was closed",
+            "fieldName": "updated_datetime",
+            "format": {
+                "align": "left",
+                "view": "date_time"
+            },
+            "id": 599267140,
+            "name": "Updated",
+            "position": 4,
+            "renderTypeName": "calendar_date",
+            "tableColumnId": 4311794,
+            "width": 138
+        },
+        {
+            "cachedContents": {
+                "cardinality": "2",
+                "count": "7178546",
+                "largest": "Open",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "Closed",
+                "top": [
+                    {
+                        "count": "7050769",
+                        "item": "Closed"
+                    },
+                    {
+                        "count": "127777",
+                        "item": "Open"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "A single-word indicator of the current state of the service request. (Note: GeoReport V2 only permits \u2018open\u2019 and \u2018closed\u2019)",
+            "fieldName": "status_description",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267141,
+            "name": "Status",
+            "position": 5,
+            "renderTypeName": "text",
+            "tableColumnId": 1563802,
+            "width": 85
+        },
+        {
+            "cachedContents": {
+                "cardinality": "1716316",
+                "count": "7178546",
+                "largest": "Wrong Park, Work is Pending - This is actually Golden Gate Park, not GG Heights Park. The projected start date for this work is April or May.",
+                "non_null": "7168919",
+                "null": "9627",
+                "smallest": "- ?????",
+                "top": [
+                    {
+                        "count": "1318119",
+                        "item": "Case Resolved"
+                    },
+                    {
+                        "count": "607581",
+                        "item": "Case Resolved - Pickup completed."
+                    },
+                    {
+                        "count": "370889",
+                        "item": "See Notes tab for more details"
+                    },
+                    {
+                        "count": "226003",
+                        "item": "Case Completed - resolved:"
+                    },
+                    {
+                        "count": "163510",
+                        "item": "Case Resolved - Pickup completed"
+                    },
+                    {
+                        "count": "135518",
+                        "item": "Case is a Duplicate"
+                    },
+                    {
+                        "count": "96110",
+                        "item": "Case Resolved - WASTE NOT FOUND"
+                    },
+                    {
+                        "count": "88770",
+                        "item": "Case Completed - resolved: Pickup completed."
+                    },
+                    {
+                        "count": "71839",
+                        "item": "Area Cleared"
+                    },
+                    {
+                        "count": "66631",
+                        "item": "Case Transferred"
+                    },
+                    {
+                        "count": "56289",
+                        "item": "open"
+                    },
+                    {
+                        "count": "46139",
+                        "item": "accepted"
+                    },
+                    {
+                        "count": "44477",
+                        "item": "Case Resolved - case is resolved"
+                    },
+                    {
+                        "count": "39707",
+                        "item": "Case Resolved - Per process - cases are closed 10 days after assignment."
+                    },
+                    {
+                        "count": "37690",
+                        "item": "Comment Noted - The report has been logged and will help the City collect data on double parking and bike lane violations to determine target areas and future enforcement efforts. Thank you."
+                    },
+                    {
+                        "count": "34621",
+                        "item": "Case Resolved - meter shop has closed this request"
+                    },
+                    {
+                        "count": "31861",
+                        "item": "Scheduled"
+                    },
+                    {
+                        "count": "30840",
+                        "item": "Administrative Closure - Administrative closure by Public Works"
+                    },
+                    {
+                        "count": "29555",
+                        "item": "Encampment Removed"
+                    },
+                    {
+                        "count": "28576",
+                        "item": "Case is a Duplicate - This issue has already been reported through an earlier request."
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": " Explanation of why status was changed to current state or more details on current status than conveyed with status alone ",
+            "fieldName": "status_notes",
+            "format": {
+                "align": "left"
+            },
+            "id": 599267142,
+            "name": "Status Notes",
+            "position": 6,
+            "renderTypeName": "text",
+            "tableColumnId": 31922986,
+            "width": 164
+        },
+        {
+            "cachedContents": {
+                "cardinality": "589",
+                "count": "7178546",
+                "largest": "Yerba Buena CBD Queue",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "311 - Content Team",
+                "top": [
+                    {
+                        "count": "2612393",
+                        "item": "DPW Ops Queue"
+                    },
+                    {
+                        "count": "967361",
+                        "item": "Recology_Abandoned"
+                    },
+                    {
+                        "count": "414960",
+                        "item": "Parking Enforcement Dispatch Queue"
+                    },
+                    {
+                        "count": "302737",
+                        "item": "DPT Abandoned Vehicles Work Queue"
+                    },
+                    {
+                        "count": "283177",
+                        "item": "Recology_Overflowing"
+                    },
+                    {
+                        "count": "200951",
+                        "item": "DPW BSM Queue"
+                    },
+                    {
+                        "count": "173381",
+                        "item": "MUNI Work Queue"
+                    },
+                    {
+                        "count": "124894",
+                        "item": "311 Supervisor Queue"
+                    },
+                    {
+                        "count": "123959",
+                        "item": "PUC Sewer Ops"
+                    },
+                    {
+                        "count": "111499",
+                        "item": "DPT Meter_Bike Queue"
+                    },
+                    {
+                        "count": "108950",
+                        "item": "HSOC Queue"
+                    },
+                    {
+                        "count": "91198",
+                        "item": "Duplicate Case Hold Queue"
+                    },
+                    {
+                        "count": "74457",
+                        "item": "Housing Authority SR Queue"
+                    },
+                    {
+                        "count": "73656",
+                        "item": "Clear Channel - Transit Queue"
+                    },
+                    {
+                        "count": "59226",
+                        "item": "SFMTA - Parking Enforcement - G"
+                    },
+                    {
+                        "count": "54548",
+                        "item": "Muni Feedback Received Queue"
+                    },
+                    {
+                        "count": "54177",
+                        "item": "DPW BSSR Queue"
+                    },
+                    {
+                        "count": "52746",
+                        "item": "SSP - MTA Feedback Queue"
+                    },
+                    {
+                        "count": "51435",
+                        "item": "PW - Street and Environmental Services"
+                    },
+                    {
+                        "count": "48385",
+                        "item": "DPT SignShop Queue"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "The agency responsible for fulfilling or otherwise addressing the service request.",
+            "fieldName": "agency_responsible",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267143,
+            "name": "Responsible Agency",
+            "position": 7,
+            "renderTypeName": "text",
+            "tableColumnId": 4311793,
+            "width": 137
+        },
+        {
+            "cachedContents": {
+                "cardinality": "136",
+                "count": "7178546",
+                "largest": "Well-Being Check",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "311 Complaints",
+                "top": [
+                    {
+                        "count": "2798918",
+                        "item": "Street and Sidewalk Cleaning"
+                    },
+                    {
+                        "count": "870421",
+                        "item": "Graffiti"
+                    },
+                    {
+                        "count": "518204",
+                        "item": "Parking Enforcement"
+                    },
+                    {
+                        "count": "394311",
+                        "item": "Encampments"
+                    },
+                    {
+                        "count": "297241",
+                        "item": "Abandoned Vehicle"
+                    },
+                    {
+                        "count": "233512",
+                        "item": "MUNI Feedback"
+                    },
+                    {
+                        "count": "194371",
+                        "item": "General Request - PUBLIC WORKS"
+                    },
+                    {
+                        "count": "143517",
+                        "item": "Tree Maintenance"
+                    },
+                    {
+                        "count": "141583",
+                        "item": "Sewer Issues"
+                    },
+                    {
+                        "count": "138729",
+                        "item": "Damaged Property"
+                    },
+                    {
+                        "count": "129541",
+                        "item": "General Request - MTA"
+                    },
+                    {
+                        "count": "121927",
+                        "item": "Illegal Postings"
+                    },
+                    {
+                        "count": "105571",
+                        "item": "Litter Receptacles"
+                    },
+                    {
+                        "count": "99858",
+                        "item": "Street Defects"
+                    },
+                    {
+                        "count": "99661",
+                        "item": "Sign Repair"
+                    },
+                    {
+                        "count": "98250",
+                        "item": "Rec and Park Requests"
+                    },
+                    {
+                        "count": "89330",
+                        "item": "Streetlights"
+                    },
+                    {
+                        "count": "86623",
+                        "item": "Sidewalk or Curb"
+                    },
+                    {
+                        "count": "74283",
+                        "item": "SFHA Requests"
+                    },
+                    {
+                        "count": "62018",
+                        "item": "Noise Report"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "The human readable name of the service request type",
+            "fieldName": "service_name",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267144,
+            "name": "Category",
+            "position": 8,
+            "renderTypeName": "text",
+            "tableColumnId": 1563804,
+            "width": 196
+        },
+        {
+            "cachedContents": {
+                "cardinality": "2582",
+                "count": "7178546",
+                "largest": "Yellow Color Curb Request",
+                "non_null": "7169338",
+                "null": "9208",
+                "smallest": "abandoned_parklet",
+                "top": [
+                    {
+                        "count": "1004147",
+                        "item": "Bulky Items"
+                    },
+                    {
+                        "count": "929020",
+                        "item": "General Cleaning"
+                    },
+                    {
+                        "count": "350620",
+                        "item": "Encampment Reports"
+                    },
+                    {
+                        "count": "301299",
+                        "item": "Human or Animal Waste"
+                    },
+                    {
+                        "count": "299550",
+                        "item": "request_for_service"
+                    },
+                    {
+                        "count": "278119",
+                        "item": "City_garbage_can_overflowing"
+                    },
+                    {
+                        "count": "145021",
+                        "item": "Other_Illegal_Parking"
+                    },
+                    {
+                        "count": "140677",
+                        "item": "Graffiti on Other_enter_additional_details_below"
+                    },
+                    {
+                        "count": "126104",
+                        "item": "Graffiti on Building_commercial"
+                    },
+                    {
+                        "count": "118578",
+                        "item": "Blocking_Driveway_Cite_Only"
+                    },
+                    {
+                        "count": "109391",
+                        "item": "Parking_on_Sidewalk"
+                    },
+                    {
+                        "count": "104627",
+                        "item": "Abandoned Vehicles"
+                    },
+                    {
+                        "count": "101290",
+                        "item": "complaint"
+                    },
+                    {
+                        "count": "94225",
+                        "item": "Hazardous Materials"
+                    },
+                    {
+                        "count": "90197",
+                        "item": "Graffiti on Pole"
+                    },
+                    {
+                        "count": "86753",
+                        "item": "Pavement_Defect"
+                    },
+                    {
+                        "count": "80825",
+                        "item": "Damaged Parking_Meter"
+                    },
+                    {
+                        "count": "79570",
+                        "item": "garbage_and_debris"
+                    },
+                    {
+                        "count": "76122",
+                        "item": "Blocking_Driveway_Cite_Tow"
+                    },
+                    {
+                        "count": "74042",
+                        "item": "Graffiti on Building_other"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "The human readable name of the service request subtype",
+            "fieldName": "service_subtype",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267145,
+            "name": "Request Type",
+            "position": 9,
+            "renderTypeName": "text",
+            "tableColumnId": 1563805,
+            "width": 244
+        },
+        {
+            "cachedContents": {
+                "cardinality": "533411",
+                "count": "7178546",
+                "largest": "Z - X - Y",
+                "non_null": "7039362",
+                "null": "139184",
+                "smallest": "-  -",
+                "top": [
+                    {
+                        "count": "922690",
+                        "item": "Other Loose Garbage"
+                    },
+                    {
+                        "count": "348862",
+                        "item": "Encampment Cleanup"
+                    },
+                    {
+                        "count": "340474",
+                        "item": "Furniture"
+                    },
+                    {
+                        "count": "339745",
+                        "item": "Boxed or Bagged Items"
+                    },
+                    {
+                        "count": "301299",
+                        "item": "Human or Animal Waste"
+                    },
+                    {
+                        "count": "278119",
+                        "item": "City_garbage_can_overflowing"
+                    },
+                    {
+                        "count": "153404",
+                        "item": "Mattress"
+                    },
+                    {
+                        "count": "126072",
+                        "item": "Other_enter_additional_details_below - Offensive"
+                    },
+                    {
+                        "count": "112396",
+                        "item": "bsm - request_for_service"
+                    },
+                    {
+                        "count": "103082",
+                        "item": "Refrigerator"
+                    },
+                    {
+                        "count": "101875",
+                        "item": "DPT Abandoned Vehicles Low"
+                    },
+                    {
+                        "count": "88589",
+                        "item": "Building_commercial - Not_Offensive"
+                    },
+                    {
+                        "count": "86753",
+                        "item": "Pavement_Defect"
+                    },
+                    {
+                        "count": "80825",
+                        "item": "Parking_Meter"
+                    },
+                    {
+                        "count": "70755",
+                        "item": "Outofsewervent4inch"
+                    },
+                    {
+                        "count": "68834",
+                        "item": "Affixed Improperly"
+                    },
+                    {
+                        "count": "67446",
+                        "item": "Electronics"
+                    },
+                    {
+                        "count": "66820",
+                        "item": "Building_other - Not_Offensive"
+                    },
+                    {
+                        "count": "66126",
+                        "item": "Parking Enforcement"
+                    },
+                    {
+                        "count": "65009",
+                        "item": "Other"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "The human readable name of the service request details",
+            "fieldName": "service_details",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267146,
+            "name": "Request Details",
+            "position": 10,
+            "renderTypeName": "text",
+            "tableColumnId": 1563806,
+            "width": 280
+        },
+        {
+            "cachedContents": {
+                "cardinality": "356488",
+                "count": "7178546",
+                "largest": "Youngblood-Coleman Playground, 1398 HUDSON ST, SAN FRANCISCO, CA, 94124",
+                "non_null": "7178531",
+                "null": "15",
+                "smallest": "1000 14TH ST, SAN FRANCISCO, CA, 94114",
+                "top": [
+                    {
+                        "count": "354269",
+                        "item": "Not associated with a specific address"
+                    },
+                    {
+                        "count": "5111",
+                        "item": "535 FOLSOM ST, SAN FRANCISCO, CA, 94105"
+                    },
+                    {
+                        "count": "4349",
+                        "item": "Potrero del Sol, , SAN FRANCISCO, CA, 94110"
+                    },
+                    {
+                        "count": "3429",
+                        "item": "Intersection of CHURCH ST and DUBOCE AVE"
+                    },
+                    {
+                        "count": "3070",
+                        "item": "Intersection of 1ST ST and CLEMENTINA ST"
+                    },
+                    {
+                        "count": "2898",
+                        "item": "Intersection of 16TH ST and MISSION ST"
+                    },
+                    {
+                        "count": "2826",
+                        "item": "Golden Gate Park, , SAN FRANCISCO, CA, 94122"
+                    },
+                    {
+                        "count": "2744",
+                        "item": "Intersection of 18TH ST and MISSION ST"
+                    },
+                    {
+                        "count": "2555",
+                        "item": "501 FOLSOM ST, SAN FRANCISCO, CA, 94105"
+                    },
+                    {
+                        "count": "2517",
+                        "item": "Mission Dolores Park, , SAN FRANCISCO, CA, 94114"
+                    },
+                    {
+                        "count": "2440",
+                        "item": "Intersection of 22ND ST and BARTLETT ST"
+                    },
+                    {
+                        "count": "2291",
+                        "item": "Intersection of HAIGHT ST and MASONIC AVE"
+                    },
+                    {
+                        "count": "2259",
+                        "item": "Intersection of 24TH ST and MISSION ST"
+                    },
+                    {
+                        "count": "2184",
+                        "item": "450 FOLSOM ST, SAN FRANCISCO, CA, 94105"
+                    },
+                    {
+                        "count": "2131",
+                        "item": "45 BARTLETT ST, SAN FRANCISCO, CA, 94110"
+                    },
+                    {
+                        "count": "2076",
+                        "item": "Jefferson Square, , SAN FRANCISCO, CA, 94102"
+                    },
+                    {
+                        "count": "2075",
+                        "item": "Intersection of BACON ST and SAN BRUNO AVE"
+                    },
+                    {
+                        "count": "1980",
+                        "item": "Intersection of BERRY ST and DE HARO ST"
+                    },
+                    {
+                        "count": "1971",
+                        "item": "Intersection of 19TH ST and MISSION ST"
+                    },
+                    {
+                        "count": "1971",
+                        "item": "552 BERRY ST, SAN FRANCISCO, CA, 94107"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "Human readable address or description of location",
+            "fieldName": "address",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267147,
+            "name": "Address",
+            "position": 11,
+            "renderTypeName": "text",
+            "tableColumnId": 1563803,
+            "width": 184
+        },
+        {
+            "cachedContents": {
+                "cardinality": "3340",
+                "count": "7178546",
+                "largest": "ZOO RD",
+                "non_null": "6821401",
+                "null": "357145",
+                "smallest": "101/103 LUNDY LANE",
+                "top": [
+                    {
+                        "count": "171523",
+                        "item": "MISSION ST"
+                    },
+                    {
+                        "count": "113275",
+                        "item": "MARKET ST"
+                    },
+                    {
+                        "count": "82448",
+                        "item": "FOLSOM ST"
+                    },
+                    {
+                        "count": "74436",
+                        "item": "GEARY BLVD"
+                    },
+                    {
+                        "count": "65753",
+                        "item": "18TH ST"
+                    },
+                    {
+                        "count": "64618",
+                        "item": "HAIGHT ST"
+                    },
+                    {
+                        "count": "63001",
+                        "item": "16TH ST"
+                    },
+                    {
+                        "count": "61664",
+                        "item": "CALIFORNIA ST"
+                    },
+                    {
+                        "count": "53198",
+                        "item": "17TH ST"
+                    },
+                    {
+                        "count": "52969",
+                        "item": "VALENCIA ST"
+                    },
+                    {
+                        "count": "52340",
+                        "item": "24TH ST"
+                    },
+                    {
+                        "count": "52000",
+                        "item": "SAN BRUNO AVE"
+                    },
+                    {
+                        "count": "48515",
+                        "item": "EDDY ST"
+                    },
+                    {
+                        "count": "47770",
+                        "item": "3RD ST"
+                    },
+                    {
+                        "count": "47758",
+                        "item": "FILLMORE ST"
+                    },
+                    {
+                        "count": "46673",
+                        "item": "SUTTER ST"
+                    },
+                    {
+                        "count": "46585",
+                        "item": "BUSH ST"
+                    },
+                    {
+                        "count": "45857",
+                        "item": "VAN NESS AVE"
+                    },
+                    {
+                        "count": "45734",
+                        "item": "19TH ST"
+                    },
+                    {
+                        "count": "44455",
+                        "item": "HYDE ST"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "Primary Street of the associated address. Parks may have a park name instead of a street name. Requests not associated with an address will be blank.",
+            "fieldName": "street",
+            "format": {},
+            "id": 599267148,
+            "name": "Street",
+            "position": 12,
+            "renderTypeName": "text",
+            "tableColumnId": 77354810
+        },
+        {
+            "cachedContents": {
+                "cardinality": "12",
+                "count": "7178546",
+                "largest": "11.00000",
+                "non_null": "6820186",
+                "null": "358360",
+                "smallest": "0.00000",
+                "top": [
+                    {
+                        "count": "1103844",
+                        "item": "9.00000"
+                    },
+                    {
+                        "count": "868771",
+                        "item": "5.00000"
+                    },
+                    {
+                        "count": "787438",
+                        "item": "3.00000"
+                    },
+                    {
+                        "count": "768351",
+                        "item": "6.00000"
+                    },
+                    {
+                        "count": "678075",
+                        "item": "8.00000"
+                    },
+                    {
+                        "count": "643870",
+                        "item": "10.00000"
+                    },
+                    {
+                        "count": "486553",
+                        "item": "1.00000"
+                    },
+                    {
+                        "count": "430623",
+                        "item": "2.00000"
+                    },
+                    {
+                        "count": "405440",
+                        "item": "11.00000"
+                    },
+                    {
+                        "count": "324932",
+                        "item": "7.00000"
+                    },
+                    {
+                        "count": "317872",
+                        "item": "4.00000"
+                    },
+                    {
+                        "count": "4417",
+                        "item": "0.00000"
+                    }
+                ]
+            },
+            "dataTypeName": "number",
+            "description": "San Francisco Supervisor District as defined in 'Supervisor Districts as of 2022'",
+            "fieldName": "supervisor_district",
+            "format": {
+                "align": "right",
+                "noCommas": "false",
+                "precisionStyle": "standard"
+            },
+            "id": 599267149,
+            "name": "Supervisor District",
+            "position": 13,
+            "renderTypeName": "number",
+            "tableColumnId": 1563807,
+            "width": 123
+        },
+        {
+            "cachedContents": {
+                "cardinality": "235",
+                "count": "7178546",
+                "largest": "YERBA BUENA ISLAND",
+                "non_null": "6815931",
+                "null": "362615",
+                "smallest": "8",
+                "top": [
+                    {
+                        "count": "701954",
+                        "item": "Mission"
+                    },
+                    {
+                        "count": "490422",
+                        "item": "South of Market"
+                    },
+                    {
+                        "count": "220179",
+                        "item": "Outer Sunset"
+                    },
+                    {
+                        "count": "219967",
+                        "item": "Tenderloin"
+                    },
+                    {
+                        "count": "181632",
+                        "item": "Inner Richmond"
+                    },
+                    {
+                        "count": "174552",
+                        "item": "Outer Richmond"
+                    },
+                    {
+                        "count": "168832",
+                        "item": "Lower Nob Hill"
+                    },
+                    {
+                        "count": "166868",
+                        "item": "Mission Dolores"
+                    },
+                    {
+                        "count": "160352",
+                        "item": "Potrero Hill"
+                    },
+                    {
+                        "count": "134975",
+                        "item": "Bayview"
+                    },
+                    {
+                        "count": "132146",
+                        "item": "Portola"
+                    },
+                    {
+                        "count": "122298",
+                        "item": "Bernal Heights"
+                    },
+                    {
+                        "count": "115179",
+                        "item": "Civic Center"
+                    },
+                    {
+                        "count": "104662",
+                        "item": "Excelsior"
+                    },
+                    {
+                        "count": "100713",
+                        "item": "Nob Hill"
+                    },
+                    {
+                        "count": "98538",
+                        "item": "Western Addition"
+                    },
+                    {
+                        "count": "92954",
+                        "item": "Lower Haight"
+                    },
+                    {
+                        "count": "91216",
+                        "item": "North Beach"
+                    },
+                    {
+                        "count": "91013",
+                        "item": "Pacific Heights"
+                    },
+                    {
+                        "count": "90327",
+                        "item": "Haight Ashbury"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "San Francisco Neighborhood as defined in 'SF Find Neighborhoods'",
+            "fieldName": "neighborhoods_sffind_boundaries",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267150,
+            "name": "Neighborhood",
+            "position": 14,
+            "renderTypeName": "text",
+            "tableColumnId": 1563808,
+            "width": 186
+        },
+        {
+            "cachedContents": {
+                "cardinality": "41",
+                "count": "7178546",
+                "largest": "West of Twin Peaks",
+                "non_null": "6619354",
+                "null": "559192",
+                "smallest": "Bayview Hunters Point",
+                "top": [
+                    {
+                        "count": "1039032",
+                        "item": "Mission"
+                    },
+                    {
+                        "count": "359507",
+                        "item": "Bayview Hunters Point"
+                    },
+                    {
+                        "count": "351671",
+                        "item": "South of Market"
+                    },
+                    {
+                        "count": "335580",
+                        "item": "Tenderloin"
+                    },
+                    {
+                        "count": "302893",
+                        "item": "Sunset/Parkside"
+                    },
+                    {
+                        "count": "274204",
+                        "item": "Castro/Upper Market"
+                    },
+                    {
+                        "count": "270561",
+                        "item": "Hayes Valley"
+                    },
+                    {
+                        "count": "259432",
+                        "item": "Financial District/South Beach"
+                    },
+                    {
+                        "count": "247929",
+                        "item": "Outer Richmond"
+                    },
+                    {
+                        "count": "240486",
+                        "item": "Nob Hill"
+                    },
+                    {
+                        "count": "229058",
+                        "item": "Haight Ashbury"
+                    },
+                    {
+                        "count": "185387",
+                        "item": "Bernal Heights"
+                    },
+                    {
+                        "count": "184418",
+                        "item": "Western Addition"
+                    },
+                    {
+                        "count": "166404",
+                        "item": "Excelsior"
+                    },
+                    {
+                        "count": "153178",
+                        "item": "West of Twin Peaks"
+                    },
+                    {
+                        "count": "146020",
+                        "item": "Inner Richmond"
+                    },
+                    {
+                        "count": "138344",
+                        "item": "Marina"
+                    },
+                    {
+                        "count": "135457",
+                        "item": "Inner Sunset"
+                    },
+                    {
+                        "count": "133358",
+                        "item": "Portola"
+                    },
+                    {
+                        "count": "129085",
+                        "item": "Chinatown"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "San Francisco Analysis Neighborhood as defined in 'Analysis Neighborhoods'",
+            "fieldName": "analysis_neighborhood",
+            "format": {},
+            "id": 599267192,
+            "name": "Analysis Neighborhood",
+            "position": 15,
+            "renderTypeName": "text",
+            "tableColumnId": 154824978
+        },
+        {
+            "cachedContents": {
+                "cardinality": "12",
+                "count": "7178546",
+                "largest": "UNASSIGNED",
+                "non_null": "6812978",
+                "null": "365568",
+                "smallest": "BAYVIEW",
+                "top": [
+                    {
+                        "count": "1231826",
+                        "item": "MISSION"
+                    },
+                    {
+                        "count": "870461",
+                        "item": "NORTHERN"
+                    },
+                    {
+                        "count": "710473",
+                        "item": "INGLESIDE"
+                    },
+                    {
+                        "count": "694448",
+                        "item": "CENTRAL"
+                    },
+                    {
+                        "count": "643638",
+                        "item": "TARAVAL"
+                    },
+                    {
+                        "count": "640546",
+                        "item": "SOUTHERN"
+                    },
+                    {
+                        "count": "610427",
+                        "item": "BAYVIEW"
+                    },
+                    {
+                        "count": "564026",
+                        "item": "RICHMOND"
+                    },
+                    {
+                        "count": "560400",
+                        "item": "PARK"
+                    },
+                    {
+                        "count": "286723",
+                        "item": "TENDERLOIN"
+                    },
+                    {
+                        "count": "9",
+                        "item": "UNASSIGNED"
+                    },
+                    {
+                        "count": "1",
+                        "item": "NO"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "San Francisco Police District as defined in 'Current Police Districts'",
+            "fieldName": "police_district",
+            "format": {},
+            "id": 599267151,
+            "name": "Police District",
+            "position": 16,
+            "renderTypeName": "text",
+            "tableColumnId": 46388094,
+            "width": 100
+        },
+        {
+            "cachedContents": {
+                "cardinality": "2774710",
+                "count": "7178546",
+                "largest": "38.6821821",
+                "non_null": "7174116",
+                "null": "4430",
+                "smallest": "0.000000000000",
+                "top": [
+                    {
+                        "count": "551131",
+                        "item": "0.0"
+                    },
+                    {
+                        "count": "6004",
+                        "item": "37.774826441129"
+                    },
+                    {
+                        "count": "4207",
+                        "item": "37.71960067749"
+                    },
+                    {
+                        "count": "3791",
+                        "item": "37.7797"
+                    },
+                    {
+                        "count": "3353",
+                        "item": "37.753601074219"
+                    },
+                    {
+                        "count": "3139",
+                        "item": "37.769058227539"
+                    },
+                    {
+                        "count": "2508",
+                        "item": "37.761699676514"
+                    },
+                    {
+                        "count": "2238",
+                        "item": "37.762672424316"
+                    },
+                    {
+                        "count": "2191",
+                        "item": "37.712100982666"
+                    },
+                    {
+                        "count": "2183",
+                        "item": "37.76505279541"
+                    },
+                    {
+                        "count": "2157",
+                        "item": "37.75170135498"
+                    },
+                    {
+                        "count": "1876",
+                        "item": "37.753799438477"
+                    },
+                    {
+                        "count": "1872",
+                        "item": "37.752239227295"
+                    },
+                    {
+                        "count": "1863",
+                        "item": "37.775146484375"
+                    },
+                    {
+                        "count": "1798",
+                        "item": "37.712200164795"
+                    },
+                    {
+                        "count": "1788",
+                        "item": "37.783309936523"
+                    },
+                    {
+                        "count": "1769",
+                        "item": "37.78039932251"
+                    },
+                    {
+                        "count": "1765",
+                        "item": "37.753101348877"
+                    },
+                    {
+                        "count": "1737",
+                        "item": "37.718082427979"
+                    },
+                    {
+                        "count": "1700",
+                        "item": "37.732437133789"
+                    }
+                ]
+            },
+            "dataTypeName": "number",
+            "description": "Latitude of the location, using the WGS84 projection",
+            "fieldName": "lat",
+            "format": {
+                "align": "right",
+                "noCommas": "false",
+                "precisionStyle": "standard"
+            },
+            "id": 599267152,
+            "name": "Latitude",
+            "position": 17,
+            "renderTypeName": "number",
+            "tableColumnId": 46388130,
+            "width": 100
+        },
+        {
+            "cachedContents": {
+                "cardinality": "2693795",
+                "count": "7178546",
+                "largest": "0.0",
+                "non_null": "7174116",
+                "null": "4430",
+                "smallest": "-141.219150990916",
+                "top": [
+                    {
+                        "count": "551131",
+                        "item": "0.0"
+                    },
+                    {
+                        "count": "6004",
+                        "item": "-122.418488282316"
+                    },
+                    {
+                        "count": "5820",
+                        "item": "-122.397003173828"
+                    },
+                    {
+                        "count": "5386",
+                        "item": "-122.416999816895"
+                    },
+                    {
+                        "count": "4939",
+                        "item": "-122.387001037598"
+                    },
+                    {
+                        "count": "3983",
+                        "item": "-122.42"
+                    },
+                    {
+                        "count": "3281",
+                        "item": "-122.416000366211"
+                    },
+                    {
+                        "count": "3206",
+                        "item": "-122.417999267578"
+                    },
+                    {
+                        "count": "3092",
+                        "item": "-122.398002624512"
+                    },
+                    {
+                        "count": "2982",
+                        "item": "-122.396003723145"
+                    },
+                    {
+                        "count": "2909",
+                        "item": "-122.480949401855"
+                    },
+                    {
+                        "count": "2857",
+                        "item": "-122.418998718262"
+                    },
+                    {
+                        "count": "2841",
+                        "item": "-122.421997070313"
+                    },
+                    {
+                        "count": "2592",
+                        "item": "-122.430000305176"
+                    },
+                    {
+                        "count": "2496",
+                        "item": "-122.41967010498"
+                    },
+                    {
+                        "count": "2455",
+                        "item": "-122.420997619629"
+                    },
+                    {
+                        "count": "2247",
+                        "item": "-122.419075012207"
+                    },
+                    {
+                        "count": "2177",
+                        "item": "-122.435188293457"
+                    },
+                    {
+                        "count": "2128",
+                        "item": "-122.419258117676"
+                    },
+                    {
+                        "count": "1894",
+                        "item": "-122.418441772461"
+                    }
+                ]
+            },
+            "dataTypeName": "number",
+            "description": "Longitude of the location, using the WGS84 projection",
+            "fieldName": "long",
+            "format": {
+                "align": "right",
+                "noCommas": "false",
+                "precisionStyle": "standard"
+            },
+            "id": 599267153,
+            "name": "Longitude",
+            "position": 18,
+            "renderTypeName": "number",
+            "tableColumnId": 46388162,
+            "width": 100
+        },
+        {
+            "dataTypeName": "location",
+            "description": "Combination of Latitude and Longitude for Socrata native maps",
+            "fieldName": "point",
+            "format": {
+                "align": "left",
+                "view": "address_coords"
+            },
+            "id": 599267154,
+            "name": "Point",
+            "position": 19,
+            "renderTypeName": "location",
+            "tableColumnId": 1563809,
+            "width": 211
+        },
+        {
+            "cachedContents": {
+                "cardinality": "3735881",
+                "count": "7178546",
+                "non_null": "7174116",
+                "null": "4430",
+                "top": [
+                    {
+                        "count": "551131",
+                        "item": {
+                            "coordinates": [
+                                0,
+                                0
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "6004",
+                        "item": {
+                            "coordinates": [
+                                -122.418488282,
+                                37.774826441
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "4139",
+                        "item": {
+                            "coordinates": [
+                                -122.387001038,
+                                37.719600677
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "3765",
+                        "item": {
+                            "coordinates": [
+                                -122.42,
+                                37.7797
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "3093",
+                        "item": {
+                            "coordinates": [
+                                -122.397003174,
+                                37.753601074
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "2897",
+                        "item": {
+                            "coordinates": [
+                                -122.480949402,
+                                37.769058228
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "2177",
+                        "item": {
+                            "coordinates": [
+                                -122.419670105,
+                                37.765052795
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "2143",
+                        "item": {
+                            "coordinates": [
+                                -122.435188293,
+                                37.762672424
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "2124",
+                        "item": {
+                            "coordinates": [
+                                -122.397003174,
+                                37.751701355
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1799",
+                        "item": {
+                            "coordinates": [
+                                -122.418441772,
+                                37.752239227
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1793",
+                        "item": {
+                            "coordinates": [
+                                -122.419258118,
+                                37.775146484
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1728",
+                        "item": {
+                            "coordinates": [
+                                -122.419075012,
+                                37.718082428
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1712",
+                        "item": {
+                            "coordinates": [
+                                -122.398002625,
+                                37.753101349
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1675",
+                        "item": {
+                            "coordinates": [
+                                -122.405609131,
+                                37.732437134
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1595",
+                        "item": {
+                            "coordinates": [
+                                -122.414741516,
+                                37.778720856
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1568",
+                        "item": {
+                            "coordinates": [
+                                -122.402999878,
+                                37.78219986
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1510",
+                        "item": {
+                            "coordinates": [
+                                -122.447303772,
+                                37.782390594
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1467",
+                        "item": {
+                            "coordinates": [
+                                -122.445343018,
+                                37.770210266
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1448",
+                        "item": {
+                            "coordinates": [
+                                -122.427093506,
+                                37.759754181
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "count": "1448",
+                        "item": {
+                            "coordinates": [
+                                -122.430000305,
+                                37.780399323
+                            ],
+                            "type": "Point"
+                        }
+                    }
+                ]
+            },
+            "dataTypeName": "point",
+            "description": "Combination of Latitude and Longitude in Point format",
+            "fieldName": "point_geom",
+            "format": {},
+            "id": 599267155,
+            "name": "point_geom",
+            "position": 20,
+            "renderTypeName": "point",
+            "tableColumnId": 151477381
+        },
+        {
+            "cachedContents": {
+                "cardinality": "10",
+                "count": "7178546",
+                "largest": "Web",
+                "non_null": "7178544",
+                "null": "2",
+                "smallest": "Email",
+                "top": [
+                    {
+                        "count": "3327770",
+                        "item": "Mobile/Open311"
+                    },
+                    {
+                        "count": "2500782",
+                        "item": "Phone"
+                    },
+                    {
+                        "count": "995170",
+                        "item": "Web"
+                    },
+                    {
+                        "count": "173586",
+                        "item": "Integrated Agency"
+                    },
+                    {
+                        "count": "130441",
+                        "item": "Mobile"
+                    },
+                    {
+                        "count": "43530",
+                        "item": "Twitter"
+                    },
+                    {
+                        "count": "6006",
+                        "item": "Other Department"
+                    },
+                    {
+                        "count": "1082",
+                        "item": "Email"
+                    },
+                    {
+                        "count": "167",
+                        "item": "In Person"
+                    },
+                    {
+                        "count": "10",
+                        "item": "Mail"
+                    }
+                ]
+            },
+            "dataTypeName": "text",
+            "description": "Mechanism or path by which the service request was received; typically \u2018Phone\u2019, \u2018Text/SMS\u2019, \u2018Website\u2019, \u2018Mobile App\u2019, \u2018Twitter\u2019, etc but terms may vary by system.",
+            "fieldName": "source",
+            "format": {
+                "align": "left",
+                "displayStyle": "plain"
+            },
+            "id": 599267157,
+            "name": "Source",
+            "position": 21,
+            "renderTypeName": "text",
+            "tableColumnId": 9597122,
+            "width": 100
+        },
+        {
+            "dataTypeName": "url",
+            "description": "A URL to media associated with the request, e.g. an image.",
+            "fieldName": "media_url",
+            "format": {
+                "align": "left"
+            },
+            "id": 599267159,
+            "name": "Media URL",
+            "position": 22,
+            "renderTypeName": "url",
+            "subColumnTypes": [
+                "url",
+                "description"
+            ],
+            "tableColumnId": 18849526,
+            "width": 100
+        },
+        {
+            "cachedContents": {
+                "cardinality": "11",
+                "count": "7178546",
+                "largest": "11.00000",
+                "non_null": "6289097",
+                "null": "889449",
+                "smallest": "1.00000",
+                "top": [
+                    {
+                        "count": "915498",
+                        "item": "9.00000"
+                    },
+                    {
+                        "count": "903538",
+                        "item": "6.00000"
+                    },
+                    {
+                        "count": "780130",
+                        "item": "5.00000"
+                    },
+                    {
+                        "count": "667171",
+                        "item": "10.00000"
+                    },
+                    {
+                        "count": "662656",
+                        "item": "8.00000"
+                    },
+                    {
+                        "count": "660809",
+                        "item": "3.00000"
+                    },
+                    {
+                        "count": "449090",
+                        "item": "1.00000"
+                    },
+                    {
+                        "count": "367991",
+                        "item": "2.00000"
+                    },
+                    {
+                        "count": "336883",
+                        "item": "11.00000"
+                    },
+                    {
+                        "count": "284202",
+                        "item": "4.00000"
+                    },
+                    {
+                        "count": "261129",
+                        "item": "7.00000"
+                    }
+                ]
+            },
+            "dataTypeName": "number",
+            "description": "San Francisco Supervisor District as defined in 'Supervisor Districts as of 2012'",
+            "fieldName": "bos_2012",
+            "format": {},
+            "id": 599267162,
+            "name": "BOS_2012",
+            "position": 23,
+            "renderTypeName": "number",
+            "tableColumnId": 146612509
+        },
+        {
+            "cachedContents": {
+                "cardinality": "192",
+                "count": "7178546",
+                "largest": "2024-09-11T06:00:00.000",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "2024-02-15T08:34:00.000",
+                "top": [
+                    {
+                        "count": "6439898",
+                        "item": "2024-02-20T10:35:55.000"
+                    },
+                    {
+                        "count": "251526",
+                        "item": "2024-04-10T10:23:00.000"
+                    },
+                    {
+                        "count": "70795",
+                        "item": "2024-04-09T09:12:00.000"
+                    },
+                    {
+                        "count": "27152",
+                        "item": "2024-06-12T06:03:00.000"
+                    },
+                    {
+                        "count": "26114",
+                        "item": "2024-09-11T06:00:00.000"
+                    },
+                    {
+                        "count": "14274",
+                        "item": "2024-05-30T06:05:00.000"
+                    },
+                    {
+                        "count": "7331",
+                        "item": "2024-03-15T06:03:00.000"
+                    },
+                    {
+                        "count": "4819",
+                        "item": "2024-04-04T06:23:00.000"
+                    },
+                    {
+                        "count": "4344",
+                        "item": "2024-05-25T06:05:00.000"
+                    },
+                    {
+                        "count": "3471",
+                        "item": "2024-08-20T06:04:00.000"
+                    },
+                    {
+                        "count": "3141",
+                        "item": "2024-03-21T06:24:00.000"
+                    },
+                    {
+                        "count": "3016",
+                        "item": "2024-05-05T06:23:00.000"
+                    },
+                    {
+                        "count": "2863",
+                        "item": "2024-09-05T06:00:00.000"
+                    },
+                    {
+                        "count": "2853",
+                        "item": "2024-04-14T06:22:00.000"
+                    },
+                    {
+                        "count": "2821",
+                        "item": "2024-09-08T06:00:00.000"
+                    },
+                    {
+                        "count": "2803",
+                        "item": "2024-09-06T06:00:00.000"
+                    },
+                    {
+                        "count": "2801",
+                        "item": "2024-06-08T06:27:00.000"
+                    },
+                    {
+                        "count": "2796",
+                        "item": "2024-06-07T06:03:00.000"
+                    },
+                    {
+                        "count": "2779",
+                        "item": "2024-05-20T06:27:00.000"
+                    },
+                    {
+                        "count": "2774",
+                        "item": "2024-06-01T06:24:00.000"
+                    }
+                ]
+            },
+            "dataTypeName": "calendar_date",
+            "description": "Timestamp the row was updated in the source system",
+            "fieldName": "data_as_of",
+            "format": {
+                "view": "date_ymd_time"
+            },
+            "id": 599267163,
+            "name": "data_as_of",
+            "position": 24,
+            "renderTypeName": "calendar_date",
+            "tableColumnId": 151477383
+        },
+        {
+            "cachedContents": {
+                "cardinality": "2",
+                "count": "7178546",
+                "largest": "2024-09-12T08:53:43.000",
+                "non_null": "7178546",
+                "null": "0",
+                "smallest": "2024-09-11T17:09:50.000",
+                "top": [
+                    {
+                        "count": "7152432",
+                        "item": "2024-09-11T17:09:50.000"
+                    },
+                    {
+                        "count": "26114",
+                        "item": "2024-09-12T08:53:43.000"
+                    }
+                ]
+            },
+            "dataTypeName": "calendar_date",
+            "description": "Timestamp the row was uploaded to the open data portal",
+            "fieldName": "data_loaded_at",
+            "format": {
+                "align": "left",
+                "view": "date_ymd_time"
+            },
+            "id": 599267164,
+            "name": "data_loaded_at",
+            "position": 25,
+            "renderTypeName": "calendar_date",
+            "tableColumnId": 151477382
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_qgnn-b9vv"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_qgnn_b9vv",
+            "format": {},
+            "id": 599267166,
+            "name": "Current Police Districts",
+            "position": 26,
+            "renderTypeName": "number",
+            "tableColumnId": 82221025
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_26cr-cadq"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_26cr_cadq",
+            "format": {},
+            "id": 599267167,
+            "name": "Current Supervisor Districts",
+            "position": 27,
+            "renderTypeName": "number",
+            "tableColumnId": 82221026
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_ajp5-b2md"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_ajp5_b2md",
+            "format": {},
+            "id": 599267168,
+            "name": "Analysis Neighborhoods",
+            "position": 28,
+            "renderTypeName": "number",
+            "tableColumnId": 82221027
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_rxqg-mtj9"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_rxqg_mtj9",
+            "format": {},
+            "id": 599267169,
+            "name": "DELETE - Supervisor Districts",
+            "position": 29,
+            "renderTypeName": "number",
+            "tableColumnId": 82221028
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_yftq-j783"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_yftq_j783",
+            "format": {},
+            "id": 599267170,
+            "name": "DELETE - Fire Prevention Districts",
+            "position": 30,
+            "renderTypeName": "number",
+            "tableColumnId": 82221029
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_jx4q-fizf"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_jx4q_fizf",
+            "format": {},
+            "id": 599267171,
+            "name": "DELETE - Current Police Districts",
+            "position": 31,
+            "renderTypeName": "number",
+            "tableColumnId": 82221030
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_bh8s-q3mv"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_bh8s_q3mv",
+            "format": {},
+            "id": 599267172,
+            "name": "DELETE - Zip Codes",
+            "position": 32,
+            "renderTypeName": "number",
+            "tableColumnId": 82221057
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_p5aj-wyqh"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_p5aj_wyqh",
+            "format": {},
+            "id": 599267173,
+            "name": "DELETE - Police Districts",
+            "position": 33,
+            "renderTypeName": "number",
+            "tableColumnId": 82221058
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_fyvs-ahh9"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_fyvs_ahh9",
+            "format": {},
+            "id": 599267174,
+            "name": "DELETE - Neighborhoods",
+            "position": 34,
+            "renderTypeName": "number",
+            "tableColumnId": 82221059
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_f58d-8dbm"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_f58d_8dbm",
+            "format": {},
+            "id": 599267175,
+            "name": "DELETE - Neighborhoods_from_fyvs_ahh9",
+            "position": 35,
+            "renderTypeName": "number",
+            "tableColumnId": 82221060
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_9dfj-4gjx"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_9dfj_4gjx",
+            "format": {},
+            "id": 599267176,
+            "name": "DELETE - 2017 Fix It Zones",
+            "position": 36,
+            "renderTypeName": "number",
+            "tableColumnId": 82221061
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_vtsz-7cme"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_vtsz_7cme",
+            "format": {},
+            "id": 599267177,
+            "name": "DELETE - SF Find Neighborhoods",
+            "position": 37,
+            "renderTypeName": "number",
+            "tableColumnId": 82221062
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_n4xg-c4py"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_n4xg_c4py",
+            "format": {},
+            "id": 599267178,
+            "name": "Civic Center Harm Reduction Project Boundary",
+            "position": 38,
+            "renderTypeName": "number",
+            "tableColumnId": 82221063
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_sruu-94in"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_sruu_94in",
+            "format": {},
+            "id": 599267179,
+            "name": "DELETE - Current Supervisor Districts",
+            "position": 39,
+            "renderTypeName": "number",
+            "tableColumnId": 82221064
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_4isq-27mq"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_4isq_27mq",
+            "format": {},
+            "id": 599267180,
+            "name": "Fix It Zones as of 2017-11-06 ",
+            "position": 40,
+            "renderTypeName": "number",
+            "tableColumnId": 82221065
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_viu7-rrfi"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_viu7_rrfi",
+            "format": {},
+            "id": 599267181,
+            "name": "Invest In Neighborhoods (IIN) Areas",
+            "position": 41,
+            "renderTypeName": "number",
+            "tableColumnId": 82221066
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_fcz8-est8"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_fcz8_est8",
+            "format": {},
+            "id": 599267182,
+            "name": "DELETE - HSOC Zones",
+            "position": 42,
+            "renderTypeName": "number",
+            "tableColumnId": 82221067
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_pigm-ib2e"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_pigm_ib2e",
+            "format": {},
+            "id": 599267183,
+            "name": "Fix It Zones as of 2018-02-07",
+            "position": 43,
+            "renderTypeName": "number",
+            "tableColumnId": 82221068
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_9jxd-iqea"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_9jxd_iqea",
+            "format": {},
+            "id": 599267184,
+            "name": "CBD, BID and GBD Boundaries as of 2017",
+            "position": 44,
+            "renderTypeName": "number",
+            "tableColumnId": 82221069
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_6ezc-tdp2"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_6ezc_tdp2",
+            "format": {},
+            "id": 599267185,
+            "name": "Central Market/Tenderloin Boundary",
+            "position": 45,
+            "renderTypeName": "number",
+            "tableColumnId": 82221070
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_6pnf-4xz7"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_6pnf_4xz7",
+            "format": {},
+            "id": 599267186,
+            "name": "Areas of Vulnerability, 2016",
+            "position": 46,
+            "renderTypeName": "number",
+            "tableColumnId": 82221071
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_h4ep-8xdi"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_h4ep_8xdi",
+            "format": {},
+            "id": 599267187,
+            "name": "Central Market/Tenderloin Boundary Polygon - Updated",
+            "position": 47,
+            "renderTypeName": "number",
+            "tableColumnId": 82221072
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_nqbw-i6c3"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_nqbw_i6c3",
+            "format": {},
+            "id": 599267188,
+            "name": "HSOC Zones as of 2018-06-05",
+            "position": 48,
+            "renderTypeName": "number",
+            "tableColumnId": 82221073
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_2dwj-jsy4"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_2dwj_jsy4",
+            "format": {},
+            "id": 599267189,
+            "name": "OWED Public Spaces",
+            "position": 49,
+            "renderTypeName": "number",
+            "tableColumnId": 82221074
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_y6ts-4iup"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_y6ts_4iup",
+            "format": {},
+            "id": 599267190,
+            "name": "Parks Alliance CPSI (27+TL sites)",
+            "position": 50,
+            "renderTypeName": "number",
+            "tableColumnId": 82221075
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_jwn9-ihcz"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_jwn9_ihcz",
+            "format": {},
+            "id": 599267191,
+            "name": "Neighborhoods",
+            "position": 51,
+            "renderTypeName": "number",
+            "tableColumnId": 88648739
+        },
+        {
+            "computationStrategy": {
+                "parameters": {
+                    "primary_key": "_feature_id",
+                    "region": "_6qbp-sg9q"
+                },
+                "source_columns": [
+                    "point"
+                ],
+                "type": "georegion_match_on_point"
+            },
+            "dataTypeName": "number",
+            "fieldName": ":@computed_region_6qbp_sg9q",
+            "format": {},
+            "id": 599267165,
+            "name": "SF Find Neighborhoods",
+            "position": 52,
+            "renderTypeName": "number",
+            "tableColumnId": 82221024
+        }
+    ],
+    "createdAt": 1318104077,
+    "description": "<strong>SUMMARY</strong>\nDataset contains SF311 cases created since 7/1/2008 with location information. \n\n<strong>UPDATE PROCESS</strong>\nThis dataset updates daily.\n\n<strong>HOW TO USE THIS DATASET</strong>\nDownload data using 'export' button to the right. For more information on this dataset, visit the  <u><a href=\"https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases\">FAQ page</a></u>.\n\n<strong>Want to map the data in your neighborhood?</strong> \nCheck out https://sf.connect.socrata.com/\n\nFor more information about Open311, see http://www.open311.org/.",
+    "displayType": "table",
+    "domainCName": "data.sfgov.org",
+    "downloadCount": 48516,
+    "flags": [
+        "default",
+        "federated",
+        "internalToPublicFederatedView",
+        "ownerMayBeContacted",
+        "restorable",
+        "restorePossibleForType"
+    ],
+    "grants": [
+        {
+            "flags": [
+                "public"
+            ],
+            "inherited": false,
+            "type": "viewer"
+        }
+    ],
+    "hideFromCatalog": false,
+    "hideFromDataJson": false,
+    "id": "vw6y-z8j6",
+    "license": {
+        "name": "Open Data Commons Public Domain Dedication and License",
+        "termsLink": "http://opendatacommons.org/licenses/pddl/1.0/"
+    },
+    "licenseId": "PDDL",
+    "locked": false,
+    "metadata": {
+        "attachments": [
+            {
+                "assetId": "618a6a4e-52df-4c38-9815-e37dd84a3f62",
+                "filename": "Open Data Changes January 2020.pdf",
+                "name": "Open Data Changes January 2020.pdf"
+            }
+        ],
+        "availableDisplayTypes": [
+            "table",
+            "fatrow",
+            "page"
+        ],
+        "custom_fields": {
+            "Department Metrics": {
+                "Publishing Department": "311"
+            },
+            "Publishing Details": {
+                "Data change frequency": "Multiple times per hour",
+                "Geographic unit": "",
+                "Program link": "",
+                "Publishing frequency": "Daily"
+            }
+        },
+        "filterCondition": {
+            "children": [
+                {
+                    "metadata": {
+                        "operator": "BETWEEN",
+                        "tableColumnId": {
+                            "244069": 1563800
+                        }
+                    },
+                    "type": "operator",
+                    "value": "OR"
+                },
+                {
+                    "metadata": {
+                        "customValues": [
+                            [
+                                "Open"
+                            ],
+                            [
+                                "Closed"
+                            ]
+                        ],
+                        "operator": "EQUALS",
+                        "tableColumnId": {
+                            "244069": 1563802
+                        }
+                    },
+                    "type": "operator",
+                    "value": "OR"
+                }
+            ],
+            "metadata": {
+                "advanced": true,
+                "unifiedVersion": 2
+            },
+            "type": "operator",
+            "value": "AND"
+        },
+        "rdfSubject": "0",
+        "renderTypeConfig": {
+            "visible": {
+                "table": true
+            }
+        },
+        "rowIdentifier": 599267137,
+        "rowLabel": "311 case",
+        "thumbnail": {
+            "page": {
+                "created": true,
+                "filename": "page.png-762.406.47.4.png",
+                "selection": {
+                    "height": 406,
+                    "width": 762,
+                    "x1": 47,
+                    "x2": 809,
+                    "y1": 4,
+                    "y2": 410
+                }
+            }
+        }
+    },
+    "name": "311 Cases",
+    "newBackend": true,
+    "numberOfComments": 16,
+    "oid": 40859565,
+    "owner": {
+        "disabledAt": 1711666451,
+        "displayName": "OpenData",
+        "flags": [
+            "acceptedEula"
+        ],
+        "id": "dbag-6qd9",
+        "screenName": "OpenData",
+        "type": "interactive"
+    },
+    "provenance": "official",
+    "publicationAppendEnabled": false,
+    "publicationDate": 1726119053,
+    "publicationGroup": 244069,
+    "publicationStage": "published",
+    "query": {},
+    "rights": [
+        "read"
+    ],
+    "rowIdentifierColumnId": 599267137,
+    "rowsUpdatedAt": 1726242789,
+    "rowsUpdatedBy": "dbag-6qd9",
+    "tableAuthor": {
+        "disabledAt": 1711666451,
+        "displayName": "OpenData",
+        "flags": [
+            "acceptedEula"
+        ],
+        "id": "dbag-6qd9",
+        "screenName": "OpenData",
+        "type": "interactive"
+    },
+    "tableId": 19649695,
+    "tags": [
+        "311",
+        "case",
+        "cases",
+        "customer service",
+        "calls"
+    ],
+    "totalTimesRated": 0,
+    "viewCount": 135530,
+    "viewLastModified": 1726242764,
+    "viewType": "tabular"
+}

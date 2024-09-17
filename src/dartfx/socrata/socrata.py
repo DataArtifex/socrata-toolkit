@@ -1,0 +1,387 @@
+from dataclasses import dataclass, field
+from datetime import datetime
+import json
+import logging
+import os
+from typing import Optional
+import requests
+
+
+class SocrataApiError(Exception):
+    """Custom exception for Socrata API errors."""
+
+    def __init__(self, message, url, status_code=None, response=None):
+        super().__init__(message)
+        self.message = message
+        self.url = url
+        self.status_code = status_code
+        self.response = response
+
+    def __str__(self):
+        base_message = f"SocrataApiError: {self.message}"
+        if self.status_code is not None:
+            base_message += f" (Status Code: {self.status_code})"
+        if self.response is not None:
+            base_message += f" (Response: {self.response})"
+        return base_message
+
+
+KNOWN_SERVERS = {
+    "data.calgary.ca": {
+        "publisher": ["City of Calgary"],
+        "spatial_coverage": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"]
+    },
+    "data.cityofchicago.org	": {
+        "publisher": ["City of Chicago"],
+        "spatial_coverage": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
+    },
+    "data.cityofnewyork.us	": {
+        "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
+        "spatial_coverage": ["New York City, New York, USA", "http://sws.geonames.org/5128581"]
+    },
+    "data.edmonton.ca": {
+        "publisher": ["City of Edmonton"],
+        "spatial_coverage": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"]
+    },
+    "data.ny.org": {
+        "publisher": ["New York State"],
+        "spatial_coverage": ["New York, USA", "http://sws.geonames.org/5128638"]
+    },
+    "data.sfgov.org": {
+        "publisher": ["City of San Francisco"],
+        "spatial_coverage": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
+    },
+    "opendata.utah.gov": {
+        "publisher": ["State of Utah"],
+        "spatial_coverage": ["Utah, USA", "http://sws.geonames.org/5549030"]
+    }
+}
+
+@dataclass
+class SocrataServer:
+    host: str
+    disk_cache_root: Optional[str] = field(default=None)
+    in_memory_cache: dict = field(default_factory=dict, init=False, repr=False)
+    
+    # attributes not available in Dataset metadata
+    publisher: Optional[list[str]] = field(default_factory=list)
+    spatial_coverage: Optional[list[str]] = field(default_factory=list)
+
+    def __post_init__(self):
+        self.memory_cache = {}
+        # set metadata for know servers
+        if self.host in KNOWN_SERVERS:
+            self.publisher = KNOWN_SERVERS[self.host].get("publisher",[])
+            self.spatial_coverage = KNOWN_SERVERS[self.host].get("spatial_coverage",[])
+
+    @property
+    def disk_cache_dir(self):
+        if self.disk_cache_root:
+            if os.path.isdir(self.disk_cache_root):
+                if self.disk_cache_root:
+                    path = os.path.join(self.disk_cache_root, self.host)
+                    os.makedirs(path, exist_ok=True)
+                    return path
+            else:
+                raise ValueError(f"Cache root directory does not exist: {self.disk_cache_root}")
+
+    def get_dataset_info(self, dataset_id, refresh=False):
+        # check if in memory cache
+        if dataset_id in self.memory_cache and not refresh:
+            return self.memory_cache[dataset_id]
+        # init local file if cache is enabled
+        file_name = f"{dataset_id}.json"
+        if self.disk_cache_dir:
+            file_path = os.path.join(self.disk_cache_dir, file_name)
+        if self.disk_cache_dir and os.path.isfile(file_path) and not refresh:
+            # load from disk cache
+            logging.debug(f"Loading from disk cache {file_path}")
+            with open(file_path) as f:
+                data = json.load(f)
+                self.memory_cache[dataset_id] = data
+                return data
+        else:
+            # retrieve from server
+            url = f"https://{self.host}/api/views/{file_name}"
+            logging.debug(f"GET {url}")
+            r = requests.get(url)
+            if r.status_code == 200:
+                data = r.json()
+                # save to disk cache if enabled
+                if self.disk_cache_dir: # save to local cache if enabled
+                    with open(file_path, 'w') as f:
+                        json.dump(data, f, indent=4)
+                # save to in memory cache
+                self.memory_cache[dataset_id] = data
+                return data
+            else:
+                raise SocrataApiError("Error getting dataset info", url, r.status_code, r.text)
+        return
+    
+    def get_urn(self, prefix="urn:socrata") -> str:
+        """
+        Generates a URN for this server.
+        """
+        return f"{prefix}:{self.host}"
+    
+
+@dataclass
+class SocrataDataset:
+    server: SocrataServer
+    id: str
+    _data: dict = field(init=False, repr=False)
+    _variables: list["SocrataVariable"] = field(init=False, repr=False, default_factory=list)
+
+    def __post_init__(self):
+        self._data = self.server.get_dataset_info(self.id)
+        if self.asset_type != 'dataset':
+            raise ValueError(f"Unexpected asset type: {self.asset_type}. Must be 'dataset'.")
+
+    @property
+    def api_foundry_url(self):
+        return f"https://dev.socrata.com/foundry/{self.server.host}/{self.id}"
+
+    @property
+    def api_endpoint_url(self):
+        return f"https://{self.server.host}/resource/{self.id}.json"
+
+
+    @property   
+    def csv_download_url(self):
+        return f"https://{self.server.host}/resource/{self.id}.csv"
+
+    @property   
+    def data(self):
+        return self._data
+
+    @property
+    def asset_type(self):
+        return self._data.get("assetType")
+
+    @property
+    def description(self):
+        return self._data.get("description")
+
+    @property
+    def landing_page(self):
+        category = self._data.get("category").replace(" ", "-")
+        name = self._data.get("name").replace(" ", "-")
+        return f"https://{self.server.host}/app/{category}/{name}/{self.id}"
+
+    @property
+    def license_id(self):
+        if self._data.get("licenseId"):
+            return self._data.get("licenseId")
+        
+    @property
+    def license_name(self):
+        if self._data.get("license"):
+            return self._data["license"].get("name")
+        
+    @property
+    def license_link(self):
+        if self._data.get("license"):
+            return self._data["license"].get("termsLink")
+
+    @property
+    def name(self):
+        return self._data.get("name")
+
+    @property
+    def rows_updated_at(self) -> datetime:
+        if self._data.get("rowsUpdatedAt"):
+            return datetime.fromtimestamp(self._data["rowsUpdatedAt"])
+
+    @property
+    def tags(self):
+        return self._data.get("tags")
+    
+    @property
+    def variables(self) -> list["SocrataVariable"]:
+        if not self._variables:
+            self._variables = []
+            for index, column in enumerate(self._data["columns"]):
+                self._variables.append(SocrataVariable(self, index))
+        return self._variables
+
+    @property
+    def view_last_modified(self) -> datetime:
+        if self._data.get("viewLastModified"):
+            return datetime.fromtimestamp(self._data["viewLastModified"])
+
+    def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.6") -> str:
+        """Generate DDI-Codebook XML for this dataset.
+
+        Returns:
+            str: XML codebook
+        """
+        uid = f"socrata-{self.server.host}-{self.id}"
+        urn = f"urn:socrata:{self.server.host}:{self.id}"
+        xml = f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" xmlns="ddi:codebook:{codebook_version}">'
+        # docDscr
+        xml += '<docDscr>'
+        xml += '<citation>'
+        xml += '<prodStmt>'
+        xml += f'<prodDate date="">{datetime.now().isoformat()}</prodDate>'
+        xml += '<software version="0.1.0">Data Artifex - Socrata API</software>'
+        xml += '</prodStmt>'
+        xml += '</citation>'
+        xml += '</docDscr>'
+        # stdyDscr
+        xml += '<stdyDscr>'
+        xml += '<citation>'
+        xml += '<titlStmt>'
+        xml += f'<titl>{self.name}</titl>'
+        xml += f'<IDNo agency="socrata.com">{self.server.host}-{self.id}</IDNo>'
+        xml += '</titlStmt>'
+        xml += '<prodStmt>'
+        xml += '<software>Socrata</software>'
+        xml += '</prodStmt>'
+        xml += '</citation>'
+        xml += '<stdyInfo>'
+        xml += f'<abstract><![CDATA[{self.description}]]></abstract>'
+        xml += '</stdyInfo>'
+        xml += '</stdyDscr>'
+        # fileDscr
+        xml += '<fileDscr ID="F1">'
+        xml += '<fileTxt>'
+        xml += '<fileName>38320-0001-Data.sav</fileName>'
+        xml += '<dimensns>'
+        xml += f'<caseQnty>{self.get_record_count()}</caseQnty>'
+        xml += f'<varQnty>{self.get_variable_count()}</varQnty>'
+        xml += '</dimensns>'
+        xml += '<fileType>socrata</fileType>'
+        xml += '</fileTxt>'
+        xml += '</fileDscr>'
+        # dataDscr
+        xml += '<dataDscr>'
+        for var in self.variables:
+            if var.is_hidden:
+                continue
+            xml += f'<var ID="V{var.id}" name="{var.name}" files="F1">'
+            xml += f'<labl>{var.label}</labl>'
+            if var.socrata_data_type == 'number':
+                type = 'number'
+            else:
+                type = 'character'
+            xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
+            if var.cached_content:
+                # summary statistics
+                cardinality = int(var.cached_content.get('cardinality'))
+                xml += f'<sumStat type="count">{var.cached_content.get("count")}</sumStat>'
+                xml += f'<sumStat type="min">{var.cached_content.get("smallest")}</sumStat>'
+                xml += f'<sumStat type="max">{var.cached_content.get("largest")}</sumStat>'
+                xml += f'<sumStat type="other" otherType="cardinality">{var.cached_content.get("cardinality")}</sumStat>'
+                xml += f'<sumStat type="vald">{var.cached_content.get("non_null")}</sumStat>'
+                xml += f'<sumStat type="invd">{var.cached_content.get("null")}</sumStat>'
+                top = var.cached_content.get('top')
+                if top and cardinality <=  category_count_threshold:
+                    for item in top:
+                        xml += '<catgry>'
+                        xml += f'<catValu>{item["item"]}</catValu>'
+                        xml += f'<labl>{item["item"]}</labl>' # Socrata does not provide category labels. Use code value.
+                        xml += f'<catStat type="count">{item["count"]}</catStat>'
+                        xml += '</catgry>'                    
+                    xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry set may therefore be incomplete.</notes>'                
+            xml += '</var>'
+        xml += '</dataDscr>'
+        xml += '</codeBook>'
+        return xml
+
+    def get_variable_count(self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True) -> int:
+        count = 0
+        for variable in self.variables:
+            if variable.is_hidden and exclude_hidden:
+                continue
+            else:
+                if variable.is_deleted and exclude_deleted:
+                    continue
+                if variable.is_computed and exclude_computed:
+                    continue
+            count += 1
+        return count
+    
+    def get_record_count(self):
+        count = self.data["columns"][0]["cachedContents"]["count"]
+        return count
+
+    def get_urn(self, prefix="urn:socrata") -> str:
+        """
+        Generates a URN for this server.
+        """
+        return f"{self.server.get_urn(prefix=prefix)}:{self.id}"
+
+@dataclass
+class SocrataVariable:
+    """Helper class to process/use Socarata dataset variables (columns).
+
+    This uses a standard terminology and hides Socrata properietary attribute names.
+
+    """
+    dataset: SocrataDataset
+    index: int
+
+    def __post_init__(self):
+        pass
+
+    @property
+    def cached_content(self):
+        return self.data.get('cachedContents')
+
+    @property
+    def data(self):
+        return self.dataset._data["columns"][self.index]
+
+    @property
+    def id(self):
+        """The variable is which is always a number"""
+        return self.data["id"]
+
+    @property
+    def is_computed(self):
+        """The name, which is the 'filedname' property, starts with ':@computed'"""
+        return self.name.startswith(":@computed")
+
+    @property
+    def is_deleted(self):
+        """The label, which is the 'name' property, starts with 'DELETE -'"""
+        return self.label.startswith("DELETE -")
+
+    @property
+    def is_hidden(self):
+        """Is either computed or deleted"""
+        return self.is_computed or self.is_deleted
+
+    @property
+    def is_visible(self):
+        """Not hdden"""
+        return not self.is_hidden
+
+    @property
+    def label(self):
+        # Note that the 'name' property is actually the variable label
+        # Be aware that variables marked for deletion, that are hidden from users, have a 'name' that starts with 'DELETE -'
+        return self.data["name"]
+
+    @property
+    def name(self):
+        # Note that the 'filedName' property is actually the variable name
+        # Be aware that compute variables, that are hidden from users, start with :@computed
+        return self.data["fieldName"]
+
+    @property
+    def position(self):
+        return self.data["position"]
+
+    @property
+    def socrata_data_type(self):
+        return self.data["dataTypeName"]
+
+    @property
+    def generic_data_type(self):
+        #TODO: implement
+        return None
+        
+    @property
+    def socrata_render_type(self):
+        return self.data["renderTypeName"]
