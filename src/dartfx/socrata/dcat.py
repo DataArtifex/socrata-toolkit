@@ -116,6 +116,8 @@ class DcatGenerator:
             dcat_api.add_conforms_to(socrata_ds.api_foundry_url)
             dcat_api.add_endpoint_url(socrata_ds.api_endpoint_url)
             dcat_api.add_type("http://rdf.highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")
+            # add service to catalog
+            dcat_catalog.add_service(dcat_api)
             
             # add dataset resources to graph
             dcat_ds.add_to_rdf_graph(g)
