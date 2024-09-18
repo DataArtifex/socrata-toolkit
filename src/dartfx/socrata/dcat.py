@@ -12,10 +12,11 @@ class DcatGenerator:
     datasets: list[SocrataDataset]
     uri_generator: utils.UriGenerator
     
-    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset|str] = [], uri_generator: utils.UriGenerator   = utils.UuidUrnGenerator()):
+    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset|str] = None, uri_generator: utils.UriGenerator   = utils.UuidUrnGenerator()):
         self.server = server
-        self.datasets = datasets
-        if datasets:
+        if not datasets:
+            self.datasets = []
+        else:
             self.add_datasets(datasets)
 
     def get_prefixes_ttl(self, dataset: SocrataDataset) -> str:
