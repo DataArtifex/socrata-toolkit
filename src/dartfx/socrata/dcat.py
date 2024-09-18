@@ -67,7 +67,10 @@ class DcatGenerator:
             dcat_ds = dcat.Dataset()
             dcat_ds.set_uri(socrata_ds.get_urn())
             dcat_ds.add_title(socrata_ds.name)
-            
+
+            if socrata_ds.description:
+                dcat_ds.add_description(socrata_ds.description)
+
             for keyword in socrata_ds.tags:
                 dcat_ds.add_keyword(keyword)
                 

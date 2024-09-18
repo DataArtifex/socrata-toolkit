@@ -66,6 +66,12 @@ KNOWN_SERVERS = {
         "name": "Washington State Open Data Portal",
         "publisher": ["Washington state government"],
         "spatial_coverage": ["Washington, USA", "http://sws.geonames.org/5815135"]
+    },
+    "datos.gov.co": {
+        "name": "Datos abierrtos de Columbia",
+        "publisher": ["Ministerio de Tecnologías de la Información y las Comunicaciones"],
+        "spatial_coverage": ["Washington, USA", "http://sws.geonames.org/3686110"],
+        "languages": ["es"]
     }
 }
 
