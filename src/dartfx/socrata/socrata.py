@@ -30,47 +30,47 @@ KNOWN_SERVERS = {
     "data.calgary.ca": {
         "name": "Calgary Open Data",
         "publisher": ["City of Calgary"],
-        "spatial_coverage": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"]
+        "spatial": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"]
     },
     "data.cityofchicago.org": {
         "name": "Chicago Data Portal",
         "publisher": ["City of Chicago"],
-        "spatial_coverage": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
+        "spatial": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
     },
     "data.cityofnewyork.us": {
         "name": "NYC Open Data",
         "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
-        "spatial_coverage": ["New York City, New York, USA", "http://sws.geonames.org/5128581"]
+        "spatial": ["New York City, New York, USA", "http://sws.geonames.org/5128581"]
     },
     "data.edmonton.ca": {
         "name": "City of Edmonton's Open Data Portal",
         "publisher": ["City of Edmonton"],
-        "spatial_coverage": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"]
+        "spatial": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"]
     },
     "data.ny.gov": {
         "name": "New York State Open Data",
         "publisher": ["New York State"],
-        "spatial_coverage": ["New York, USA", "http://sws.geonames.org/5128638"]
+        "spatial": ["New York, USA", "http://sws.geonames.org/5128638"]
     },
     "data.sfgov.org": {
         "name": "DataSF",
         "publisher": ["City of San Francisco"],
-        "spatial_coverage": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
+        "spatial": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
     },
     "opendata.utah.gov": {
         "name": "State of Utah Open Data Catalog",
         "publisher": ["State of Utah"],
-        "spatial_coverage": ["Utah, USA", "http://sws.geonames.org/5549030"]
+        "spatial": ["Utah, USA", "http://sws.geonames.org/5549030"]
     },
     "data.wa.gov": {
         "name": "Washington State Open Data Portal",
         "publisher": ["Washington state government"],
-        "spatial_coverage": ["Washington, USA", "http://sws.geonames.org/5815135"]
+        "spatial": ["Washington, USA", "http://sws.geonames.org/5815135"]
     },
     "datos.gov.co": {
         "name": "Datos abierrtos de Columbia",
         "publisher": ["Ministerio de Tecnologías de la Información y las Comunicaciones"],
-        "spatial_coverage": ["Washington, USA", "http://sws.geonames.org/3686110"],
+        "spatial": ["Washington, USA", "http://sws.geonames.org/3686110"],
         "languages": ["es"]
     }
 }
@@ -84,7 +84,7 @@ class SocrataServer:
     
     # attributes not available in Dataset metadata
     publisher: Optional[list[str]] = field(default_factory=list)
-    spatial_coverage: Optional[list[str]] = field(default_factory=list)
+    spatial: Optional[list[str]] = field(default_factory=list)
 
     def __post_init__(self):
         self.memory_cache = {}
@@ -92,7 +92,7 @@ class SocrataServer:
         if self.host in KNOWN_SERVERS:
             self.name = KNOWN_SERVERS[self.host].get("name",self.host)
             self.publisher = KNOWN_SERVERS[self.host].get("publisher",[])
-            self.spatial_coverage = KNOWN_SERVERS[self.host].get("spatial_coverage",[])
+            self.spatial = KNOWN_SERVERS[self.host].get("spatial",[])
         else:
             self.name = self.host
             self.publisher = [self.host_url]
@@ -145,13 +145,6 @@ class SocrataServer:
                 raise SocrataApiError("Error getting dataset info", url, r.status_code, r.text)
         return
     
-    def get_urn(self, prefix="urn:socrata") -> str:
-        """
-        Generates a URN for this server.
-        """
-        return f"{prefix}:{self.host}"
-    
-
 @dataclass
 class SocrataDataset:
     server: SocrataServer
@@ -331,12 +324,6 @@ class SocrataDataset:
     def get_record_count(self):
         count = self.data["columns"][0]["cachedContents"]["count"]
         return count
-
-    def get_urn(self, prefix="urn:socrata") -> str:
-        """
-        Generates a URN for this server.
-        """
-        return f"{self.server.get_urn(prefix=prefix)}:{self.id}"
 
 @dataclass
 class SocrataVariable:

@@ -51,12 +51,12 @@ class DcatGenerator:
         # Initialize Catalog
         #
         dcat_catalog = dcat.Catalog()
-        dcat_catalog.set_uri(self.server.get_urn())
+        dcat_catalog.set_uri(f"https://{self.server.host}")
         dcat_catalog.add_title(self.server.name)
         dcat_catalog.add_publisher(f"https://{self.server.host}")
         for value in self.server.publisher:
             dcat_catalog.add_publisher(value)
-        for value in self.server.spatial_coverage:
+        for value in self.server.spatial:
             dcat_catalog.add_spatial(value)
         
         # Loop over datasets
@@ -65,7 +65,7 @@ class DcatGenerator:
             # populate DCAT dataset
             #
             dcat_ds = dcat.Dataset()
-            dcat_ds.set_uri(socrata_ds.get_urn())
+            dcat_ds.set_uri(socrata_ds.landing_page)
             dcat_ds.add_title(socrata_ds.name)
 
             if socrata_ds.description:
@@ -91,7 +91,7 @@ class DcatGenerator:
             for value in socrata_ds.server.publisher:
                 dcat_ds.add_publisher(value)
 
-            for value in socrata_ds.server.spatial_coverage:
+            for value in socrata_ds.server.spatial:
                 dcat_ds.add_spatial(value)
 
             # add dataset to catalog
@@ -118,7 +118,7 @@ class DcatGenerator:
             dcat_api.add_served_dataset(dcat_ds)
             dcat_api.add_conforms_to(socrata_ds.api_foundry_url)
             dcat_api.add_endpoint_url(socrata_ds.api_endpoint_url)
-            dcat_api.add_type("http://rdf.highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")
+            dcat_api.add_type("https://highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")
             # add service to catalog
             dcat_catalog.add_service(dcat_api)
             
