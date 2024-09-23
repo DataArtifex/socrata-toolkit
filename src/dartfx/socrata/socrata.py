@@ -186,7 +186,7 @@ class SocrataDataset:
     def landing_page(self):
         category = self._data.get("category").replace(" ", "-")
         name = self._data.get("name").replace(" ", "-")
-        return f"https://{self.server.host}/app/{category}/{name}/{self.id}"
+        return f"https://{self.server.host}/{category}/{name}/{self.id}"
 
     @property
     def license_id(self):
