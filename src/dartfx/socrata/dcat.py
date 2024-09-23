@@ -101,7 +101,7 @@ class DcatGenerator:
             # populate DCAT CSV distribution
             #
             dcat_csv = dcat.Distribution()
-            dcat_csv.set_uri(dcat_ds.get_uri()+"_csv")
+            dcat_csv.set_uri(socrata_ds.csv_download_url)
             dcat_csv.add_download_url(socrata_ds.csv_download_url)
             dcat_csv.add_media_type("http://www.iana.org/assignments/media-types/text/csv")
 
@@ -114,7 +114,7 @@ class DcatGenerator:
             # populate DCAT API service
             #
             dcat_api = dcat.DataService()
-            dcat_api.set_uri(dcat_ds.get_uri()+"_api")
+            dcat_api.set_uri(socrata_ds.api_endpoint_url)
             dcat_api.add_served_dataset(dcat_ds)
             dcat_api.add_conforms_to(socrata_ds.api_foundry_url)
             dcat_api.add_endpoint_url(socrata_ds.api_endpoint_url)
