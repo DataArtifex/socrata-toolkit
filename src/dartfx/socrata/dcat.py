@@ -3,16 +3,16 @@ DCAT support for Socrata
 
 """
 from .socrata import SocrataServer, SocrataDataset
-from dartfx.rdf import utils
+from dartfx.rdf import utils as rdfutils
 from dartfx.dcat import dcat
 from rdflib import Graph
 
 class DcatGenerator:
     server: SocrataServer    
     datasets: list[SocrataDataset]
-    uri_generator: utils.UriGenerator
+    uri_generator: rdfutils.UriGenerator
     
-    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset|str] = None, uri_generator: utils.UriGenerator   = utils.UuidUrnGenerator()):
+    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset|str] = None, uri_generator: rdfutils.UriGenerator = rdfutils.UuidUrnGenerator()):
         self.server = server
         if not datasets:
             self.datasets = []

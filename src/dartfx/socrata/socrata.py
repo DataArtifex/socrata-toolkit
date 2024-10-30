@@ -130,10 +130,9 @@ class SocrataServer:
         else:
             # retrieve from server
             url = f"https://{self.host}/api/views/{file_name}"
-            logging.debug(f"GET {url}")
-            r = requests.get(url)
-            if r.status_code == 200:
-                data = r.json()
+            results = requests.get(url)
+            if results.status_code == 200:
+                data = results.json()
                 # save to disk cache if enabled
                 if self.disk_cache_dir: # save to local cache if enabled
                     with open(file_path, 'w') as f:
@@ -142,8 +141,25 @@ class SocrataServer:
                 self.memory_cache[dataset_id] = data
                 return data
             else:
-                raise SocrataApiError("Error getting dataset info", url, r.status_code, r.text)
+                raise SocrataApiError("Error getting dataset info", url, results.status_code, results.text)
         return
+    
+    def search_datasets(self):
+        """Calls the Socrata Discovery API
+
+        See https://dev.socrata.com/docs/other/discovery
+
+        Raises:
+            SocrataApiError: Error when calling the API
+        """
+        url = f"https://{self.host}/api/catalog/v1?domains={self.host}&only=datasets"
+        results = requests.get(url)
+        if results.status_code == 200:
+            data = results.json()
+            return(data)
+        else:
+            raise SocrataApiError("Search error", url, results.status_code, results.text)
+        
     
 @dataclass
 class SocrataDataset:
