@@ -26,7 +26,7 @@ class SocrataApiError(Exception):
         return base_message
 
 
-KNOWN_SERVERS = {
+SERVERS = {
     "data.calgary.ca": {
         "name": "Calgary Open Data",
         "publisher": ["City of Calgary"],
@@ -89,10 +89,10 @@ class SocrataServer:
     def __post_init__(self):
         self.memory_cache = {}
         # set metadata for know servers
-        if self.host in KNOWN_SERVERS:
-            self.name = KNOWN_SERVERS[self.host].get("name",self.host)
-            self.publisher = KNOWN_SERVERS[self.host].get("publisher",[])
-            self.spatial = KNOWN_SERVERS[self.host].get("spatial",[])
+        if self.host in SERVERS:
+            self.name = SERVERS[self.host].get("name",self.host)
+            self.publisher = SERVERS[self.host].get("publisher",[])
+            self.spatial = SERVERS[self.host].get("spatial",[])
         else:
             self.name = self.host
             self.publisher = [self.host_url]
@@ -250,17 +250,17 @@ class SocrataDataset:
 
         if environment == "jquery":
             code = """
-$.ajax({
+$.ajax({{
     url: "https://{host}/resource/{dataset_id}.json",
     type: "GET",
-    data: {
+    data: {{
       "$limit" : 5000,
       "$$app_token" : "YOURAPPTOKENHERE"
-    }
-}).done(function(data) {
+    }}
+}}).done(function(data) {{
   alert("Retrieved " + data.length + " records from the dataset!");
   console.log(data);
-});
+}});
 """
         elif environment == "powershell":
             code = """
