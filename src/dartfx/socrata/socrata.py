@@ -2,10 +2,11 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import json
 import logging
+import mlcroissant as mlc
 import os
 from typing import Optional
 import requests
-
+from xml.sax.saxutils import escape
 
 class SocrataApiError(Exception):
     """Custom exception for Socrata API errors."""
@@ -376,7 +377,19 @@ clear
         if code:
             code = code.format(host=self.server.host, dataset_id=self.id)
         return code
-        
+
+    def get_croissant(self) -> str:
+        # distribution
+        distribution = []
+        # fields and record set
+        fields = []
+        record_set = mlc.RecordSet(fields=fields) 
+        record_sets = [record_set]
+        # metadata
+        metadata = mlc.Metadata(distribution=distribution, record_sets=record_sets)
+        metadata.name = self.name
+        metadata.description = self.description
+        return metadata
 
     def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.6") -> str:
         """Generate DDI-Codebook XML for this dataset.
@@ -400,7 +413,7 @@ clear
         xml += '<stdyDscr>'
         xml += '<citation>'
         xml += '<titlStmt>'
-        xml += f'<titl>{self.name}</titl>'
+        xml += f'<titl>{escape(self.name)}</titl>'
         xml += f'<IDNo agency="socrata.com">{self.server.host}-{self.id}</IDNo>'
         xml += '</titlStmt>'
         xml += '<prodStmt>'
@@ -408,7 +421,7 @@ clear
         xml += '</prodStmt>'
         xml += '</citation>'
         xml += '<stdyInfo>'
-        xml += f'<abstract><![CDATA[{self.description}]]></abstract>'
+        xml += f'<abstract><![CDATA[{escape(self.description)}]]></abstract>'
         xml += '</stdyInfo>'
         xml += '</stdyDscr>'
         # fileDscr
@@ -428,7 +441,7 @@ clear
             if var.is_hidden:
                 continue
             xml += f'<var ID="V{var.id}" name="{var.name}" files="F1">'
-            xml += f'<labl>{var.label}</labl>'
+            xml += f'<labl>{escape(var.label)}</labl>'
             if var.socrata_data_type == 'number':
                 type = 'number'
             else:
@@ -447,8 +460,8 @@ clear
                 if top and cardinality <=  category_count_threshold:
                     for item in top:
                         xml += '<catgry>'
-                        xml += f'<catValu>{item["item"]}</catValu>'
-                        xml += f'<labl>{item["item"]}</labl>' # Socrata does not provide category labels. Use code value.
+                        xml += f'<catValu>{escape(str(item["item"]))}</catValu>'
+                        xml += f'<labl>{escape(str(item["item"]))}</labl>' # Socrata does not provide category labels. Use code value.
                         xml += f'<catStat type="count">{item["count"]}</catStat>'
                         xml += '</catgry>'                    
                     xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry set may therefore be incomplete.</notes>'                
