@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import json
 import logging
+from markdownify import markdownify as md
 import mlcroissant as mlc
 import os
 from typing import Optional
@@ -54,7 +55,7 @@ SERVERS = {
         "spatial": ["New York, USA", "http://sws.geonames.org/5128638"]
     },
     "data.sfgov.org": {
-        "name": "DataSF",
+        "name": "San Francisco Open Data Portal",
         "publisher": ["City of San Francisco"],
         "spatial": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
     },
@@ -201,9 +202,10 @@ class SocrataDataset:
 
     @property
     def landing_page(self):
-        category = self._data.get("category").replace(" ", "-")
-        name = self._data.get("name").replace(" ", "-")
-        return f"https://{self.server.host}/{category}/{name}/{self.id}"
+        #category = self._data.get("category").replace(" ", "-")
+        #name = self._data.get("name").replace(" ", "-")
+        #return f"https://{self.server.host}/{category}/{name}/{self.id}"
+        return f"https://{self.server.host}/d/{self.id}"
 
     @property
     def license_id(self):
@@ -223,6 +225,11 @@ class SocrataDataset:
     @property
     def name(self):
         return self._data.get("name")
+
+    @property
+    def publication_date(self) -> datetime:
+        if self._data.get("rowsUpdatedAt"):
+            return datetime.fromtimestamp(self._data["publicationDate"])
 
     @property
     def rows_updated_at(self) -> datetime:
@@ -378,17 +385,52 @@ clear
             code = code.format(host=self.server.host, dataset_id=self.id)
         return code
 
-    def get_croissant(self) -> str:
+    def get_croissant(self, include_computed=False) -> mlc.Metadata:
+        context = mlc.Context()
+        context.is_live_dataset = True
+        # metadata
+        publishers = []
+        for publisher in self.server.publisher:
+            publishers.append(mlc.Organization(name=publisher, url=self.server.host))
+        metadata = mlc.Metadata(ctx=context, 
+            id=self.id,
+            name=self.name,
+            description=md(self.description),
+            cite_as = f'{self.name}, {self.server.name}, {self.landing_page}',
+            date_modified = self.rows_updated_at,
+            date_published = self.publication_date,
+            license = ', '.join([self.license_name, self.license_id, self.license_link]),
+            publisher=publishers,
+            version = int(self.rows_updated_at.timestamp())
+        )
         # distribution
         distribution = []
+        csv_file = mlc.FileObject(ctx=context, 
+            id=self.id+'.csv',
+            name=self.name+'.csv',
+            content_url=self.csv_download_url,
+            encoding_format=mlc.EncodingFormat.CSV
+        )
+        distribution.append(csv_file)
+        metadata.distribution = distribution
         # fields and record set
         fields = []
+        for variable in self.variables:
+            if variable.is_deleted:
+                continue
+            if variable.is_computed and not include_computed:
+                continue
+            field = mlc.Field(ctx=context,
+                id=variable.name,
+                name=variable.name,
+                description=variable.label,
+                source=mlc.Source(file_object=csv_file.id, extract=mlc.Extract(ctx=context, column=variable.name))
+            )
+            field.data_types.append(variable.croissant_data_type)
+            fields.append(field)
         record_set = mlc.RecordSet(fields=fields) 
         record_sets = [record_set]
-        # metadata
-        metadata = mlc.Metadata(distribution=distribution, record_sets=record_sets)
-        metadata.name = self.name
-        metadata.description = self.description
+        metadata.record_sets = record_sets
         return metadata
 
     def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.6") -> str:
@@ -504,6 +546,20 @@ class SocrataVariable:
     def cached_content(self):
         return self.data.get('cachedContents')
 
+
+    @property
+    def croissant_data_type(self):
+        # https://dev.socrata.com/docs/datatypes
+        if self.socrata_data_type == 'number':
+            return mlc.DataType.FLOAT
+        elif self.socrata_data_type == 'calendar_date':
+            return mlc.DataType.DATE
+        elif self.socrata_data_type =='point':
+            return mlc.DataType.TEXT
+        elif self.socrata_data_type =='url':
+            return mlc.DataType.URL
+        return mlc.DataType.TEXT
+        
     @property
     def data(self):
         return self.dataset._data["columns"][self.index]

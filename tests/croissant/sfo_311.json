@@ -1,0 +1,453 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "examples": {
+            "@id": "cr:examples",
+            "@type": "@json"
+        },
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "@type": "sc:Dataset",
+    "name": "311 Cases",
+    "description": "**SUMMARY**\nDataset contains SF311 cases created since 7/1/2008 with location information. \n\n**UPDATE PROCESS**\nThis dataset updates daily.\n\n**HOW TO USE THIS DATASET**\nDownload data using 'export' button to the right. For more information on this dataset, visit the [FAQ page](https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases).\n\n**Want to map the data in your neighborhood?** \nCheck out https://sf.connect.socrata.com/\n\nFor more information about Open311, see http://www.open311\\.org/.",
+    "conformsTo": "http://mlcommons.org/croissant/1.0",
+    "citeAs": "311 Cases, San Francisco Open Data Portal, https://data.sfgov.org/d/vw6y-z8j6",
+    "dateModified": "2024-11-11 09:59:33",
+    "datePublished": "2024-09-11 23:30:53",
+    "isLiveDataset": true,
+    "license": "Open Data Commons Public Domain Dedication and License, PDDL, http://opendatacommons.org/licenses/pddl/1.0/",
+    "publisher": {
+        "@type": "sc:Organization",
+        "name": "City of San Francisco",
+        "url": "data.sfgov.org"
+    },
+    "version": "1731344373.0.0",
+    "distribution": [
+        {
+            "@type": "cr:FileObject",
+            "@id": "vw6y-z8j6.csv",
+            "name": "311 Cases.csv",
+            "contentUrl": "https://data.sfgov.org/resource/vw6y-z8j6.csv",
+            "encodingFormat": "text/csv"
+        }
+    ],
+    "recordSet": [
+        {
+            "@type": "cr:RecordSet",
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "@id": "service_request_id",
+                    "name": "service_request_id",
+                    "description": "CaseID",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "service_request_id"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "requested_datetime",
+                    "name": "requested_datetime",
+                    "description": "Opened",
+                    "dataType": "sc:Date",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "requested_datetime"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "closed_date",
+                    "name": "closed_date",
+                    "description": "Closed",
+                    "dataType": "sc:Date",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "closed_date"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "updated_datetime",
+                    "name": "updated_datetime",
+                    "description": "Updated",
+                    "dataType": "sc:Date",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "updated_datetime"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "status_description",
+                    "name": "status_description",
+                    "description": "Status",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "status_description"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "status_notes",
+                    "name": "status_notes",
+                    "description": "Status Notes",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "status_notes"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "agency_responsible",
+                    "name": "agency_responsible",
+                    "description": "Responsible Agency",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "agency_responsible"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "service_name",
+                    "name": "service_name",
+                    "description": "Category",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "service_name"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "service_subtype",
+                    "name": "service_subtype",
+                    "description": "Request Type",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "service_subtype"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "service_details",
+                    "name": "service_details",
+                    "description": "Request Details",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "service_details"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "address",
+                    "name": "address",
+                    "description": "Address",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "address"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "street",
+                    "name": "street",
+                    "description": "Street",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "street"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "supervisor_district",
+                    "name": "supervisor_district",
+                    "description": "Supervisor District",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "supervisor_district"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "neighborhoods_sffind_boundaries",
+                    "name": "neighborhoods_sffind_boundaries",
+                    "description": "Neighborhood",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "neighborhoods_sffind_boundaries"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "analysis_neighborhood",
+                    "name": "analysis_neighborhood",
+                    "description": "Analysis Neighborhood",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "analysis_neighborhood"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "police_district",
+                    "name": "police_district",
+                    "description": "Police District",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "police_district"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "lat",
+                    "name": "lat",
+                    "description": "Latitude",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "lat"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "long",
+                    "name": "long",
+                    "description": "Longitude",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "long"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "point",
+                    "name": "point",
+                    "description": "Point",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "point"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "point_geom",
+                    "name": "point_geom",
+                    "description": "point_geom",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "point_geom"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "source",
+                    "name": "source",
+                    "description": "Source",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "source"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "media_url",
+                    "name": "media_url",
+                    "description": "Media URL",
+                    "dataType": "sc:URL",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "media_url"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "bos_2012",
+                    "name": "bos_2012",
+                    "description": "BOS_2012",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "bos_2012"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "data_as_of",
+                    "name": "data_as_of",
+                    "description": "data_as_of",
+                    "dataType": "sc:Date",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "data_as_of"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "data_loaded_at",
+                    "name": "data_loaded_at",
+                    "description": "data_loaded_at",
+                    "dataType": "sc:Date",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vw6y-z8j6.csv"
+                        },
+                        "extract": {
+                            "column": "data_loaded_at"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
