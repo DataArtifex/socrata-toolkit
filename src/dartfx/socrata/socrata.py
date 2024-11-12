@@ -207,8 +207,6 @@ class SocrataDataset:
         #return f"https://{self.server.host}/{category}/{name}/{self.id}"
         return f"https://{self.server.host}/d/{self.id}"
 
-
-
     @property
     def license(self):
         """Combines available license properties or returns Unknown if not available"""
@@ -400,6 +398,16 @@ clear
     def get_croissant(self, include_computed=False) -> mlc.Metadata:
         context = mlc.Context()
         context.is_live_dataset = True
+        # selected variables
+        selected_variables = []
+        selected_variables_names = []
+        for variable in self.variables:
+            if variable.is_deleted:
+                continue
+            if variable.is_computed and not include_computed:
+                continue
+            selected_variables.append(variable)
+            selected_variables_names.append(variable.name)
         # metadata
         publishers = []
         for publisher in self.server.publisher:
@@ -420,18 +428,14 @@ clear
         csv_file = mlc.FileObject(ctx=context, 
             id=self.id+'.csv',
             name=self.name+'.csv',
-            content_url=self.csv_download_url,
+            content_url=f'{self.csv_download_url}?$select={",".join(selected_variables_names)}',
             encoding_format=mlc.EncodingFormat.CSV
         )
         distribution.append(csv_file)
         metadata.distribution = distribution
         # fields and record set
         fields = []
-        for variable in self.variables:
-            if variable.is_deleted:
-                continue
-            if variable.is_computed and not include_computed:
-                continue
+        for variable in selected_variables:
             field = mlc.Field(ctx=context,
                 id=variable.name,
                 name=variable.name,
@@ -451,7 +455,7 @@ clear
         Returns:
             str: XML codebook
         """
-        uid = f"socrata-{self.server.host}-{self.id}"
+        uid = f"socrata_{self.server.host}_{self.id}"
         urn = f"urn:socrata:{self.server.host}:{self.id}"
         xml = f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" xmlns="ddi:codebook:{codebook_version}">'
         # docDscr
@@ -481,7 +485,7 @@ clear
         # fileDscr
         xml += '<fileDscr ID="F1">'
         xml += '<fileTxt>'
-        xml += '<fileName>38320-0001-Data.sav</fileName>'
+        xml += f'<fileName>{self.name}</fileName>'
         xml += '<dimensns>'
         xml += f'<caseQnty>{self.get_record_count()}</caseQnty>'
         xml += f'<varQnty>{self.get_variable_count()}</varQnty>'
