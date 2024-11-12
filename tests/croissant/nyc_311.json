@@ -1,0 +1,550 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "examples": {
+            "@id": "cr:examples",
+            "@type": "@json"
+        },
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "@type": "sc:Dataset",
+    "name": "2018 Central Park Squirrel Census - Squirrel Data",
+    "description": "The Squirrel Census (https://www.thesquirrelcensus.com/) is a multimedia science, design, and storytelling project focusing on the Eastern gray (Sciurus carolinensis). They count squirrels and present their findings to the public. This table contains squirrel data for each of the 3,023 sightings, including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and with humans.",
+    "conformsTo": "http://mlcommons.org/croissant/1.0",
+    "citeAs": "2018 Central Park Squirrel Census - Squirrel Data, NYC Open Data, https://data.cityofnewyork.us/d/vfnx-vebw",
+    "dateModified": "2019-10-18 11:54:51",
+    "datePublished": "2019-10-13 15:47:29",
+    "isLiveDataset": true,
+    "license": "Unknown",
+    "publisher": [
+        {
+            "@type": "sc:Organization",
+            "name": "City of New York",
+            "url": "data.cityofnewyork.us"
+        },
+        {
+            "@type": "sc:Organization",
+            "name": "https://opendata.cityofnewyork.us/",
+            "url": "data.cityofnewyork.us"
+        }
+    ],
+    "version": "1571421291.0.0",
+    "distribution": [
+        {
+            "@type": "cr:FileObject",
+            "@id": "vfnx-vebw.csv",
+            "name": "2018 Central Park Squirrel Census - Squirrel Data.csv",
+            "contentUrl": "https://data.cityofnewyork.us/resource/vfnx-vebw.csv",
+            "encodingFormat": "text/csv"
+        }
+    ],
+    "recordSet": [
+        {
+            "@type": "cr:RecordSet",
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "@id": "x",
+                    "name": "x",
+                    "description": "X",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "x"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "y",
+                    "name": "y",
+                    "description": "Y",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "y"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "unique_squirrel_id",
+                    "name": "unique_squirrel_id",
+                    "description": "Unique Squirrel ID",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "unique_squirrel_id"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "hectare",
+                    "name": "hectare",
+                    "description": "Hectare",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "hectare"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "shift",
+                    "name": "shift",
+                    "description": "Shift",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "shift"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "date",
+                    "name": "date",
+                    "description": "Date",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "date"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "hectare_squirrel_number",
+                    "name": "hectare_squirrel_number",
+                    "description": "Hectare Squirrel Number",
+                    "dataType": "sc:Float",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "hectare_squirrel_number"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "age",
+                    "name": "age",
+                    "description": "Age",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "age"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "primary_fur_color",
+                    "name": "primary_fur_color",
+                    "description": "Primary Fur Color",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "primary_fur_color"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "highlight_fur_color",
+                    "name": "highlight_fur_color",
+                    "description": "Highlight Fur Color",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "highlight_fur_color"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "combination_of_primary_and",
+                    "name": "combination_of_primary_and",
+                    "description": "Combination of Primary and Highlight Color",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "combination_of_primary_and"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "color_notes",
+                    "name": "color_notes",
+                    "description": "Color notes",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "color_notes"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "location",
+                    "name": "location",
+                    "description": "Location",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "location"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "above_ground_sighter",
+                    "name": "above_ground_sighter",
+                    "description": "Above Ground Sighter Measurement",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "above_ground_sighter"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "specific_location",
+                    "name": "specific_location",
+                    "description": "Specific Location",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "specific_location"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "running",
+                    "name": "running",
+                    "description": "Running",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "running"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "chasing",
+                    "name": "chasing",
+                    "description": "Chasing",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "chasing"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "climbing",
+                    "name": "climbing",
+                    "description": "Climbing",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "climbing"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "eating",
+                    "name": "eating",
+                    "description": "Eating",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "eating"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "foraging",
+                    "name": "foraging",
+                    "description": "Foraging",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "foraging"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "other_activities",
+                    "name": "other_activities",
+                    "description": "Other Activities",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "other_activities"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "kuks",
+                    "name": "kuks",
+                    "description": "Kuks",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "kuks"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "quaas",
+                    "name": "quaas",
+                    "description": "Quaas",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "quaas"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "moans",
+                    "name": "moans",
+                    "description": "Moans",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "moans"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "tail_flags",
+                    "name": "tail_flags",
+                    "description": "Tail flags",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "tail_flags"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "tail_twitches",
+                    "name": "tail_twitches",
+                    "description": "Tail twitches",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "tail_twitches"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "approaches",
+                    "name": "approaches",
+                    "description": "Approaches",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "approaches"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "indifferent",
+                    "name": "indifferent",
+                    "description": "Indifferent",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "indifferent"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "runs_from",
+                    "name": "runs_from",
+                    "description": "Runs from",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "runs_from"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "other_interactions",
+                    "name": "other_interactions",
+                    "description": "Other Interactions",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "other_interactions"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "@id": "geocoded_column",
+                    "name": "geocoded_column",
+                    "description": "Lat/Long",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileObject": {
+                            "@id": "vfnx-vebw.csv"
+                        },
+                        "extract": {
+                            "column": "geocoded_column"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

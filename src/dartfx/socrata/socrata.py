@@ -392,6 +392,11 @@ clear
         publishers = []
         for publisher in self.server.publisher:
             publishers.append(mlc.Organization(name=publisher, url=self.server.host))
+        license_terms = [x for x in [self.license_name, self.license_id, self.license_link] if x is not None]
+        if license_terms:
+            license = ', '.join(license_terms)
+        else:
+            license = ['Unknown']
         metadata = mlc.Metadata(ctx=context, 
             id=self.id,
             name=self.name,
@@ -399,7 +404,7 @@ clear
             cite_as = f'{self.name}, {self.server.name}, {self.landing_page}',
             date_modified = self.rows_updated_at,
             date_published = self.publication_date,
-            license = ', '.join([self.license_name, self.license_id, self.license_link]),
+            license = license,
             publisher=publishers,
             version = int(self.rows_updated_at.timestamp())
         )
