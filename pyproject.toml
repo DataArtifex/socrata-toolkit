@@ -51,6 +51,7 @@ path = "src/dartfx/socrata/__about__.py"
 dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
+  "lxml>=5.0.0" # For XML schema validation
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
