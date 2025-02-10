@@ -49,7 +49,7 @@
     "description": "**SUMMARY**\nDataset contains SF311 cases created since 7/1/2008 with location information. \n\n**UPDATE PROCESS**\nThis dataset updates daily.\n\n**HOW TO USE THIS DATASET**\nDownload data using 'export' button to the right. For more information on this dataset, visit the [FAQ page](https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases).\n\n**Want to map the data in your neighborhood?** \nCheck out https://sf.connect.socrata.com/\n\nFor more information about Open311, see http://www.open311\\.org/.",
     "conformsTo": "http://mlcommons.org/croissant/1.0",
     "citeAs": "311 Cases, San Francisco Open Data Portal, https://data.sfgov.org/d/vw6y-z8j6",
-    "dateModified": "2024-11-11 09:59:33",
+    "dateModified": "2025-02-10 09:58:49",
     "datePublished": "2024-09-11 23:30:53",
     "isLiveDataset": true,
     "license": "Open Data Commons Public Domain Dedication and License, PDDL, http://opendatacommons.org/licenses/pddl/1.0/",
@@ -58,13 +58,13 @@
         "name": "City of San Francisco",
         "url": "data.sfgov.org"
     },
-    "version": "1731344373.0.0",
+    "version": "1739206729.0.0",
     "distribution": [
         {
             "@type": "cr:FileObject",
             "@id": "vw6y-z8j6.csv",
             "name": "311 Cases.csv",
-            "contentUrl": "https://data.sfgov.org/resource/vw6y-z8j6.csv",
+            "contentUrl": "https://data.sfgov.org/resource/vw6y-z8j6.csv?$select=service_request_id,requested_datetime,closed_date,updated_datetime,status_description,status_notes,agency_responsible,service_name,service_subtype,service_details,address,street,supervisor_district,neighborhoods_sffind_boundaries,analysis_neighborhood,police_district,lat,long,point,point_geom,source,media_url,bos_2012,data_as_of,data_loaded_at",
             "encodingFormat": "text/csv"
         }
     ],

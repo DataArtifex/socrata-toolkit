@@ -39,6 +39,11 @@ SERVERS = {
         "publisher": ["City of Chicago"],
         "spatial": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
     },
+    "data.cdc.gov": {
+        "name": "U.S. Centers for Disease Control and Prevention",
+        "publisher": ["U.S. Centers for Disease Control and Prevention"],
+        "spatial": ["United States", "http://sws.geonames.org/6252001"]
+    },
     "data.cityofnewyork.us": {
         "name": "NYC Open Data",
         "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
@@ -425,10 +430,13 @@ clear
         )
         # distribution
         distribution = []
+        content_url = self.csv_download_url
+        if not include_computed:
+            content_url += f'?$select={",".join(selected_variables_names)}'
         csv_file = mlc.FileObject(ctx=context, 
             id=self.id+'.csv',
             name=self.name+'.csv',
-            content_url=f'{self.csv_download_url}?$select={",".join(selected_variables_names)}',
+            content_url=content_url,
             encoding_format=mlc.EncodingFormat.CSV
         )
         distribution.append(csv_file)
@@ -449,7 +457,7 @@ clear
         metadata.record_sets = record_sets
         return metadata
 
-    def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.6") -> str:
+    def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.5") -> str:
         """Generate DDI-Codebook XML for this dataset.
 
         Returns:
@@ -457,13 +465,18 @@ clear
         """
         uid = f"socrata_{self.server.host}_{self.id}"
         urn = f"urn:socrata:{self.server.host}:{self.id}"
-        xml = f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" xmlns="ddi:codebook:{codebook_version}">'
+        xml = f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" xmlns="ddi:codebook:{codebook_version.replace(".", "_")}">'
         # docDscr
         xml += '<docDscr>'
         xml += '<citation>'
+        xml += '<titlStmt>'
+        xml += f'<titl>{escape(self.name)}</titl>'
+        xml += f'<IDNo agency="socrata.com">{self.server.host}-{self.id}</IDNo>'
+        xml += '</titlStmt>'
         xml += '<prodStmt>'
-        xml += f'<prodDate date="">{datetime.now().isoformat()}</prodDate>'
-        xml += '<software version="0.1.0">Data Artifex - Socrata API</software>'
+        prodDate = datetime.now().isoformat()[:-7]
+        xml += f'<prodDate date="{prodDate}">{prodDate}</prodDate>'
+        xml += '<software version="0.1.0">Data Artifex - Socrata (dartfx-socrata)</software>'
         xml += '</prodStmt>'
         xml += '</citation>'
         xml += '</docDscr>'
@@ -501,14 +514,13 @@ clear
             xml += f'<var ID="V{var.id}" name="{var.name}" files="F1">'
             xml += f'<labl>{escape(var.label)}</labl>'
             if var.socrata_data_type == 'number':
-                type = 'number'
+                type = 'numeric'
             else:
                 type = 'character'
-            xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
             if var.cached_content:
                 # summary statistics
                 cardinality = int(var.cached_content.get('cardinality'))
-                xml += f'<sumStat type="count">{var.cached_content.get("count")}</sumStat>'
+                xml += f'<sumStat type="other" otherType="count">{var.cached_content.get("count")}</sumStat>'
                 xml += f'<sumStat type="min">{var.cached_content.get("smallest")}</sumStat>'
                 xml += f'<sumStat type="max">{var.cached_content.get("largest")}</sumStat>'
                 xml += f'<sumStat type="other" otherType="cardinality">{var.cached_content.get("cardinality")}</sumStat>'
@@ -520,10 +532,11 @@ clear
                         xml += '<catgry>'
                         xml += f'<catValu>{escape(str(item["item"]))}</catValu>'
                         xml += f'<labl>{escape(str(item["item"]))}</labl>' # Socrata does not provide category labels. Use code value.
-                        xml += f'<catStat type="count">{item["count"]}</catStat>'
+                        xml += f'<catStat type="freq">{item["count"]}</catStat>'
                         xml += '</catgry>'                    
-                    xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry set may therefore be incomplete.</notes>'                
+            xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
             xml += '</var>'
+            xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
         xml += '</dataDscr>'
         xml += '</codeBook>'
         return xml
@@ -587,7 +600,7 @@ class SocrataVariable:
 
     @property
     def is_computed(self):
-        """The name, which is the 'filedname' property, starts with ':@computed'"""
+        """The name, which is the 'fieldname' property, starts with ':@computed'"""
         return self.name.startswith(":@computed")
 
     @property
