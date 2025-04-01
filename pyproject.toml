@@ -26,7 +26,8 @@ dependencies = [
   "dartfx-dcat>=0.0.1",
   "dartfx-rdf>=0.0.1",
   "mardownify>=0.13.0",
-  "mlcroissant>=1.0.0"
+  "mlcroissant>=1.0.0",
+  "pydantic>=2",
 ]
 
 [project.urls]

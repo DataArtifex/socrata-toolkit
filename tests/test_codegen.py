@@ -1,9 +1,9 @@
 from dartfx.socrata import SocrataServer, SocrataDataset
 
 
-sfo_server = SocrataServer("data.sfgov.org")
+sfo_server = SocrataServer(host="data.sfgov.org")
 
-sfo_dataset_311 = SocrataDataset(sfo_server, "vw6y-z8j6")
+sfo_dataset_311 = SocrataDataset(server=sfo_server, id="vw6y-z8j6")
 
 def test_jquery_sfo_311():
     code = sfo_dataset_311.get_code("jquery")
@@ -30,5 +30,5 @@ def test_soda_dotnet_sfo_311():
     assert code
 
 def test_soda_dotnet_stata_311():
-    code = sfo_dataset_311.get_code("soda-stata")
+    code = sfo_dataset_311.get_code("stata")
     assert code

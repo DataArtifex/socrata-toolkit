@@ -5,6 +5,7 @@ import logging
 from markdownify import markdownify as md
 import mlcroissant as mlc
 import os
+from pydantic import BaseModel, Field, PrivateAttr
 from typing import Optional
 import requests
 from xml.sax.saxutils import escape
@@ -82,19 +83,17 @@ SERVERS = {
     }
 }
 
-@dataclass
-class SocrataServer:
+class SocrataServer(BaseModel):
     host: str
-    name: Optional[str] = field(default=None)
-    disk_cache_root: Optional[str] = field(default=None)
-    in_memory_cache: dict = field(default_factory=dict, init=False, repr=False)
+    name: str | None = Field(default=None)
+    disk_cache_root: str | None = Field(default=None) # a directory will be created here for this server
+    _in_memory_cache: dict = PrivateAttr(default_factory=dict)
     
     # attributes not available in Dataset metadata
     publisher: Optional[list[str]] = field(default_factory=list)
     spatial: Optional[list[str]] = field(default_factory=list)
 
-    def __post_init__(self):
-        self.memory_cache = {}
+    def model_post_init(self, __context):
         # set metadata for know servers
         if self.host in SERVERS:
             self.name = SERVERS[self.host].get("name",self.host)
@@ -114,6 +113,10 @@ class SocrataServer:
                     return path
             else:
                 raise ValueError(f"Cache root directory does not exist: {self.disk_cache_root}")
+
+    @property
+    def memory_cache(self):
+        return self._in_memory_cache
 
     @property
     def host_url(self):
@@ -168,14 +171,13 @@ class SocrataServer:
             raise SocrataApiError("Search error", url, results.status_code, results.text)
         
     
-@dataclass
-class SocrataDataset:
+class SocrataDataset(BaseModel):
     server: SocrataServer
     id: str
-    _data: dict = field(init=False, repr=False)
-    _variables: list["SocrataVariable"] = field(init=False, repr=False, default_factory=list)
+    _data: dict 
+    _variables: list["SocrataVariable"] = PrivateAttr(default_factory=list)
 
-    def __post_init__(self):
+    def model_post_init(self, __context):
         self._data = self.server.get_dataset_info(self.id)
         if self.asset_type != 'dataset':
             raise ValueError(f"Unexpected asset type: {self.asset_type}. Must be 'dataset'.")
@@ -260,7 +262,7 @@ class SocrataDataset:
         if not self._variables:
             self._variables = []
             for index, column in enumerate(self._data["columns"]):
-                self._variables.append(SocrataVariable(self, index))
+                self._variables.append(SocrataVariable(dataset=self, index=index))
         return self._variables
 
     @property
@@ -520,12 +522,12 @@ clear
             if var.cached_content:
                 # summary statistics
                 cardinality = int(var.cached_content.get('cardinality'))
-                xml += f'<sumStat type="other" otherType="count">{var.cached_content.get("count")}</sumStat>'
-                xml += f'<sumStat type="min">{var.cached_content.get("smallest")}</sumStat>'
-                xml += f'<sumStat type="max">{var.cached_content.get("largest")}</sumStat>'
-                xml += f'<sumStat type="other" otherType="cardinality">{var.cached_content.get("cardinality")}</sumStat>'
-                xml += f'<sumStat type="vald">{var.cached_content.get("non_null")}</sumStat>'
-                xml += f'<sumStat type="invd">{var.cached_content.get("null")}</sumStat>'
+                xml += f'<sumStat type="other" otherType="count">{escape(var.cached_content.get("count"))}</sumStat>' if var.cached_content.get("count") else ''
+                xml += f'<sumStat type="min">{escape(var.cached_content.get("smallest"))}</sumStat>' if var.cached_content.get("smallest") else ''
+                xml += f'<sumStat type="max">{escape(var.cached_content.get("largest"))}</sumStat>' if var.cached_content.get("largest") else ''
+                xml += f'<sumStat type="other" otherType="cardinality">{escape(var.cached_content.get("cardinality"))}</sumStat>' if var.cached_content.get("cardinality") else ''
+                xml += f'<sumStat type="vald">{escape(var.cached_content.get("non_null"))}</sumStat>' if var.cached_content.get("non_null") else ''
+                xml += f'<sumStat type="invd">{escape(var.cached_content.get("null"))}</sumStat>' if var.cached_content.get("null") else ''
                 top = var.cached_content.get('top')
                 if top and cardinality <=  category_count_threshold:
                     for item in top:
@@ -536,7 +538,7 @@ clear
                         xml += '</catgry>'                    
             xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
             xml += '</var>'
-            xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
+        xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
         xml += '</dataDscr>'
         xml += '</codeBook>'
         return xml
@@ -558,18 +560,14 @@ clear
         count = self.data["columns"][0]["cachedContents"]["count"]
         return count
 
-@dataclass
-class SocrataVariable:
-    """Helper class to process/use Socarata dataset variables (columns).
+class SocrataVariable(BaseModel):
+    """Helper class to process/use Socrata dataset variables (columns).
 
-    This uses a standard terminology and hides Socrata properietary attribute names.
+    This uses a standard terminology and hides Socrata proprietary attribute names.
 
     """
     dataset: SocrataDataset
     index: int
-
-    def __post_init__(self):
-        pass
 
     @property
     def cached_content(self):

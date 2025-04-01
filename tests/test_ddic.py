@@ -4,8 +4,8 @@ import pytest
 import os
 from xml.dom import minidom
 
-sfo_server = SocrataServer("data.sfgov.org")
-sfo_dataset_311 = SocrataDataset(sfo_server, "vw6y-z8j6")
+sfo_server = SocrataServer(host="data.sfgov.org")
+sfo_dataset_311 = SocrataDataset(server=sfo_server, id="vw6y-z8j6")
 
 @pytest.fixture
 def ddi_schema(tests_dir):
@@ -17,7 +17,7 @@ def test_sfo_311_ddi_codebook(tests_dir, ddi_schema):
     xml_str = sfo_dataset_311.get_ddi_codebook()
     assert xml_str
     # save to file (pretty printed)
-    with open(os.path.join(tests_dir, 'vw6y-z8j6.ddic.xml'),'w') as f:
+    with open(os.path.join(tests_dir, 'sfo_311.ddic.xml'),'w') as f:
         dom = minidom.parseString(xml_str)
         f.write(dom.toprettyxml())
     # validate codebook
