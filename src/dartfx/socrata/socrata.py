@@ -556,6 +556,14 @@ clear
             count += 1
         return count
     
+
+    def get_markdown(self, include=[], exclude=[], top_level=1):
+        if (include and 'title' in include) or (exclude and 'title' not in exclude):
+            md = f"# {self.name}\n"
+        if (include and 'description' in include) or (exclude and 'description' not in exclude):
+            md += f"{self.description}\n"
+        return md
+
     def get_record_count(self):
         count = self.data["columns"][0]["cachedContents"]["count"]
         return count

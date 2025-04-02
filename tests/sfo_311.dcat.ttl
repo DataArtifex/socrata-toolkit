@@ -1,0 +1,54 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.sfgov.org> a dcat:Catalog ;
+    dcterms:publisher <https://data.sfgov.org>,
+        "City of San Francisco" ;
+    dcterms:spatial <http://sws.geonames.org/5391959>,
+        "San Francisco, California, USA" ;
+    dcterms:title "San Francisco Open Data Portal"^^xsd:string ;
+    dcat:dataset <https://data.sfgov.org/d/vw6y-z8j6> ;
+    dcat:service <https://data.sfgov.org/resource/vw6y-z8j6.json> .
+
+<https://data.sfgov.org/resource/vw6y-z8j6.csv> a dcat:Distribution ;
+    dcat:downloadURL <https://data.sfgov.org/resource/vw6y-z8j6.csv> ;
+    dcat:mediaType <http://www.iana.org/assignments/media-types/text/csv> .
+
+<https://data.sfgov.org/resource/vw6y-z8j6.json> a dcat:DataService ;
+    dcterms:conformsTo <https://dev.socrata.com/foundry/data.sfgov.org/vw6y-z8j6> ;
+    dcterms:type <https://highvaluedata.net/vocab/service_type#SocrataOpenDataAPI> ;
+    dcat:endpointURL <https://data.sfgov.org/resource/vw6y-z8j6.json> ;
+    dcat:servesDataset <https://data.sfgov.org/d/vw6y-z8j6> .
+
+<https://data.sfgov.org/d/vw6y-z8j6> a dcat:Dataset ;
+    dcterms:description """<strong>SUMMARY</strong>
+Dataset contains SF311 cases created since 7/1/2008 with location information. 
+
+<strong>UPDATE PROCESS</strong>
+This dataset updates daily.
+
+<strong>HOW TO USE THIS DATASET</strong>
+Download data using 'export' button to the right. For more information on this dataset, visit the  <u><a href="https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases">FAQ page</a></u>.
+
+<strong>Want to map the data in your neighborhood?</strong> 
+Check out https://sf.connect.socrata.com/
+
+For more information about Open311, see http://www.open311.org/."""^^xsd:string ;
+    dcterms:license <http://opendatacommons.org/licenses/pddl/1.0/>,
+        "Open Data Commons Public Domain Dedication and License",
+        "PDDL" ;
+    dcterms:modified "2025-04-02T03:51:22"^^xsd:dateTime ;
+    dcterms:publisher <https://data.sfgov.org>,
+        "City of San Francisco" ;
+    dcterms:spatial <http://sws.geonames.org/5391959>,
+        "San Francisco, California, USA" ;
+    dcterms:title "311 Cases"^^xsd:string ;
+    dcat:distribution <https://data.sfgov.org/resource/vw6y-z8j6.csv> ;
+    dcat:keyword "311"^^xsd:string,
+        "calls"^^xsd:string,
+        "case"^^xsd:string,
+        "cases"^^xsd:string,
+        "customer service"^^xsd:string ;
+    dcat:landingPage <https://data.sfgov.org/d/vw6y-z8j6> .
+

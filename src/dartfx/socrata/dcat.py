@@ -40,7 +40,7 @@ class DcatGenerator:
             if isinstance(item, SocrataDataset):
                 self.datasets.append(item)
             elif isinstance(item, str):
-                self.datasets.append(SocrataDataset(self.server, item))
+                self.datasets.append(SocrataDataset(server=self.server, id=item))
             else:
                 raise ValueError(f"Unexpected dataset type: {type(item)}")
 
