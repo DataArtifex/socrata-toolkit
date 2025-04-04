@@ -71,8 +71,9 @@ class DcatGenerator:
             if socrata_ds.description:
                 dcat_ds.add_description(socrata_ds.description)
 
-            for keyword in socrata_ds.tags:
-                dcat_ds.add_keyword(keyword)
+            if socrata_ds.tags:
+                for keyword in socrata_ds.tags:
+                    dcat_ds.add_keyword(keyword)
                 
             dcat_ds.add_landing_page(socrata_ds.landing_page)
             

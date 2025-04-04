@@ -245,13 +245,13 @@ class SocrataDataset(BaseModel):
 
     @property
     def publication_date(self) -> datetime:
-        if self._data.get("rowsUpdatedAt"):
-            return datetime.fromtimestamp(self._data["publicationDate"])
+        if self._data.get("publicationDate"):
+            return datetime.fromtimestamp(self._data.get("publicationDate"))
 
     @property
     def rows_updated_at(self) -> datetime:
         if self._data.get("rowsUpdatedAt"):
-            return datetime.fromtimestamp(self._data["rowsUpdatedAt"])
+            return datetime.fromtimestamp(self._data.get("rowsUpdatedAt"))
 
     @property
     def tags(self):
