@@ -537,7 +537,7 @@ clear
                         xml += '</catgry>'                    
             xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
             xml += '</var>'
-        xml += '<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
+        xml += '<notes type="dartfx" subject="variables">Be wary that Socrata does not provide category labels and by default only lists information on the top/most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
         xml += '</dataDscr>'
         xml += '</codeBook>'
         return xml
