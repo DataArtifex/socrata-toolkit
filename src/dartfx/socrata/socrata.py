@@ -521,15 +521,14 @@ clear
                 type = 'character'
             if var.cached_content:
                 # summary statistics
-                cardinality = int(var.cached_content.get('cardinality'))
-                xml += f'<sumStat type="other" otherType="count">{escape(var.cached_content.get("count"))}</sumStat>' if var.cached_content.get("count") else ''
-                xml += f'<sumStat type="min">{escape(var.cached_content.get("smallest"))}</sumStat>' if var.cached_content.get("smallest") else ''
-                xml += f'<sumStat type="max">{escape(var.cached_content.get("largest"))}</sumStat>' if var.cached_content.get("largest") else ''
-                xml += f'<sumStat type="other" otherType="cardinality">{escape(var.cached_content.get("cardinality"))}</sumStat>' if var.cached_content.get("cardinality") else ''
-                xml += f'<sumStat type="vald">{escape(var.cached_content.get("non_null"))}</sumStat>' if var.cached_content.get("non_null") else ''
-                xml += f'<sumStat type="invd">{escape(var.cached_content.get("null"))}</sumStat>' if var.cached_content.get("null") else ''
+                xml += f'<sumStat type="other" otherType="count">{var.count}</sumStat>' if var.count else ''
+                xml += f'<sumStat type="min">{escape(var.smallest)}</sumStat>' if var.smallest else ''
+                xml += f'<sumStat type="max">{escape(var.largest)}</sumStat>' if var.largest else ''
+                xml += f'<sumStat type="other" otherType="cardinality">{var.cardinality}</sumStat>' if var.cardinality else ''
+                xml += f'<sumStat type="vald">{var.non_null}</sumStat>' if var.non_null else ''
+                xml += f'<sumStat type="invd">{var.null}</sumStat>' if var.null else ''
                 top = var.cached_content.get('top')
-                if top and cardinality <=  category_count_threshold:
+                if top and var.cardinality <=  category_count_threshold:
                     for item in top:
                         xml += '<catgry>'
                         xml += f'<catValu>{escape(str(item["item"]))}</catValu>'
@@ -565,8 +564,10 @@ clear
         return md
 
     def get_record_count(self):
-        count = self.data["columns"][0]["cachedContents"]["count"]
-        return count
+        variable0 = self.variables[0]
+        if variable0.cached_content:
+            count = variable0.cached_content.get("count")
+            return count
 
 class SocrataVariable(BaseModel):
     """Helper class to process/use Socrata dataset variables (columns).
@@ -581,6 +582,16 @@ class SocrataVariable(BaseModel):
     def cached_content(self):
         return self.data.get('cachedContents')
 
+    @property
+    def cardinality(self):
+        if self.cached_content and self.cached_content.get('cardinality'):
+            return int(self.cached_content.get('cardinality'))
+
+
+    @property
+    def count(self):
+        if self.cached_content and self.cached_content.get('count'):
+            return int(self.cached_content.get('count'))
 
     @property
     def croissant_data_type(self):
@@ -631,14 +642,34 @@ class SocrataVariable(BaseModel):
         return self.data["name"]
 
     @property
+    def largest(self):
+        if self.cached_content:
+            return self.cached_content.get('largest')
+
+    @property
     def name(self):
         # Note that the 'filedName' property is actually the variable name
         # Be aware that compute variables, that are hidden from users, start with :@computed
         return self.data["fieldName"]
 
     @property
+    def non_null(self):
+        if self.cached_content and self.cached_content.get('non_null'):
+            return int(self.cached_content.get('non_null'))
+
+    @property
+    def null(self):
+        if self.cached_content and self.cached_content.get('null'):
+            return int(self.cached_content.get('null'))
+
+    @property
     def position(self):
         return self.data["position"]
+
+    @property
+    def smallest(self):
+        if self.cached_content:
+            return self.cached_content.get('smallest')
 
     @property
     def socrata_data_type(self):
