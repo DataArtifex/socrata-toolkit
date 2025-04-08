@@ -422,7 +422,7 @@ clear
         metadata = mlc.Metadata(ctx=context, 
             id=self.id,
             name=self.name,
-            description=md(self.description),
+            description=md(self.description) if self.description else None,
             cite_as = f'{self.name}, {self.server.name}, {self.landing_page}',
             date_modified = self.rows_updated_at,
             date_published = self.publication_date,
@@ -493,9 +493,10 @@ clear
         xml += '<software>Socrata</software>'
         xml += '</prodStmt>'
         xml += '</citation>'
-        xml += '<stdyInfo>'
-        xml += f'<abstract><![CDATA[{escape(self.description)}]]></abstract>'
-        xml += '</stdyInfo>'
+        if self.description:
+            xml += '<stdyInfo>'
+            xml += f'<abstract><![CDATA[{escape(self.description)}]]></abstract>'
+            xml += '</stdyInfo>'
         xml += '</stdyDscr>'
         # fileDscr
         xml += '<fileDscr ID="F1">'
@@ -559,7 +560,7 @@ clear
     def get_markdown(self, include=[], exclude=[], top_level=1):
         if (include and 'title' in include) or (exclude and 'title' not in exclude):
             md = f"# {self.name}\n"
-        if (include and 'description' in include) or (exclude and 'description' not in exclude):
+        if self.description and (include and 'description' in include) or (exclude and 'description' not in exclude):
             md += f"{self.description}\n"
         return md
 
