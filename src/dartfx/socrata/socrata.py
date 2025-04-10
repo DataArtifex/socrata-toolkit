@@ -402,7 +402,7 @@ clear
             code = code.format(host=self.server.host, dataset_id=self.id)
         return code
 
-    def get_croissant(self, include_computed=False) -> mlc.Metadata:
+    def get_croissant(self, include_computed=False, include_codes=True, max_codes=100) -> mlc.Metadata:
         context = mlc.Context()
         context.is_live_dataset = True
         # selected variables
@@ -439,12 +439,13 @@ clear
             id=self.id+'.csv',
             name=self.name+'.csv',
             content_url=content_url,
-            encoding_format=mlc.EncodingFormat.CSV
+            encoding_formats=mlc.EncodingFormat.CSV
         )
         distribution.append(csv_file)
         metadata.distribution = distribution
         # fields and record set
         fields = []
+        classifications_record_sets = []
         for variable in selected_variables:
             field = mlc.Field(ctx=context,
                 id=variable.name,
@@ -454,9 +455,50 @@ clear
             )
             field.data_types.append(variable.croissant_data_type)
             fields.append(field)
-        record_set = mlc.RecordSet(fields=fields) 
-        record_sets = [record_set]
+            # classifications
+            if include_codes:
+                if variable.cached_content: # we have statistics
+                    top = variable.cached_content.get('top') 
+                    if top: # we have top codes
+                        classification_id = f"{variable.name}_codes"
+                        value_field_id = f"{classification_id}/value"
+                        freq_field_id = f"{classification_id}/freq"
+                        classification_fields = [
+                            mlc.Field(ctx=context, id=value_field_id, description="Code value"),
+                            mlc.Field(ctx=context, id=freq_field_id, name="freq", description="Code frequency"),
+                        ]
+                        # codes
+                        classification_records = []
+                        code_count = 0
+                        for code in top:
+                            code_count += 1
+                            classification_records.append({
+                                value_field_id: str(code.get("item")),
+                                freq_field_id: code.get("count")
+                            })
+                            if code_count >= max_codes:
+                                break
+                        # create record set
+                        classification_record_set = mlc.RecordSet(id=classification_id, fields=classification_fields)
+                        classification_record_set.description = f"Top {max(len(top), max_codes)} values and frequencies for {field.name}."
+                        if variable.cardinality <= max_codes:
+                            # complete data
+                            classification_record_set.data = classification_records
+                        else:
+                            # partial data
+                            classification_record_set.examples = classification_records
+                            classification_record_set.description += f" This is partial list. The full set contains {variable.cardinality} values."
+                        classifications_record_sets.append(classification_record_set)
+                        # add classification reference to the variable
+                        field.references = mlc.Source(
+                            id=f"{classification_id}/value"
+                        )
+        # create data file record set
+        data_record_set = mlc.RecordSet(fields=fields) 
+        record_sets = [data_record_set] + classifications_record_sets
         metadata.record_sets = record_sets
+
+
         return metadata
 
     def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.5") -> str:
