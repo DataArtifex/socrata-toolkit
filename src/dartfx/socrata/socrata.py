@@ -480,7 +480,7 @@ clear
                                 break
                         # create record set
                         classification_record_set = mlc.RecordSet(id=classification_id, fields=classification_fields)
-                        classification_record_set.description = f"Top {max(len(top), max_codes)} values and frequencies for {field.name}."
+                        classification_record_set.description = f"Top {min(len(top), max_codes)} values and frequencies for {field.name}."
                         if variable.cardinality <= max_codes:
                             # complete data
                             classification_record_set.data = classification_records
