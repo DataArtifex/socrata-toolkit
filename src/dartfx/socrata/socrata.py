@@ -481,13 +481,16 @@ clear
                         # create record set
                         classification_record_set = mlc.RecordSet(id=classification_id, fields=classification_fields)
                         classification_record_set.description = f"Top {min(len(top), max_codes)} values and frequencies for {field.name}."
-                        if variable.cardinality <= max_codes:
+                        if variable.cardinality and variable.cardinality <= max_codes:
                             # complete data
                             classification_record_set.data = classification_records
                         else:
                             # partial data
                             classification_record_set.examples = classification_records
-                            classification_record_set.description += f" This is partial list. The full set contains {variable.cardinality} values."
+                            if variable.cardinality:
+                                classification_record_set.description = f"This is partial list. The full list has {variable.cardinality} codes."
+                            else:
+                                classification_record_set.description = "This may be a partial list. The variable cardinality is unknown."
                         classifications_record_sets.append(classification_record_set)
                         # add classification reference to the variable
                         field.references = mlc.Source(
