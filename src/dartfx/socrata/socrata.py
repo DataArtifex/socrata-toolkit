@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import json
 import logging
-from markdownify import markdownify as md
+from markdownify import markdownify
 import mlcroissant as mlc
 import os
 from pydantic import BaseModel, Field, PrivateAttr
@@ -422,7 +422,7 @@ clear
         metadata = mlc.Metadata(ctx=context, 
             id=self.id,
             name=self.name,
-            description=md(self.description) if self.description else None,
+            description=markdownify(self.description) if self.description else None,
             cite_as = f'{self.name}, {self.server.name}, {self.landing_page}',
             date_modified = self.rows_updated_at,
             date_published = self.publication_date,
@@ -458,8 +458,7 @@ clear
             # classifications
             if include_codes:
                 if variable.cached_content: # we have statistics
-                    top = variable.cached_content.get('top') 
-                    if top: # we have top codes
+                    if variable.top: # we have top codes
                         classification_id = f"{variable.name}_codes"
                         value_field_id = f"{classification_id}/value"
                         freq_field_id = f"{classification_id}/freq"
@@ -470,7 +469,7 @@ clear
                         # codes
                         classification_records = []
                         code_count = 0
-                        for code in top:
+                        for code in variable.top:
                             code_count += 1
                             classification_records.append({
                                 value_field_id: str(code.get("item")),
@@ -480,7 +479,7 @@ clear
                                 break
                         # create record set
                         classification_record_set = mlc.RecordSet(id=classification_id, fields=classification_fields)
-                        classification_record_set.description = f"Top {min(len(top), max_codes)} values and frequencies for {field.name}."
+                        classification_record_set.description = f"Top {min(len(variable.top), max_codes)} values and frequencies for {field.name}."
                         if variable.cardinality and variable.cardinality <= max_codes:
                             # complete data
                             classification_record_set.data = classification_records
@@ -573,9 +572,8 @@ clear
                 xml += f'<sumStat type="other" otherType="cardinality">{var.cardinality}</sumStat>' if var.cardinality else ''
                 xml += f'<sumStat type="vald">{var.non_null}</sumStat>' if var.non_null else ''
                 xml += f'<sumStat type="invd">{var.null}</sumStat>' if var.null else ''
-                top = var.cached_content.get('top')
-                if top and var.cardinality <=  category_count_threshold:
-                    for item in top:
+                if var.top and var.cardinality <=  category_count_threshold:
+                    for item in var.top:
                         xml += '<catgry>'
                         xml += f'<catValu>{escape(str(item["item"]))}</catValu>'
                         xml += f'<labl>{escape(str(item["item"]))}</labl>' # Socrata does not provide category labels. Use code value.
@@ -601,12 +599,31 @@ clear
             count += 1
         return count
     
-
-    def get_markdown(self, include=[], exclude=[], top_level=1):
-        if (include and 'title' in include) or (exclude and 'title' not in exclude):
-            md = f"# {self.name}\n"
-        if self.description and (include and 'description' in include) or (exclude and 'description' not in exclude):
-            md += f"{self.description}\n"
+    def get_markdown(self, sections=[]):
+        md = f"# {markdownify(self.name)}\n\n"
+        if self.description:
+            md += f"{markdownify(self.description)}\n\n"
+        if not sections or 'variables' in sections:
+            md += f"\n## Variables\n\n"
+            md += "| Name | Label | Type | Info |\n"
+            md += "|---|---|---|---|\n"
+            for variable in self.variables:
+                if variable.is_hidden:
+                    continue
+                md += f"| {variable.name} | {variable.label} | {variable.socrata_data_type}"
+                info = ""
+                if variable.cardinality:
+                    info += f"Cardinality: {variable.cardinality:,}"
+                if variable.top:
+                    values = []
+                    for entry in variable.top[:3]:
+                        values.append(str(entry.get("item")))
+                    if info:
+                        info += "<br/>"
+                    info += f"Examples: {', '.join(values)}"
+                if not info:
+                    info = "-"
+                md += f" | {info} |\n"
         return md
 
     def get_record_count(self):
@@ -729,3 +746,9 @@ class SocrataVariable(BaseModel):
     @property
     def socrata_render_type(self):
         return self.data["renderTypeName"]
+
+
+    @property
+    def top(self):
+        if self.cached_content and self.cached_content.get('top'):
+            return self.cached_content.get('top')
