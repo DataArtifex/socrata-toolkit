@@ -1,0 +1,11 @@
+## Install the required package with:
+## install.packages("RSocrata")
+
+library("RSocrata")
+
+df <- read.socrata(
+  "https://{{host}}/resource/{{dataset_id}}.json",
+  app_token = "YOURAPPTOKENHERE",
+  email     = "user@example.com",
+  password  = "fakepassword"
+)            

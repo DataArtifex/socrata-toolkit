@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import json
 import logging
+from jinja2 import Environment, FileSystemLoader
 from markdownify import markdownify
 import mlcroissant as mlc
 import os
@@ -9,6 +10,9 @@ from pydantic import BaseModel, Field, PrivateAttr
 from typing import Optional
 import requests
 from xml.sax.saxutils import escape
+
+
+jinja_env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)),'templates')))
 
 class SocrataApiError(Exception):
     """Custom exception for Socrata API errors."""
@@ -272,134 +276,13 @@ class SocrataDataset(BaseModel):
 
     def get_code(self, environment, options: dict = None, *args, **kwargs) -> str:
         code = None
-
-        if environment == "jquery":
-            code = """
-$.ajax({{
-    url: "https://{host}/resource/{dataset_id}.json",
-    type: "GET",
-    data: {{
-      "$limit" : 5000,
-      "$$app_token" : "YOURAPPTOKENHERE"
-    }}
-}}).done(function(data) {{
-  alert("Retrieved " + data.length + " records from the dataset!");
-  console.log(data);
-}});
-"""
-        elif environment == "powershell":
-            code = """
-$url = "https://{host}/resource/{dataset_id}"
-$apptoken = "YOURAPPTOKENHERE"
-
-# Set header to accept JSON
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Accept","application/json")
-$headers.Add("X-App-Token",$apptoken)
-
-$results = Invoke-RestMethod -Uri $url -Method get -Headers $headers
-            """
-        elif environment == "python-pandas":
-            code = """
-#!/usr/bin/env python
-
-# make sure to install these packages before running:
-# pip install pandas
-# pip install sodapy
-
-import pandas as pd
-from sodapy import Socrata
-
-# Unauthenticated client only works with public data sets. Note 'None'
-# in place of application token, and no username or password:
-client = Socrata("{host}", None)
-
-# Example authenticated client (needed for non-public datasets):
-# client = Socrata({host},
-#                  MyAppToken,
-#                  username="user@example.com",
-#                  password="AFakePassword")
-
-# First 2000 results, returned as JSON from API / converted to Python list of
-# dictionaries by sodapy.
-results = client.get("{dataset_id}", limit=2000)
-
-# Convert to pandas DataFrame
-results_df = pd.DataFrame.from_records(results)
-
-print(results_df)
-            """
-        elif environment == "r-socrata":
-            code = """
-## Install the required package with:
-## install.packages("RSocrata")
-
-library("RSocrata")
-
-df <- read.socrata(
-  "https://{host}/resource/{dataset_id}.json",
-  app_token = "YOURAPPTOKENHERE",
-  email     = "user@example.com",
-  password  = "fakepassword"
-)            
-            """
-        elif environment == "sas":
-            code = """
-filename datain url 'http://{host}/resource/{dataset_id}.csv?$limit=5000&$$app_token=YOURAPPTOKENHERE';
-proc import datafile=datain out=dataout dbms=csv replace;
-  getnames=yes;
-run;
-            """     
-        elif environment == "soda-ruby":
-            code = """
-#!/usr/bin/env ruby
-
-require 'soda/client'
-
-client = SODA::Client.new({{:domain => "{host}", :app_token => "YOURAPPTOKENHERE"}})
-
-results = client.get("{dataset_id}", :$limit => 5000)
-
-puts "Got #{{results.count}} results. Dumping first results:"
-results.first.each do |k, v|
-  puts "#{{key}}: #{{value}}"
-end
-            """
-        elif environment == "soda-dotnet":
-            code = """
-using System;
-using System.Linq;
-
-// Install the package from Nuget first:
-// PM> Install-Package CSM.SodaDotNet
-using SODA;
-
-var client = new SodaClient("https://{host}", "YOURAPPTOKENHERE");
-
-// Get a reference to the resource itself
-// The result (a Resouce object) is a generic type
-// The type parameter represents the underlying rows of the resource
-// and can be any JSON-serializable class
-var dataset = client.GetResource("{dataset_id}");
-
-// Resource objects read their own data
-var rows = dataset.GetRows(limit: 5000);
-
-Console.WriteLine("Got {{0}} results. Dumping first results:", rows.Count());
-
-foreach (var keyValue in rows.First())
-{{
-    Console.WriteLine(keyValue);
-}}            
-            """
-        elif environment == "stata":
-            code = """
-clear
-. import delimited "https://{host}/resource/{dataset_id}.csv?%24limit=5000&%24%24app_token=YOURAPPTOKENHERE"            
-            """
-        # FORMAT CODE
-        if code:
-            code = code.format(host=self.server.host, dataset_id=self.id)
+        template_file = f"generate_{environment}.j2"
+        template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
+        if os.path.isfile(template_path):
+            template = jinja_env.get_template(template_file)
+            code = template.render(host=self.server.host, dataset_id=self.id, options=options)
+        else: 
+            raise ValueError(f"Unsupported environment: {environment}.")
         return code
 
     def get_croissant(self, include_computed=False, include_codes=True, max_codes=100) -> mlc.Metadata:
@@ -599,6 +482,31 @@ clear
             count += 1
         return count
     
+    def get_variables(self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True) -> list["SocrataVariable"]:
+        """Helper function for getting a list of variables based on visibility attributes."""
+        variables = []
+        for variable in self.variables:
+            if variable.is_hidden and exclude_hidden:
+                continue
+            else:
+                if variable.is_deleted and exclude_deleted:
+                    continue
+                if variable.is_computed and exclude_computed:
+                    continue
+            variables.append(variable)
+        return variables
+    
+    def get_visible_variables(self) -> list["SocrataVariable"]:
+        """Helper to get a list of the visible variables."""
+        return self.get_variables()
+
+    def get_visible_variables_names(self) -> list[str]:
+        """Helper to get a list of the visible variable names."""
+        names = []
+        for variable in self.get_visible_variables():
+            names.append(variable.name)
+        return names
+
     def get_markdown(self, sections=[]):
         md = f"# {markdownify(self.name)}\n\n"
         if self.description:

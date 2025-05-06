@@ -1,0 +1,4 @@
+filename datain url 'http://{{host}}/resource/{{dataset_id}}.csv?$limit=5000&$$app_token=YOURAPPTOKENHERE';
+proc import datafile=datain out=dataout dbms=csv replace;
+  getnames=yes;
+run;

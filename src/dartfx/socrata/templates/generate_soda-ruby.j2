@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'soda/client'
+
+client = SODA::Client.new({:domain => "{{host}}", :app_token => "YOURAPPTOKENHERE"})
+
+results = client.get("{{dataset_id}}", :$limit => 5000)
+
+puts "Got #{results.count} results. Dumping first results:"
+results.first.each do |k, v|
+  puts "#{key}: #{value}"
+end
