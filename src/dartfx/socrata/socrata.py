@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import field
 from datetime import datetime
 import json
 import logging
@@ -158,7 +158,7 @@ class SocrataServer(BaseModel):
                 raise SocrataApiError("Error getting dataset info", url, results.status_code, results.text)
         return
     
-    def search_datasets(self):
+    def search_datasets(self, limit:int=None, offset:int = None, order:str = None, sort_order:str = None):
         """Calls the Socrata Discovery API
 
         See https://dev.socrata.com/docs/other/discovery
@@ -166,7 +166,23 @@ class SocrataServer(BaseModel):
         Raises:
             SocrataApiError: Error when calling the API
         """
-        url = f"https://{self.host}/api/catalog/v1?domains={self.host}&only=datasets"
+        # use search_context= , not domain=
+        url = f"https://{self.host}/api/catalog/v1?search_context={self.host}&only=datasets"
+        if limit:
+            url += f"&limit={limit}"
+        if offset:
+            url += f"&offset={offset}"
+        if order:
+            valid_order = ["name", "owner", "dataset_id", "datatype", "domain_category", "page_views_total", "page_views_last_month", "page_views_last_week", "updatedAt", "createdAt"]
+            if order not in valid_order:
+                raise SocrataApiError(f"sort must be one of {valid_order}")
+            url += f"&order={order}"
+            if sort_order:
+                sort_order = sort_order.upper()
+                if sort_order not in ["ASC", "DESC"]:
+                    raise SocrataApiError("sort_order must be 'asc' or 'desc'")
+                url += f"+{sort_order}"
+        logging.debug(f"Calling {url}")
         results = requests.get(url)
         if results.status_code == 200:
             data = results.json()
@@ -178,7 +194,7 @@ class SocrataServer(BaseModel):
 class SocrataDataset(BaseModel):
     server: SocrataServer
     id: str
-    _data: dict 
+    _data: dict|None = None
     _variables: list["SocrataVariable"] = PrivateAttr(default_factory=list)
 
     def model_post_init(self, __context):
@@ -248,12 +264,12 @@ class SocrataDataset(BaseModel):
         return self._data.get("name")
 
     @property
-    def publication_date(self) -> datetime:
+    def publication_date(self) -> datetime|None:
         if self._data.get("publicationDate"):
             return datetime.fromtimestamp(self._data.get("publicationDate"))
 
     @property
-    def rows_updated_at(self) -> datetime:
+    def rows_updated_at(self) -> datetime|None:
         if self._data.get("rowsUpdatedAt"):
             return datetime.fromtimestamp(self._data.get("rowsUpdatedAt"))
 
@@ -270,11 +286,14 @@ class SocrataDataset(BaseModel):
         return self._variables
 
     @property
-    def view_last_modified(self) -> datetime:
-        if self._data.get("viewLastModified"):
-            return datetime.fromtimestamp(self._data["viewLastModified"])
+    def view_last_modified(self) -> datetime|None:
+        if self._data:
+            if self._data.get("viewLastModified"):
+                return datetime.fromtimestamp(self._data["viewLastModified"])
 
     def get_code(self, environment, options: dict = None, *args, **kwargs) -> str:
+        """Generates code/script for a given environment.
+        """
         code = None
         template_file = f"generate_{environment}.j2"
         template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
@@ -509,10 +528,12 @@ class SocrataDataset(BaseModel):
 
     def get_markdown(self, sections=[]):
         md = f"# {markdownify(self.name)}\n\n"
+        if not sections or 'links' in sections:
+            md += f"###### [View online]({self.landing_page})\n\n"
         if self.description:
             md += f"{markdownify(self.description)}\n\n"
         if not sections or 'variables' in sections:
-            md += f"\n## Variables\n\n"
+            md += "\n## Variables\n\n"
             md += "| Name | Label | Type | Info |\n"
             md += "|---|---|---|---|\n"
             for variable in self.variables:
