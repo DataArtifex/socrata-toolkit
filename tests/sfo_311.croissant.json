@@ -38,6 +38,7 @@
         "regex": "cr:regex",
         "repeated": "cr:repeated",
         "replace": "cr:replace",
+        "samplingRate": "cr:samplingRate",
         "sc": "https://schema.org/",
         "separator": "cr:separator",
         "source": "cr:source",
@@ -46,10 +47,10 @@
     },
     "@type": "sc:Dataset",
     "name": "311 Cases",
-    "description": "**SUMMARY**\nDataset contains SF311 cases created since 7/1/2008 with location information. \n\n**UPDATE PROCESS**\nThis dataset updates daily.\n\n**HOW TO USE THIS DATASET**\nDownload data using 'export' button to the right. For more information on this dataset, visit the [FAQ page](https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases).\n\n**Want to map the data in your neighborhood?** \nCheck out https://sf.connect.socrata.com/\n\nFor more information about Open311, see http://www.open311\\.org/.",
+    "description": "**SUMMARY**\nDataset contains SF311 cases created since 7/1/2008 with location information.\n**UPDATE PROCESS**\nThis dataset updates nightly. New data is added around 6am pacific time.\n**HOW TO USE THIS DATASET**\nDownload data using 'export' button to the right. For more information on this dataset, visit the [FAQ page](https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases).\n**Want to map the data in your neighborhood?**\nCheck out https://sf.connect.socrata.com/\nFor more information about Open311, see http://www.open311.org/.",
     "conformsTo": "http://mlcommons.org/croissant/1.0",
     "citeAs": "311 Cases, San Francisco Open Data Portal, https://data.sfgov.org/d/vw6y-z8j6",
-    "dateModified": "2025-04-10 03:52:53",
+    "dateModified": "2026-02-06 04:06:12",
     "datePublished": "2024-09-11 23:30:53",
     "isLiveDataset": true,
     "license": "Open Data Commons Public Domain Dedication and License, PDDL, http://opendatacommons.org/licenses/pddl/1.0/",
@@ -58,7 +59,7 @@
         "name": "City of San Francisco",
         "url": "data.sfgov.org"
     },
-    "version": "1744278773.0.0",
+    "version": "1770375972.0.0",
     "distribution": [
         {
             "@type": "cr:FileObject",
@@ -521,7 +522,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "service_request_id_codes",
-            "description": "Top 20 values and frequencies for service_request_id. This is partial list. The full set contains 7647819 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "service_request_id_codes/value": "240216",
@@ -581,7 +582,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "requested_datetime_codes",
-            "description": "Top 20 values and frequencies for requested_datetime. This is partial list. The full set contains 5907387 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "requested_datetime_codes/value": "2024-03-11T11:18:00.000",
@@ -612,11 +613,11 @@
                     "requested_datetime_codes/freq": "32"
                 },
                 {
-                    "requested_datetime_codes/value": "2019-05-15T21:00:00.000",
+                    "requested_datetime_codes/value": "2019-04-20T03:37:00.000",
                     "requested_datetime_codes/freq": "30"
                 },
                 {
-                    "requested_datetime_codes/value": "2019-04-20T03:37:00.000",
+                    "requested_datetime_codes/value": "2019-05-15T21:00:00.000",
                     "requested_datetime_codes/freq": "30"
                 },
                 {
@@ -641,7 +642,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "closed_date_codes",
-            "description": "Top 20 values and frequencies for closed_date. This is partial list. The full set contains 5814889 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "closed_date_codes/value": "2023-03-06T10:15:03.000",
@@ -650,6 +651,10 @@
                 {
                     "closed_date_codes/value": "2024-05-15T10:43:47.000",
                     "closed_date_codes/freq": "1934"
+                },
+                {
+                    "closed_date_codes/value": "2025-12-01T14:58:16.000",
+                    "closed_date_codes/freq": "1839"
                 },
                 {
                     "closed_date_codes/value": "2020-09-16T13:56:22.000",
@@ -678,10 +683,6 @@
                 {
                     "closed_date_codes/value": "2023-09-23T02:00:01.000",
                     "closed_date_codes/freq": "499"
-                },
-                {
-                    "closed_date_codes/value": "2023-09-22T23:00:01.000",
-                    "closed_date_codes/freq": "497"
                 }
             ],
             "field": [
@@ -701,7 +702,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "updated_datetime_codes",
-            "description": "Top 20 values and frequencies for updated_datetime. This is partial list. The full set contains 5958240 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "updated_datetime_codes/value": "2023-03-06T10:15:03.000",
@@ -761,7 +762,17 @@
         {
             "@type": "cr:RecordSet",
             "@id": "status_description_codes",
-            "description": "Top 10 values and frequencies for status_description.",
+            "description": "This is partial list. The full list has 8386364 codes.",
+            "examples": [
+                {
+                    "status_description_codes/value": "Closed",
+                    "status_description_codes/freq": "8243809"
+                },
+                {
+                    "status_description_codes/value": "Open",
+                    "status_description_codes/freq": "142555"
+                }
+            ],
             "field": [
                 {
                     "@type": "cr:Field",
@@ -774,26 +785,16 @@
                     "name": "freq",
                     "description": "Code frequency"
                 }
-            ],
-            "data": [
-                {
-                    "status_description_codes/value": "Closed",
-                    "status_description_codes/freq": "7519726"
-                },
-                {
-                    "status_description_codes/value": "Open",
-                    "status_description_codes/freq": "128093"
-                }
             ]
         },
         {
             "@type": "cr:RecordSet",
             "@id": "status_notes_codes",
-            "description": "Top 20 values and frequencies for status_notes. This is partial list. The full set contains 1821735 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "status_notes_codes/value": "Case Resolved",
-                    "status_notes_codes/freq": "1459044"
+                    "status_notes_codes/freq": "1642779"
                 },
                 {
                     "status_notes_codes/value": "Case Resolved - Pickup completed.",
@@ -813,23 +814,23 @@
                 },
                 {
                     "status_notes_codes/value": "Case is a Duplicate",
-                    "status_notes_codes/freq": "140613"
+                    "status_notes_codes/freq": "151203"
+                },
+                {
+                    "status_notes_codes/value": "Case Resolved - No Work Needed",
+                    "status_notes_codes/freq": "100595"
                 },
                 {
                     "status_notes_codes/value": "Case Resolved - WASTE NOT FOUND",
                     "status_notes_codes/freq": "96110"
                 },
                 {
+                    "status_notes_codes/value": "Case Resolved - Resolved",
+                    "status_notes_codes/freq": "91733"
+                },
+                {
                     "status_notes_codes/value": "Case Completed - resolved: Pickup completed.",
                     "status_notes_codes/freq": "88770"
-                },
-                {
-                    "status_notes_codes/value": "Area Cleared",
-                    "status_notes_codes/freq": "71841"
-                },
-                {
-                    "status_notes_codes/value": "Case Transferred",
-                    "status_notes_codes/freq": "67119"
                 }
             ],
             "field": [
@@ -849,7 +850,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "agency_responsible_codes",
-            "description": "Top 20 values and frequencies for agency_responsible. This is partial list. The full set contains 613 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "agency_responsible_codes/value": "DPW Ops Queue",
@@ -858,6 +859,10 @@
                 {
                     "agency_responsible_codes/value": "Recology_Abandoned",
                     "agency_responsible_codes/freq": "967361"
+                },
+                {
+                    "agency_responsible_codes/value": "PW - Street and Environmental Services",
+                    "agency_responsible_codes/freq": "420118"
                 },
                 {
                     "agency_responsible_codes/value": "Parking Enforcement Dispatch Queue",
@@ -872,24 +877,20 @@
                     "agency_responsible_codes/freq": "283177"
                 },
                 {
+                    "agency_responsible_codes/value": "MTA - Parking Enforcement Dispatch",
+                    "agency_responsible_codes/freq": "201766"
+                },
+                {
                     "agency_responsible_codes/value": "DPW BSM Queue",
                     "agency_responsible_codes/freq": "200951"
                 },
                 {
-                    "agency_responsible_codes/value": "PW - Street and Environmental Services",
-                    "agency_responsible_codes/freq": "187687"
+                    "agency_responsible_codes/value": "Recology - Abandoned",
+                    "agency_responsible_codes/freq": "182781"
                 },
                 {
                     "agency_responsible_codes/value": "MUNI Work Queue",
                     "agency_responsible_codes/freq": "173381"
-                },
-                {
-                    "agency_responsible_codes/value": "311 Supervisor Queue",
-                    "agency_responsible_codes/freq": "124894"
-                },
-                {
-                    "agency_responsible_codes/value": "PUC Sewer Ops",
-                    "agency_responsible_codes/freq": "123959"
                 }
             ],
             "field": [
@@ -909,11 +910,11 @@
         {
             "@type": "cr:RecordSet",
             "@id": "service_name_codes",
-            "description": "Top 20 values and frequencies for service_name. This is partial list. The full set contains 140 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "service_name_codes/value": "Street and Sidewalk Cleaning",
-                    "service_name_codes/freq": "3011127"
+                    "service_name_codes/freq": "3301745"
                 },
                 {
                     "service_name_codes/value": "Graffiti",
@@ -921,7 +922,7 @@
                 },
                 {
                     "service_name_codes/value": "Parking Enforcement",
-                    "service_name_codes/freq": "598515"
+                    "service_name_codes/freq": "738717"
                 },
                 {
                     "service_name_codes/value": "Encampments",
@@ -941,7 +942,7 @@
                 },
                 {
                     "service_name_codes/value": "Tree Maintenance",
-                    "service_name_codes/freq": "150655"
+                    "service_name_codes/freq": "164658"
                 },
                 {
                     "service_name_codes/value": "Sewer Issues",
@@ -969,7 +970,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "service_subtype_codes",
-            "description": "Top 20 values and frequencies for service_subtype. This is partial list. The full set contains 2610 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "service_subtype_codes/value": "Bulky Items",
@@ -978,6 +979,10 @@
                 {
                     "service_subtype_codes/value": "General Cleaning",
                     "service_subtype_codes/freq": "929020"
+                },
+                {
+                    "service_subtype_codes/value": "garbage_and_debris",
+                    "service_subtype_codes/freq": "582103"
                 },
                 {
                     "service_subtype_codes/value": "Encampment Reports",
@@ -992,10 +997,6 @@
                     "service_subtype_codes/freq": "299550"
                 },
                 {
-                    "service_subtype_codes/value": "garbage_and_debris",
-                    "service_subtype_codes/freq": "291786"
-                },
-                {
                     "service_subtype_codes/value": "City_garbage_can_overflowing",
                     "service_subtype_codes/freq": "278119"
                 },
@@ -1008,8 +1009,8 @@
                     "service_subtype_codes/freq": "140677"
                 },
                 {
-                    "service_subtype_codes/value": "Graffiti on Building_commercial",
-                    "service_subtype_codes/freq": "126104"
+                    "service_subtype_codes/value": "not_offensive",
+                    "service_subtype_codes/freq": "139037"
                 }
             ],
             "field": [
@@ -1029,7 +1030,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "service_details_codes",
-            "description": "Top 20 values and frequencies for service_details. This is partial list. The full set contains 533787 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "service_details_codes/value": "Other Loose Garbage",
@@ -1056,20 +1057,20 @@
                     "service_details_codes/freq": "278119"
                 },
                 {
+                    "service_details_codes/value": "other_loose_garbage_debris_yard_waste",
+                    "service_details_codes/freq": "172270"
+                },
+                {
                     "service_details_codes/value": "Mattress",
                     "service_details_codes/freq": "153404"
                 },
                 {
+                    "service_details_codes/value": "city_garbage_can_overflowing",
+                    "service_details_codes/freq": "128565"
+                },
+                {
                     "service_details_codes/value": "Other_enter_additional_details_below - Offensive",
                     "service_details_codes/freq": "126072"
-                },
-                {
-                    "service_details_codes/value": "bsm - request_for_service",
-                    "service_details_codes/freq": "112396"
-                },
-                {
-                    "service_details_codes/value": "Refrigerator",
-                    "service_details_codes/freq": "103082"
                 }
             ],
             "field": [
@@ -1089,11 +1090,11 @@
         {
             "@type": "cr:RecordSet",
             "@id": "address_codes",
-            "description": "Top 20 values and frequencies for address. This is partial list. The full set contains 428390 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "address_codes/value": "Not associated with a specific address",
-                    "address_codes/freq": "358439"
+                    "address_codes/freq": "363339"
                 },
                 {
                     "address_codes/value": "535 FOLSOM ST, SAN FRANCISCO, CA, 94105",
@@ -1149,47 +1150,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "street_codes",
-            "description": "Top 20 values and frequencies for street. This is partial list. The full set contains 3354 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "street_codes/value": "MISSION ST",
-                    "street_codes/freq": "184340"
+                    "street_codes/freq": "201607"
                 },
                 {
                     "street_codes/value": "MARKET ST",
-                    "street_codes/freq": "123713"
+                    "street_codes/freq": "137791"
                 },
                 {
                     "street_codes/value": "FOLSOM ST",
-                    "street_codes/freq": "87874"
+                    "street_codes/freq": "97015"
                 },
                 {
                     "street_codes/value": "GEARY BLVD",
-                    "street_codes/freq": "79045"
+                    "street_codes/freq": "84558"
                 },
                 {
                     "street_codes/value": "18TH ST",
-                    "street_codes/freq": "69475"
+                    "street_codes/freq": "75984"
                 },
                 {
                     "street_codes/value": "HAIGHT ST",
-                    "street_codes/freq": "68978"
-                },
-                {
-                    "street_codes/value": "16TH ST",
-                    "street_codes/freq": "67021"
+                    "street_codes/freq": "74600"
                 },
                 {
                     "street_codes/value": "CALIFORNIA ST",
-                    "street_codes/freq": "66630"
+                    "street_codes/freq": "73680"
                 },
                 {
-                    "street_codes/value": "17TH ST",
-                    "street_codes/freq": "56844"
+                    "street_codes/value": "16TH ST",
+                    "street_codes/freq": "73065"
                 },
                 {
                     "street_codes/value": "VALENCIA ST",
-                    "street_codes/freq": "56741"
+                    "street_codes/freq": "64912"
+                },
+                {
+                    "street_codes/value": "17TH ST",
+                    "street_codes/freq": "62705"
                 }
             ],
             "field": [
@@ -1209,47 +1210,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "supervisor_district_codes",
-            "description": "Top 12 values and frequencies for supervisor_district. This is partial list. The full set contains 12 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
-                    "supervisor_district_codes/value": "9.0",
-                    "supervisor_district_codes/freq": "1170906"
+                    "supervisor_district_codes/value": "9.00000",
+                    "supervisor_district_codes/freq": "1287936"
                 },
                 {
-                    "supervisor_district_codes/value": "5.0",
-                    "supervisor_district_codes/freq": "929145"
+                    "supervisor_district_codes/value": "5.00000",
+                    "supervisor_district_codes/freq": "1021102"
                 },
                 {
-                    "supervisor_district_codes/value": "3.0",
-                    "supervisor_district_codes/freq": "836963"
+                    "supervisor_district_codes/value": "6.00000",
+                    "supervisor_district_codes/freq": "923935"
                 },
                 {
-                    "supervisor_district_codes/value": "6.0",
-                    "supervisor_district_codes/freq": "826132"
+                    "supervisor_district_codes/value": "3.00000",
+                    "supervisor_district_codes/freq": "917124"
                 },
                 {
-                    "supervisor_district_codes/value": "8.0",
-                    "supervisor_district_codes/freq": "723922"
+                    "supervisor_district_codes/value": "8.00000",
+                    "supervisor_district_codes/freq": "802759"
                 },
                 {
-                    "supervisor_district_codes/value": "10.0",
-                    "supervisor_district_codes/freq": "691231"
+                    "supervisor_district_codes/value": "10.00000",
+                    "supervisor_district_codes/freq": "758156"
                 },
                 {
-                    "supervisor_district_codes/value": "1.0",
-                    "supervisor_district_codes/freq": "517465"
+                    "supervisor_district_codes/value": "1.00000",
+                    "supervisor_district_codes/freq": "562465"
                 },
                 {
-                    "supervisor_district_codes/value": "2.0",
-                    "supervisor_district_codes/freq": "461466"
+                    "supervisor_district_codes/value": "2.00000",
+                    "supervisor_district_codes/freq": "510943"
                 },
                 {
-                    "supervisor_district_codes/value": "11.0",
-                    "supervisor_district_codes/freq": "430901"
+                    "supervisor_district_codes/value": "11.00000",
+                    "supervisor_district_codes/freq": "468953"
                 },
                 {
-                    "supervisor_district_codes/value": "7.0",
-                    "supervisor_district_codes/freq": "347358"
+                    "supervisor_district_codes/value": "7.00000",
+                    "supervisor_district_codes/freq": "381533"
                 }
             ],
             "field": [
@@ -1269,47 +1270,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "neighborhoods_sffind_boundaries_codes",
-            "description": "Top 20 values and frequencies for neighborhoods_sffind_boundaries. This is partial list. The full set contains 235 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Mission",
-                    "neighborhoods_sffind_boundaries_codes/freq": "710692"
+                    "neighborhoods_sffind_boundaries_codes/freq": "741869"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "South of Market",
-                    "neighborhoods_sffind_boundaries_codes/freq": "496942"
+                    "neighborhoods_sffind_boundaries_codes/freq": "519988"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Outer Sunset",
-                    "neighborhoods_sffind_boundaries_codes/freq": "224915"
+                    "neighborhoods_sffind_boundaries_codes/freq": "234827"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Tenderloin",
-                    "neighborhoods_sffind_boundaries_codes/freq": "223905"
+                    "neighborhoods_sffind_boundaries_codes/freq": "230902"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Inner Richmond",
-                    "neighborhoods_sffind_boundaries_codes/freq": "185350"
+                    "neighborhoods_sffind_boundaries_codes/freq": "193218"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Outer Richmond",
-                    "neighborhoods_sffind_boundaries_codes/freq": "178314"
+                    "neighborhoods_sffind_boundaries_codes/freq": "185221"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Lower Nob Hill",
-                    "neighborhoods_sffind_boundaries_codes/freq": "170974"
+                    "neighborhoods_sffind_boundaries_codes/freq": "181867"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Mission Dolores",
-                    "neighborhoods_sffind_boundaries_codes/freq": "169126"
+                    "neighborhoods_sffind_boundaries_codes/freq": "178736"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Potrero Hill",
-                    "neighborhoods_sffind_boundaries_codes/freq": "162105"
+                    "neighborhoods_sffind_boundaries_codes/freq": "166020"
                 },
                 {
                     "neighborhoods_sffind_boundaries_codes/value": "Bayview",
-                    "neighborhoods_sffind_boundaries_codes/freq": "137292"
+                    "neighborhoods_sffind_boundaries_codes/freq": "142983"
                 }
             ],
             "field": [
@@ -1329,47 +1330,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "analysis_neighborhood_codes",
-            "description": "Top 20 values and frequencies for analysis_neighborhood. This is partial list. The full set contains 41 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "analysis_neighborhood_codes/value": "Mission",
-                    "analysis_neighborhood_codes/freq": "1106917"
+                    "analysis_neighborhood_codes/freq": "1225782"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Bayview Hunters Point",
-                    "analysis_neighborhood_codes/freq": "389301"
+                    "analysis_neighborhood_codes/freq": "428544"
                 },
                 {
                     "analysis_neighborhood_codes/value": "South of Market",
-                    "analysis_neighborhood_codes/freq": "377725"
+                    "analysis_neighborhood_codes/freq": "422360"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Tenderloin",
-                    "analysis_neighborhood_codes/freq": "361146"
+                    "analysis_neighborhood_codes/freq": "401819"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Sunset/Parkside",
-                    "analysis_neighborhood_codes/freq": "325220"
-                },
-                {
-                    "analysis_neighborhood_codes/value": "Castro/Upper Market",
-                    "analysis_neighborhood_codes/freq": "293318"
+                    "analysis_neighborhood_codes/freq": "354560"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Hayes Valley",
-                    "analysis_neighborhood_codes/freq": "290974"
+                    "analysis_neighborhood_codes/freq": "323064"
+                },
+                {
+                    "analysis_neighborhood_codes/value": "Castro/Upper Market",
+                    "analysis_neighborhood_codes/freq": "321968"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Financial District/South Beach",
-                    "analysis_neighborhood_codes/freq": "276378"
-                },
-                {
-                    "analysis_neighborhood_codes/value": "Outer Richmond",
-                    "analysis_neighborhood_codes/freq": "265177"
+                    "analysis_neighborhood_codes/freq": "302766"
                 },
                 {
                     "analysis_neighborhood_codes/value": "Nob Hill",
-                    "analysis_neighborhood_codes/freq": "258468"
+                    "analysis_neighborhood_codes/freq": "290233"
+                },
+                {
+                    "analysis_neighborhood_codes/value": "Outer Richmond",
+                    "analysis_neighborhood_codes/freq": "289659"
                 }
             ],
             "field": [
@@ -1389,47 +1390,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "police_district_codes",
-            "description": "Top 12 values and frequencies for police_district. This is partial list. The full set contains 12 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "police_district_codes/value": "MISSION",
-                    "police_district_codes/freq": "1312268"
+                    "police_district_codes/freq": "1449491"
                 },
                 {
                     "police_district_codes/value": "NORTHERN",
-                    "police_district_codes/freq": "937330"
+                    "police_district_codes/freq": "1043006"
                 },
                 {
                     "police_district_codes/value": "INGLESIDE",
-                    "police_district_codes/freq": "754577"
+                    "police_district_codes/freq": "829751"
                 },
                 {
                     "police_district_codes/value": "CENTRAL",
-                    "police_district_codes/freq": "738157"
-                },
-                {
-                    "police_district_codes/value": "TARAVAL",
-                    "police_district_codes/freq": "688502"
+                    "police_district_codes/freq": "807405"
                 },
                 {
                     "police_district_codes/value": "SOUTHERN",
-                    "police_district_codes/freq": "682752"
+                    "police_district_codes/freq": "756716"
+                },
+                {
+                    "police_district_codes/value": "TARAVAL",
+                    "police_district_codes/freq": "751517"
                 },
                 {
                     "police_district_codes/value": "BAYVIEW",
-                    "police_district_codes/freq": "653479"
-                },
-                {
-                    "police_district_codes/value": "RICHMOND",
-                    "police_district_codes/freq": "599980"
+                    "police_district_codes/freq": "712568"
                 },
                 {
                     "police_district_codes/value": "PARK",
-                    "police_district_codes/freq": "597183"
+                    "police_district_codes/freq": "658064"
+                },
+                {
+                    "police_district_codes/value": "RICHMOND",
+                    "police_district_codes/freq": "652865"
                 },
                 {
                     "police_district_codes/value": "TENDERLOIN",
-                    "police_district_codes/freq": "308878"
+                    "police_district_codes/freq": "340533"
                 }
             ],
             "field": [
@@ -1449,7 +1450,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "lat_codes",
-            "description": "Top 20 values and frequencies for lat. This is partial list. The full set contains 3071583 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "lat_codes/value": "0.0",
@@ -1465,7 +1466,7 @@
                 },
                 {
                     "lat_codes/value": "37.7797",
-                    "lat_codes/freq": "3791"
+                    "lat_codes/freq": "3792"
                 },
                 {
                     "lat_codes/value": "37.753601074219",
@@ -1509,7 +1510,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "long_codes",
-            "description": "Top 20 values and frequencies for long. This is partial list. The full set contains 2985686 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "long_codes/value": "0.0",
@@ -1569,10 +1570,10 @@
         {
             "@type": "cr:RecordSet",
             "@id": "point_geom_codes",
-            "description": "Top 20 values and frequencies for point_geom. This is partial list. The full set contains 4051434 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
-                    "point_geom_codes/value": "{'coordinates': [0, 0], 'type': 'Point'}",
+                    "point_geom_codes/value": "{'coordinates': [0.0, 0.0], 'type': 'Point'}",
                     "point_geom_codes/freq": "551131"
                 },
                 {
@@ -1629,7 +1630,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "source_codes",
-            "description": "Top 11 values and frequencies for source. This is partial list. The full set contains 11 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "source_codes/value": "Mobile/Open311",
@@ -1637,23 +1638,23 @@
                 },
                 {
                     "source_codes/value": "Phone",
-                    "source_codes/freq": "2585776"
+                    "source_codes/freq": "2711627"
                 },
                 {
                     "source_codes/value": "Web",
-                    "source_codes/freq": "1029428"
+                    "source_codes/freq": "1222366"
                 },
                 {
                     "source_codes/value": "Mobile",
-                    "source_codes/freq": "474645"
+                    "source_codes/freq": "888761"
                 },
                 {
                     "source_codes/value": "Integrated Agency",
-                    "source_codes/freq": "178402"
+                    "source_codes/freq": "182945"
                 },
                 {
                     "source_codes/value": "Twitter",
-                    "source_codes/freq": "44217"
+                    "source_codes/freq": "44735"
                 },
                 {
                     "source_codes/value": "Other Department",
@@ -1661,15 +1662,15 @@
                 },
                 {
                     "source_codes/value": "Email",
-                    "source_codes/freq": "1158"
-                },
-                {
-                    "source_codes/value": "In Person",
-                    "source_codes/freq": "233"
+                    "source_codes/freq": "1267"
                 },
                 {
                     "source_codes/value": "Test",
-                    "source_codes/freq": "172"
+                    "source_codes/freq": "647"
+                },
+                {
+                    "source_codes/value": "In Person",
+                    "source_codes/freq": "228"
                 }
             ],
             "field": [
@@ -1689,7 +1690,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "bos_2012_codes",
-            "description": "Top 11 values and frequencies for bos_2012. This is partial list. The full set contains 11 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "bos_2012_codes/value": "9.00000",
@@ -1749,7 +1750,7 @@
         {
             "@type": "cr:RecordSet",
             "@id": "data_as_of_codes",
-            "description": "Top 20 values and frequencies for data_as_of. This is partial list. The full set contains 401 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "data_as_of_codes/value": "2024-02-20T10:35:55.000",
@@ -1764,8 +1765,12 @@
                     "data_as_of_codes/freq": "70795"
                 },
                 {
-                    "data_as_of_codes/value": "2025-04-09T01:00:00.000",
-                    "data_as_of_codes/freq": "36598"
+                    "data_as_of_codes/value": "2025-07-01T01:00:00.000",
+                    "data_as_of_codes/freq": "39432"
+                },
+                {
+                    "data_as_of_codes/value": "2026-02-06T01:00:00.000",
+                    "data_as_of_codes/freq": "31330"
                 },
                 {
                     "data_as_of_codes/value": "2024-06-12T06:03:00.000",
@@ -1777,19 +1782,15 @@
                 },
                 {
                     "data_as_of_codes/value": "2024-12-16T06:00:00.000",
-                    "data_as_of_codes/freq": "9931"
+                    "data_as_of_codes/freq": "9888"
                 },
                 {
-                    "data_as_of_codes/value": "2024-03-15T06:03:00.000",
-                    "data_as_of_codes/freq": "7331"
+                    "data_as_of_codes/value": "2026-02-02T01:00:00.000",
+                    "data_as_of_codes/freq": "9759"
                 },
                 {
-                    "data_as_of_codes/value": "2025-04-06T01:00:00.000",
-                    "data_as_of_codes/freq": "6126"
-                },
-                {
-                    "data_as_of_codes/value": "2025-02-21T06:00:00.000",
-                    "data_as_of_codes/freq": "5546"
+                    "data_as_of_codes/value": "2025-04-10T01:00:00.000",
+                    "data_as_of_codes/freq": "8241"
                 }
             ],
             "field": [
@@ -1809,47 +1810,47 @@
         {
             "@type": "cr:RecordSet",
             "@id": "data_loaded_at_codes",
-            "description": "Top 20 values and frequencies for data_loaded_at. This is partial list. The full set contains 202 values.",
+            "description": "This is partial list. The full list has 8386364 codes.",
             "examples": [
                 {
                     "data_loaded_at_codes/value": "2024-09-11T17:09:50.000",
-                    "data_loaded_at_codes/freq": "7135553"
+                    "data_loaded_at_codes/freq": "7134443"
                 },
                 {
-                    "data_loaded_at_codes/value": "2025-04-09T02:52:36.000",
-                    "data_loaded_at_codes/freq": "36598"
+                    "data_loaded_at_codes/value": "2025-07-01T02:55:33.000",
+                    "data_loaded_at_codes/freq": "39432"
+                },
+                {
+                    "data_loaded_at_codes/value": "2026-02-06T03:05:19.000",
+                    "data_loaded_at_codes/freq": "31330"
+                },
+                {
+                    "data_loaded_at_codes/value": "2026-02-02T16:02:30.000",
+                    "data_loaded_at_codes/freq": "16766"
                 },
                 {
                     "data_loaded_at_codes/value": "2024-12-17T09:11:33.000",
-                    "data_loaded_at_codes/freq": "9931"
+                    "data_loaded_at_codes/freq": "9888"
                 },
                 {
                     "data_loaded_at_codes/value": "2024-11-26T09:59:30.000",
-                    "data_loaded_at_codes/freq": "9524"
+                    "data_loaded_at_codes/freq": "9322"
                 },
                 {
                     "data_loaded_at_codes/value": "2024-12-02T09:19:31.000",
-                    "data_loaded_at_codes/freq": "9009"
+                    "data_loaded_at_codes/freq": "8831"
+                },
+                {
+                    "data_loaded_at_codes/value": "2025-04-10T02:52:13.000",
+                    "data_loaded_at_codes/freq": "8241"
                 },
                 {
                     "data_loaded_at_codes/value": "2024-10-07T09:28:38.000",
-                    "data_loaded_at_codes/freq": "7050"
+                    "data_loaded_at_codes/freq": "6976"
                 },
                 {
-                    "data_loaded_at_codes/value": "2025-04-06T02:51:08.000",
-                    "data_loaded_at_codes/freq": "6126"
-                },
-                {
-                    "data_loaded_at_codes/value": "2025-03-02T09:01:30.000",
-                    "data_loaded_at_codes/freq": "5694"
-                },
-                {
-                    "data_loaded_at_codes/value": "2025-02-22T08:58:41.000",
-                    "data_loaded_at_codes/freq": "5546"
-                },
-                {
-                    "data_loaded_at_codes/value": "2025-04-04T02:54:06.000",
-                    "data_loaded_at_codes/freq": "4837"
+                    "data_loaded_at_codes/value": "2025-08-09T03:03:27.000",
+                    "data_loaded_at_codes/freq": "6578"
                 }
             ],
             "field": [

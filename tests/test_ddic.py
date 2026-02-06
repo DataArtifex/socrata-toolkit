@@ -24,3 +24,28 @@ def test_sfo_311_ddi_codebook(tests_dir, ddi_schema):
     xml_doc = ET.fromstring(xml_str)
     ddi_schema.assertValid(xml_doc)
     
+    # Content verification using XPath
+    ns = {'d': 'ddi:codebook:2_5'}
+    
+    # Verify title is present
+    titles = xml_doc.xpath('//d:titlStmt/d:titl/text()', namespaces=ns)
+    assert len(titles) > 0, "No title found in DDI codebook"
+    assert sfo_dataset_311.name in titles, f"Expected title '{sfo_dataset_311.name}' not found"
+    
+    # Verify IDNo is correct
+    idnos = xml_doc.xpath('//d:titlStmt/d:IDNo/text()', namespaces=ns)
+    expected_id = f"{sfo_server.host}-{sfo_dataset_311.id}"
+    assert expected_id in idnos, f"Expected ID '{expected_id}' not found"
+    
+    # Verify variables are present
+    vars = xml_doc.xpath('//d:dataDscr/d:var', namespaces=ns)
+    assert len(vars) > 0, "No variables found in DDI codebook"
+    
+    # Verify at least one variable has correct attributes
+    var_names = [v.get('name') for v in vars]
+    assert len(var_names) > 0, "No variable names found"
+    # Check that first visible variable is included
+    first_var = next((v for v in sfo_dataset_311.variables if not v.is_hidden), None)
+    if first_var:
+        assert first_var.name in var_names, f"Expected variable '{first_var.name}' not found"
+

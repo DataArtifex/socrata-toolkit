@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Data Artifex Foo'
-copyright = '2024, Pascal Heus'
+project = 'Data Artifex Socrata Toolkit'
+copyright = '2024-2026, Pascal Heus'
 author = 'Pascal Heus'
 release = '0.1.0'
 

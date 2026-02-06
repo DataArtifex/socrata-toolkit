@@ -7,7 +7,7 @@
 				<IDNo agency="socrata.com">data.sfgov.org-vw6y-z8j6</IDNo>
 			</titlStmt>
 			<prodStmt>
-				<prodDate date="2025-04-01T13:48:39">2025-04-01T13:48:39</prodDate>
+				<prodDate date="2026-02-06T14:19:50">2026-02-06T14:19:50</prodDate>
 				<software version="0.1.0">Data Artifex - Socrata (dartfx-socrata)</software>
 			</prodStmt>
 		</citation>
@@ -27,7 +27,7 @@
 Dataset contains SF311 cases created since 7/1/2008 with location information. 
 
 &lt;strong&gt;UPDATE PROCESS&lt;/strong&gt;
-This dataset updates daily.
+This dataset updates nightly. New data is added around 6am pacific time. 
 
 &lt;strong&gt;HOW TO USE THIS DATASET&lt;/strong&gt;
 Download data using 'export' button to the right. For more information on this dataset, visit the  &lt;u&gt;&lt;a href="https://sfdigitalservices.gitbook.io/dataset-explainers/311-cases"&gt;FAQ page&lt;/a&gt;&lt;/u&gt;.
@@ -42,7 +42,7 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		<fileTxt>
 			<fileName>311 Cases</fileName>
 			<dimensns>
-				<caseQnty>7627893</caseQnty>
+				<caseQnty>8386364</caseQnty>
 				<varQnty>25</varQnty>
 			</dimensns>
 			<fileType>socrata</fileType>
@@ -51,612 +51,176 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 	<dataDscr>
 		<var ID="V599267137" name="service_request_id" files="F1">
 			<labl>CaseID</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">240215</sumStat>
-			<sumStat type="max">101001690764</sumStat>
-			<sumStat type="other" otherType="cardinality">7627893</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
+			<sumStat type="max">101003451289</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267138" name="requested_datetime" files="F1">
 			<labl>Opened</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">2008-07-01T00:13:13.000</sumStat>
-			<sumStat type="max">2025-03-30T23:58:33.000</sumStat>
-			<sumStat type="other" otherType="cardinality">5887860</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
+			<sumStat type="max">2026-02-05T23:56:00.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267139" name="closed_date" files="F1">
 			<labl>Closed</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
-			<sumStat type="min">2008-07-01T06:10:23.000</sumStat>
-			<sumStat type="max">2025-03-30T23:52:08.000</sumStat>
-			<sumStat type="other" otherType="cardinality">5790230</sumStat>
-			<sumStat type="vald">7490734</sumStat>
-			<sumStat type="invd">137159</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="min">1899-12-31T23:07:00.000</sumStat>
+			<sumStat type="max">2026-02-05T23:48:14.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8243809</sumStat>
+			<sumStat type="invd">142555</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267140" name="updated_datetime" files="F1">
 			<labl>Updated</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">2008-07-01T06:10:23.000</sumStat>
-			<sumStat type="max">2025-03-30T23:58:48.000</sumStat>
-			<sumStat type="other" otherType="cardinality">5942721</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
+			<sumStat type="max">2026-02-05T23:57:03.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267141" name="status_description" files="F1">
 			<labl>Status</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">Closed</sumStat>
 			<sumStat type="max">Open</sumStat>
-			<sumStat type="other" otherType="cardinality">2</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
-			<catgry>
-				<catValu>Closed</catValu>
-				<labl>Closed</labl>
-				<catStat type="freq">7490734</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Open</catValu>
-				<labl>Open</labl>
-				<catStat type="freq">137159</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267142" name="status_notes" files="F1">
 			<labl>Status Notes</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">- ?????</sumStat>
 			<sumStat type="max">Wrong Park, Work is Pending - This is actually Golden Gate Park, not GG Heights Park. The projected start date for this work is April or May.</sumStat>
-			<sumStat type="other" otherType="cardinality">1816920</sumStat>
-			<sumStat type="vald">7618255</sumStat>
-			<sumStat type="invd">9638</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8376279</sumStat>
+			<sumStat type="invd">10085</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267143" name="agency_responsible" files="F1">
 			<labl>Responsible Agency</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">311 - Content Team</sumStat>
 			<sumStat type="max">Yerba Buena CBD Queue</sumStat>
-			<sumStat type="other" otherType="cardinality">611</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267144" name="service_name" files="F1">
 			<labl>Category</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">311 Complaints</sumStat>
 			<sumStat type="max">Well-Being Check</sumStat>
-			<sumStat type="other" otherType="cardinality">140</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
-			<catgry>
-				<catValu>Street and Sidewalk Cleaning</catValu>
-				<labl>Street and Sidewalk Cleaning</labl>
-				<catStat type="freq">3002744</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Graffiti</catValu>
-				<labl>Graffiti</labl>
-				<catStat type="freq">870421</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Parking Enforcement</catValu>
-				<labl>Parking Enforcement</labl>
-				<catStat type="freq">594981</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Encampments</catValu>
-				<labl>Encampments</labl>
-				<catStat type="freq">394311</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Abandoned Vehicle</catValu>
-				<labl>Abandoned Vehicle</labl>
-				<catStat type="freq">297241</catStat>
-			</catgry>
-			<catgry>
-				<catValu>MUNI Feedback</catValu>
-				<labl>MUNI Feedback</labl>
-				<catStat type="freq">233512</catStat>
-			</catgry>
-			<catgry>
-				<catValu>General Request - PUBLIC WORKS</catValu>
-				<labl>General Request - PUBLIC WORKS</labl>
-				<catStat type="freq">194371</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Tree Maintenance</catValu>
-				<labl>Tree Maintenance</labl>
-				<catStat type="freq">150294</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Sewer Issues</catValu>
-				<labl>Sewer Issues</labl>
-				<catStat type="freq">141583</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Damaged Property</catValu>
-				<labl>Damaged Property</labl>
-				<catStat type="freq">138729</catStat>
-			</catgry>
-			<catgry>
-				<catValu>General Request - MTA</catValu>
-				<labl>General Request - MTA</labl>
-				<catStat type="freq">129541</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Illegal Postings</catValu>
-				<labl>Illegal Postings</labl>
-				<catStat type="freq">125784</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Litter Receptacles</catValu>
-				<labl>Litter Receptacles</labl>
-				<catStat type="freq">105571</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Street Defects</catValu>
-				<labl>Street Defects</labl>
-				<catStat type="freq">99858</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Sign Repair</catValu>
-				<labl>Sign Repair</labl>
-				<catStat type="freq">99661</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Rec and Park Requests</catValu>
-				<labl>Rec and Park Requests</labl>
-				<catStat type="freq">98250</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Streetlights</catValu>
-				<labl>Streetlights</labl>
-				<catStat type="freq">92281</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Sidewalk or Curb</catValu>
-				<labl>Sidewalk or Curb</labl>
-				<catStat type="freq">86623</catStat>
-			</catgry>
-			<catgry>
-				<catValu>SFHA Requests</catValu>
-				<labl>SFHA Requests</labl>
-				<catStat type="freq">74283</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Noise Report</catValu>
-				<labl>Noise Report</labl>
-				<catStat type="freq">62018</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267145" name="service_subtype" files="F1">
 			<labl>Request Type</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">abandoned_parklet</sumStat>
 			<sumStat type="max">Yellow Color Curb Request</sumStat>
-			<sumStat type="other" otherType="cardinality">2610</sumStat>
-			<sumStat type="vald">7616603</sumStat>
-			<sumStat type="invd">11290</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8371308</sumStat>
+			<sumStat type="invd">15056</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267146" name="service_details" files="F1">
 			<labl>Request Details</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">-  -</sumStat>
 			<sumStat type="max">Z - X - Y</sumStat>
-			<sumStat type="other" otherType="cardinality">533774</sumStat>
-			<sumStat type="vald">7351376</sumStat>
-			<sumStat type="invd">276517</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">7879647</sumStat>
+			<sumStat type="invd">506717</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267147" name="address" files="F1">
 			<labl>Address</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
-			<sumStat type="min">1000 14TH ST, SAN FRANCISCO, CA, 94114</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="min">1000 14TH ST, SAN FRANCISCO, CA 94114</sumStat>
 			<sumStat type="max">Youngblood-Coleman Playground, 1398 HUDSON ST, SAN FRANCISCO, CA, 94124</sumStat>
-			<sumStat type="other" otherType="cardinality">426260</sumStat>
-			<sumStat type="vald">7627878</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386349</sumStat>
 			<sumStat type="invd">15</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267148" name="street" files="F1">
 			<labl>Street</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">101/103 LUNDY LANE</sumStat>
 			<sumStat type="max">ZOO RD</sumStat>
-			<sumStat type="other" otherType="cardinality">3354</sumStat>
-			<sumStat type="vald">7264857</sumStat>
-			<sumStat type="invd">363036</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8014873</sumStat>
+			<sumStat type="invd">371491</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267149" name="supervisor_district" files="F1">
 			<labl>Supervisor District</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">0.0</sumStat>
 			<sumStat type="max">11.0</sumStat>
-			<sumStat type="other" otherType="cardinality">12</sumStat>
-			<sumStat type="vald">7260593</sumStat>
-			<sumStat type="invd">367300</sumStat>
-			<catgry>
-				<catValu>9.00000</catValu>
-				<labl>9.00000</labl>
-				<catStat type="freq">1167677</catStat>
-			</catgry>
-			<catgry>
-				<catValu>5.00000</catValu>
-				<labl>5.00000</labl>
-				<catStat type="freq">926706</catStat>
-			</catgry>
-			<catgry>
-				<catValu>3.00000</catValu>
-				<labl>3.00000</labl>
-				<catStat type="freq">835043</catStat>
-			</catgry>
-			<catgry>
-				<catValu>6.00000</catValu>
-				<labl>6.00000</labl>
-				<catStat type="freq">823540</catStat>
-			</catgry>
-			<catgry>
-				<catValu>8.00000</catValu>
-				<labl>8.00000</labl>
-				<catStat type="freq">722019</catStat>
-			</catgry>
-			<catgry>
-				<catValu>10.00000</catValu>
-				<labl>10.00000</labl>
-				<catStat type="freq">689206</catStat>
-			</catgry>
-			<catgry>
-				<catValu>1.00000</catValu>
-				<labl>1.00000</labl>
-				<catStat type="freq">516219</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2.00000</catValu>
-				<labl>2.00000</labl>
-				<catStat type="freq">460190</catStat>
-			</catgry>
-			<catgry>
-				<catValu>11.00000</catValu>
-				<labl>11.00000</labl>
-				<catStat type="freq">429812</catStat>
-			</catgry>
-			<catgry>
-				<catValu>7.00000</catValu>
-				<labl>7.00000</labl>
-				<catStat type="freq">346428</catStat>
-			</catgry>
-			<catgry>
-				<catValu>4.00000</catValu>
-				<labl>4.00000</labl>
-				<catStat type="freq">339300</catStat>
-			</catgry>
-			<catgry>
-				<catValu>0.00000</catValu>
-				<labl>0.00000</labl>
-				<catStat type="freq">4453</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8009002</sumStat>
+			<sumStat type="invd">377362</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267150" name="neighborhoods_sffind_boundaries" files="F1">
 			<labl>Neighborhood</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">8</sumStat>
 			<sumStat type="max">YERBA BUENA ISLAND</sumStat>
-			<sumStat type="other" otherType="cardinality">235</sumStat>
-			<sumStat type="vald">7256503</sumStat>
-			<sumStat type="invd">371390</sumStat>
-			<catgry>
-				<catValu>Mission</catValu>
-				<labl>Mission</labl>
-				<catStat type="freq">710328</catStat>
-			</catgry>
-			<catgry>
-				<catValu>South of Market</catValu>
-				<labl>South of Market</labl>
-				<catStat type="freq">496647</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Outer Sunset</catValu>
-				<labl>Outer Sunset</labl>
-				<catStat type="freq">224748</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Tenderloin</catValu>
-				<labl>Tenderloin</labl>
-				<catStat type="freq">223718</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Inner Richmond</catValu>
-				<labl>Inner Richmond</labl>
-				<catStat type="freq">185189</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Outer Richmond</catValu>
-				<labl>Outer Richmond</labl>
-				<catStat type="freq">178168</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Lower Nob Hill</catValu>
-				<labl>Lower Nob Hill</labl>
-				<catStat type="freq">170873</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Mission Dolores</catValu>
-				<labl>Mission Dolores</labl>
-				<catStat type="freq">169042</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Potrero Hill</catValu>
-				<labl>Potrero Hill</labl>
-				<catStat type="freq">162026</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Bayview</catValu>
-				<labl>Bayview</labl>
-				<catStat type="freq">137189</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Portola</catValu>
-				<labl>Portola</labl>
-				<catStat type="freq">133790</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Bernal Heights</catValu>
-				<labl>Bernal Heights</labl>
-				<catStat type="freq">124611</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Civic Center</catValu>
-				<labl>Civic Center</labl>
-				<catStat type="freq">116577</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Excelsior</catValu>
-				<labl>Excelsior</labl>
-				<catStat type="freq">106566</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Nob Hill</catValu>
-				<labl>Nob Hill</labl>
-				<catStat type="freq">102678</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Western Addition</catValu>
-				<labl>Western Addition</labl>
-				<catStat type="freq">99761</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Lower Haight</catValu>
-				<labl>Lower Haight</labl>
-				<catStat type="freq">93960</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Pacific Heights</catValu>
-				<labl>Pacific Heights</labl>
-				<catStat type="freq">93049</catStat>
-			</catgry>
-			<catgry>
-				<catValu>North Beach</catValu>
-				<labl>North Beach</labl>
-				<catStat type="freq">92998</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Haight Ashbury</catValu>
-				<labl>Haight Ashbury</labl>
-				<catStat type="freq">91148</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8005089</sumStat>
+			<sumStat type="invd">381275</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267192" name="analysis_neighborhood" files="F1">
 			<labl>Analysis Neighborhood</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">Bayview Hunters Point</sumStat>
 			<sumStat type="max">West of Twin Peaks</sumStat>
-			<sumStat type="other" otherType="cardinality">41</sumStat>
-			<sumStat type="vald">7059921</sumStat>
-			<sumStat type="invd">567972</sumStat>
-			<catgry>
-				<catValu>Mission</catValu>
-				<labl>Mission</labl>
-				<catStat type="freq">1103363</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Bayview Hunters Point</catValu>
-				<labl>Bayview Hunters Point</labl>
-				<catStat type="freq">388033</catStat>
-			</catgry>
-			<catgry>
-				<catValu>South of Market</catValu>
-				<labl>South of Market</labl>
-				<catStat type="freq">376543</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Tenderloin</catValu>
-				<labl>Tenderloin</labl>
-				<catStat type="freq">360066</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Sunset/Parkside</catValu>
-				<labl>Sunset/Parkside</labl>
-				<catStat type="freq">324261</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Castro/Upper Market</catValu>
-				<labl>Castro/Upper Market</labl>
-				<catStat type="freq">292574</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Hayes Valley</catValu>
-				<labl>Hayes Valley</labl>
-				<catStat type="freq">290105</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Financial District/South Beach</catValu>
-				<labl>Financial District/South Beach</labl>
-				<catStat type="freq">275715</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Outer Richmond</catValu>
-				<labl>Outer Richmond</labl>
-				<catStat type="freq">264465</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Nob Hill</catValu>
-				<labl>Nob Hill</labl>
-				<catStat type="freq">257822</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Haight Ashbury</catValu>
-				<labl>Haight Ashbury</labl>
-				<catStat type="freq">244960</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Western Addition</catValu>
-				<labl>Western Addition</labl>
-				<catStat type="freq">197338</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Bernal Heights</catValu>
-				<labl>Bernal Heights</labl>
-				<catStat type="freq">195582</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Excelsior</catValu>
-				<labl>Excelsior</labl>
-				<catStat type="freq">176384</catStat>
-			</catgry>
-			<catgry>
-				<catValu>West of Twin Peaks</catValu>
-				<labl>West of Twin Peaks</labl>
-				<catStat type="freq">162984</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Inner Richmond</catValu>
-				<labl>Inner Richmond</labl>
-				<catStat type="freq">154548</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Marina</catValu>
-				<labl>Marina</labl>
-				<catStat type="freq">149763</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Inner Sunset</catValu>
-				<labl>Inner Sunset</labl>
-				<catStat type="freq">144669</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Portola</catValu>
-				<labl>Portola</labl>
-				<catStat type="freq">141781</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Chinatown</catValu>
-				<labl>Chinatown</labl>
-				<catStat type="freq">135040</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">7808787</sumStat>
+			<sumStat type="invd">577577</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267151" name="police_district" files="F1">
 			<labl>Police District</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">BAYVIEW</sumStat>
 			<sumStat type="max">UNASSIGNED</sumStat>
-			<sumStat type="other" otherType="cardinality">12</sumStat>
-			<sumStat type="vald">7253555</sumStat>
-			<sumStat type="invd">374338</sumStat>
-			<catgry>
-				<catValu>MISSION</catValu>
-				<labl>MISSION</labl>
-				<catStat type="freq">1308199</catStat>
-			</catgry>
-			<catgry>
-				<catValu>NORTHERN</catValu>
-				<labl>NORTHERN</labl>
-				<catStat type="freq">934556</catStat>
-			</catgry>
-			<catgry>
-				<catValu>INGLESIDE</catValu>
-				<labl>INGLESIDE</labl>
-				<catStat type="freq">752747</catStat>
-			</catgry>
-			<catgry>
-				<catValu>CENTRAL</catValu>
-				<labl>CENTRAL</labl>
-				<catStat type="freq">736487</catStat>
-			</catgry>
-			<catgry>
-				<catValu>TARAVAL</catValu>
-				<labl>TARAVAL</labl>
-				<catStat type="freq">686623</catStat>
-			</catgry>
-			<catgry>
-				<catValu>SOUTHERN</catValu>
-				<labl>SOUTHERN</labl>
-				<catStat type="freq">680862</catStat>
-			</catgry>
-			<catgry>
-				<catValu>BAYVIEW</catValu>
-				<labl>BAYVIEW</labl>
-				<catStat type="freq">651766</catStat>
-			</catgry>
-			<catgry>
-				<catValu>RICHMOND</catValu>
-				<labl>RICHMOND</labl>
-				<catStat type="freq">598522</catStat>
-			</catgry>
-			<catgry>
-				<catValu>PARK</catValu>
-				<labl>PARK</labl>
-				<catStat type="freq">595804</catStat>
-			</catgry>
-			<catgry>
-				<catValu>TENDERLOIN</catValu>
-				<labl>TENDERLOIN</labl>
-				<catStat type="freq">307927</catStat>
-			</catgry>
-			<catgry>
-				<catValu>UNASSIGNED</catValu>
-				<labl>UNASSIGNED</labl>
-				<catStat type="freq">61</catStat>
-			</catgry>
-			<catgry>
-				<catValu>NO</catValu>
-				<labl>NO</labl>
-				<catStat type="freq">1</catStat>
-			</catgry>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8002038</sumStat>
+			<sumStat type="invd">384326</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267152" name="lat" files="F1">
 			<labl>Latitude</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
-			<sumStat type="min">0.000000000000</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="min">0E-12</sumStat>
 			<sumStat type="max">38.6821821</sumStat>
-			<sumStat type="other" otherType="cardinality">3058735</sumStat>
-			<sumStat type="vald">7614828</sumStat>
-			<sumStat type="invd">13065</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8363947</sumStat>
+			<sumStat type="invd">22417</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267153" name="long" files="F1">
 			<labl>Longitude</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">-141.219150990916</sumStat>
-			<sumStat type="max">0.0</sumStat>
-			<sumStat type="other" otherType="cardinality">2973119</sumStat>
-			<sumStat type="vald">7614828</sumStat>
-			<sumStat type="invd">13065</sumStat>
+			<sumStat type="max">0E-12</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8363947</sumStat>
+			<sumStat type="invd">22417</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267154" name="point" files="F1">
@@ -665,75 +229,20 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		</var>
 		<var ID="V599267155" name="point_geom" files="F1">
 			<labl>point_geom</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
-			<sumStat type="other" otherType="cardinality">4037467</sumStat>
-			<sumStat type="vald">7614828</sumStat>
-			<sumStat type="invd">13065</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8363947</sumStat>
+			<sumStat type="invd">22417</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">point</varFormat>
 		</var>
 		<var ID="V599267157" name="source" files="F1">
 			<labl>Source</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">Email</sumStat>
 			<sumStat type="max">Web</sumStat>
-			<sumStat type="other" otherType="cardinality">11</sumStat>
-			<sumStat type="vald">7627891</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386362</sumStat>
 			<sumStat type="invd">2</sumStat>
-			<catgry>
-				<catValu>Mobile/Open311</catValu>
-				<labl>Mobile/Open311</labl>
-				<catStat type="freq">3327770</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Phone</catValu>
-				<labl>Phone</labl>
-				<catStat type="freq">2582230</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Web</catValu>
-				<labl>Web</labl>
-				<catStat type="freq">1028110</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Mobile</catValu>
-				<labl>Mobile</labl>
-				<catStat type="freq">459783</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Integrated Agency</catValu>
-				<labl>Integrated Agency</labl>
-				<catStat type="freq">178227</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Twitter</catValu>
-				<labl>Twitter</labl>
-				<catStat type="freq">44199</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Other Department</catValu>
-				<labl>Other Department</labl>
-				<catStat type="freq">6006</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Email</catValu>
-				<labl>Email</labl>
-				<catStat type="freq">1157</catStat>
-			</catgry>
-			<catgry>
-				<catValu>In Person</catValu>
-				<labl>In Person</labl>
-				<catStat type="freq">238</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Test</catValu>
-				<labl>Test</labl>
-				<catStat type="freq">161</catStat>
-			</catgry>
-			<catgry>
-				<catValu>Mail</catValu>
-				<labl>Mail</labl>
-				<catStat type="freq">10</catStat>
-			</catgry>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267159" name="media_url" files="F1">
@@ -742,289 +251,32 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		</var>
 		<var ID="V599267162" name="bos_2012" files="F1">
 			<labl>BOS_2012</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">1.00000</sumStat>
 			<sumStat type="max">11.00000</sumStat>
-			<sumStat type="other" otherType="cardinality">11</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
 			<sumStat type="vald">6289097</sumStat>
-			<sumStat type="invd">1338796</sumStat>
-			<catgry>
-				<catValu>9.00000</catValu>
-				<labl>9.00000</labl>
-				<catStat type="freq">915498</catStat>
-			</catgry>
-			<catgry>
-				<catValu>6.00000</catValu>
-				<labl>6.00000</labl>
-				<catStat type="freq">903538</catStat>
-			</catgry>
-			<catgry>
-				<catValu>5.00000</catValu>
-				<labl>5.00000</labl>
-				<catStat type="freq">780130</catStat>
-			</catgry>
-			<catgry>
-				<catValu>10.00000</catValu>
-				<labl>10.00000</labl>
-				<catStat type="freq">667171</catStat>
-			</catgry>
-			<catgry>
-				<catValu>8.00000</catValu>
-				<labl>8.00000</labl>
-				<catStat type="freq">662656</catStat>
-			</catgry>
-			<catgry>
-				<catValu>3.00000</catValu>
-				<labl>3.00000</labl>
-				<catStat type="freq">660809</catStat>
-			</catgry>
-			<catgry>
-				<catValu>1.00000</catValu>
-				<labl>1.00000</labl>
-				<catStat type="freq">449090</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2.00000</catValu>
-				<labl>2.00000</labl>
-				<catStat type="freq">367991</catStat>
-			</catgry>
-			<catgry>
-				<catValu>11.00000</catValu>
-				<labl>11.00000</labl>
-				<catStat type="freq">336883</catStat>
-			</catgry>
-			<catgry>
-				<catValu>4.00000</catValu>
-				<labl>4.00000</labl>
-				<catStat type="freq">284202</catStat>
-			</catgry>
-			<catgry>
-				<catValu>7.00000</catValu>
-				<labl>7.00000</labl>
-				<catStat type="freq">261129</catStat>
-			</catgry>
+			<sumStat type="invd">2097267</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267163" name="data_as_of" files="F1">
 			<labl>data_as_of</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">2024-02-15T08:34:00.000</sumStat>
-			<sumStat type="max">2025-03-31T01:00:00.000</sumStat>
-			<sumStat type="other" otherType="cardinality">392</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
-			<catgry>
-				<catValu>2024-02-20T10:35:55.000</catValu>
-				<labl>2024-02-20T10:35:55.000</labl>
-				<catStat type="freq">6439898</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-04-10T10:23:00.000</catValu>
-				<labl>2024-04-10T10:23:00.000</labl>
-				<catStat type="freq">251526</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-04-09T09:12:00.000</catValu>
-				<labl>2024-04-09T09:12:00.000</labl>
-				<catStat type="freq">70795</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-31T01:00:00.000</catValu>
-				<labl>2025-03-31T01:00:00.000</labl>
-				<catStat type="freq">37531</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-06-12T06:03:00.000</catValu>
-				<labl>2024-06-12T06:03:00.000</labl>
-				<catStat type="freq">27152</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-05-30T06:05:00.000</catValu>
-				<labl>2024-05-30T06:05:00.000</labl>
-				<catStat type="freq">14274</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-12-16T06:00:00.000</catValu>
-				<labl>2024-12-16T06:00:00.000</labl>
-				<catStat type="freq">9962</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-03-15T06:03:00.000</catValu>
-				<labl>2024-03-15T06:03:00.000</labl>
-				<catStat type="freq">7331</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-02-21T06:00:00.000</catValu>
-				<labl>2025-02-21T06:00:00.000</labl>
-				<catStat type="freq">5581</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-04-04T06:23:00.000</catValu>
-				<labl>2024-04-04T06:23:00.000</labl>
-				<catStat type="freq">4819</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-11-24T06:00:00.000</catValu>
-				<labl>2024-11-24T06:00:00.000</labl>
-				<catStat type="freq">4586</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-05-25T06:05:00.000</catValu>
-				<labl>2024-05-25T06:05:00.000</labl>
-				<catStat type="freq">4344</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-12-19T06:00:00.000</catValu>
-				<labl>2024-12-19T06:00:00.000</labl>
-				<catStat type="freq">3764</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-03-21T06:24:00.000</catValu>
-				<labl>2024-03-21T06:24:00.000</labl>
-				<catStat type="freq">3141</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-08-20T06:04:00.000</catValu>
-				<labl>2024-08-20T06:04:00.000</labl>
-				<catStat type="freq">3120</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-31T06:00:00.000</catValu>
-				<labl>2025-01-31T06:00:00.000</labl>
-				<catStat type="freq">3095</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-14T06:00:00.000</catValu>
-				<labl>2025-03-14T06:00:00.000</labl>
-				<catStat type="freq">3042</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-05-05T06:23:00.000</catValu>
-				<labl>2024-05-05T06:23:00.000</labl>
-				<catStat type="freq">3016</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-16T06:00:00.000</catValu>
-				<labl>2025-01-16T06:00:00.000</labl>
-				<catStat type="freq">3000</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-12T06:00:00.000</catValu>
-				<labl>2025-01-12T06:00:00.000</labl>
-				<catStat type="freq">3000</catStat>
-			</catgry>
+			<sumStat type="max">2026-02-06T01:00:00.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267164" name="data_loaded_at" files="F1">
 			<labl>data_loaded_at</labl>
-			<sumStat type="other" otherType="count">7627893</sumStat>
+			<sumStat type="other" otherType="count">8386364</sumStat>
 			<sumStat type="min">2024-09-11T17:09:50.000</sumStat>
-			<sumStat type="max">2025-03-31T02:52:26.000</sumStat>
-			<sumStat type="other" otherType="cardinality">193</sumStat>
-			<sumStat type="vald">7627893</sumStat>
-			<sumStat type="invd">0</sumStat>
-			<catgry>
-				<catValu>2024-09-11T17:09:50.000</catValu>
-				<labl>2024-09-11T17:09:50.000</labl>
-				<catStat type="freq">7139260</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-31T02:52:26.000</catValu>
-				<labl>2025-03-31T02:52:26.000</labl>
-				<catStat type="freq">37531</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-12-17T09:11:33.000</catValu>
-				<labl>2024-12-17T09:11:33.000</labl>
-				<catStat type="freq">9962</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-11-26T09:59:30.000</catValu>
-				<labl>2024-11-26T09:59:30.000</labl>
-				<catStat type="freq">9698</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-12-02T09:19:31.000</catValu>
-				<labl>2024-12-02T09:19:31.000</labl>
-				<catStat type="freq">9132</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-10-07T09:28:38.000</catValu>
-				<labl>2024-10-07T09:28:38.000</labl>
-				<catStat type="freq">7226</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-02T09:01:30.000</catValu>
-				<labl>2025-03-02T09:01:30.000</labl>
-				<catStat type="freq">5756</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-02-22T08:58:41.000</catValu>
-				<labl>2025-02-22T08:58:41.000</labl>
-				<catStat type="freq">5581</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-12-20T09:08:54.000</catValu>
-				<labl>2024-12-20T09:08:54.000</labl>
-				<catStat type="freq">3764</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-27T02:50:55.000</catValu>
-				<labl>2025-03-27T02:50:55.000</labl>
-				<catStat type="freq">3256</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-02-01T08:56:34.000</catValu>
-				<labl>2025-02-01T08:56:34.000</labl>
-				<catStat type="freq">3095</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-15T08:58:46.000</catValu>
-				<labl>2025-03-15T08:58:46.000</labl>
-				<catStat type="freq">3042</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-17T09:04:43.000</catValu>
-				<labl>2025-01-17T09:04:43.000</labl>
-				<catStat type="freq">3000</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-13T09:07:44.000</catValu>
-				<labl>2025-01-13T09:07:44.000</labl>
-				<catStat type="freq">3000</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-29T02:51:01.000</catValu>
-				<labl>2025-03-29T02:51:01.000</labl>
-				<catStat type="freq">2948</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-09-14T08:53:10.000</catValu>
-				<labl>2024-09-14T08:53:10.000</labl>
-				<catStat type="freq">2917</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2024-11-04T08:58:30.000</catValu>
-				<labl>2024-11-04T08:58:30.000</labl>
-				<catStat type="freq">2909</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-03-10T09:01:00.000</catValu>
-				<labl>2025-03-10T09:01:00.000</labl>
-				<catStat type="freq">2907</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-01-25T08:56:39.000</catValu>
-				<labl>2025-01-25T08:56:39.000</labl>
-				<catStat type="freq">2890</catStat>
-			</catgry>
-			<catgry>
-				<catValu>2025-02-02T08:56:31.000</catValu>
-				<labl>2025-02-02T08:56:31.000</labl>
-				<catStat type="freq">2886</catStat>
-			</catgry>
+			<sumStat type="max">2026-02-06T03:05:19.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="vald">8386364</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
-		<notes type="dartfx" subject="categorical-variables">Be wary that Socrata does not provide category labels and by default only lists information on the top 10 most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>
+		<notes type="dartfx" subject="variables">Be wary that Socrata does not provide category labels and by default only lists information on the top/most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>
 	</dataDscr>
 </codeBook>
