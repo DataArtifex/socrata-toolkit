@@ -1,11 +1,72 @@
-"""
-DCAT support for Socrata
-
-"""
+from __future__ import annotations
+from datetime import datetime
+from typing import Annotated, List, Optional, Union, cast, ClassVar
+from rdflib import DCAT, DCTERMS, FOAF, URIRef, Namespace, Graph
+from dartfx.rdf.pydantic import RdfBaseModel, RdfProperty
 from .socrata import SocrataServer, SocrataDataset
 from dartfx.rdf import utils as rdfutils
-from dartfx.dcat import dcat
-from rdflib import Graph
+
+# Extra namespaces used in Socrata DCAT
+HVDN = Namespace("https://rdf.highvaluedata.net/dcat#")
+CATALOG = Namespace("https://catalog.highvaluedata.net/")
+
+class DcatBaseModel(RdfBaseModel):
+    """Base class for DCAT Pydantic models with shared prefixes."""
+    rdf_prefixes: ClassVar[dict[str, Union[str, Namespace]]] = {
+        "dcat": DCAT,
+        "dcterms": DCTERMS,
+        "foaf": FOAF,
+        "hvdn": HVDN,
+    }
+
+class Distribution(DcatBaseModel):
+    """Pydantic model for dcat:Distribution."""
+    rdf_type: ClassVar[str] = str(DCAT.Distribution)
+    
+    id: str
+    title: Annotated[Optional[List[str]], RdfProperty(DCTERMS.title)] = None
+    description: Annotated[Optional[List[str]], RdfProperty(DCTERMS.description)] = None
+    download_url: Annotated[Optional[List[URIRef]], RdfProperty(DCAT.downloadURL)] = None
+    media_type: Annotated[Optional[List[URIRef]], RdfProperty(DCAT.mediaType)] = None
+    format: Annotated[Optional[List[str]], RdfProperty(DCTERMS["format"])] = None
+
+class Dataset(DcatBaseModel):
+    """Pydantic model for dcat:Dataset."""
+    rdf_type: ClassVar[str] = str(DCAT.Dataset)
+    
+    id: str
+    title: Annotated[Optional[List[str]], RdfProperty(DCTERMS.title)] = None
+    description: Annotated[Optional[List[str]], RdfProperty(DCTERMS.description)] = None
+    keyword: Annotated[Optional[List[str]], RdfProperty(DCAT.keyword)] = None
+    landing_page: Annotated[Optional[List[URIRef]], RdfProperty(DCAT.landingPage)] = None
+    license: Annotated[Optional[List[Union[URIRef, str]]], RdfProperty(DCTERMS.license)] = None
+    publisher: Annotated[Optional[List[Union[URIRef, str]]], RdfProperty(DCTERMS.publisher)] = None
+    spatial: Annotated[Optional[List[Union[URIRef, str]]], RdfProperty(DCTERMS.spatial)] = None
+    modified: Annotated[Optional[List[datetime]], RdfProperty(DCTERMS.modified)] = None
+    distribution: Annotated[Optional[List[Distribution]], RdfProperty(DCAT.distribution)] = None
+
+class DataService(DcatBaseModel):
+    """Pydantic model for dcat:DataService."""
+    rdf_type: ClassVar[str] = str(DCAT.DataService)
+    
+    id: str
+    endpoint_url: Annotated[Optional[List[URIRef]], RdfProperty(DCAT.endpointURL)] = None
+    serves_dataset: Annotated[Optional[List[Dataset]], RdfProperty(DCAT.servesDataset)] = None
+    endpoint_description: Annotated[Optional[List[str]], RdfProperty(DCAT.endpointDescription)] = None
+    conforms_to: Annotated[Optional[List[URIRef]], RdfProperty(DCTERMS.conformsTo)] = None
+    type: Annotated[Optional[List[URIRef]], RdfProperty(DCTERMS.type)] = None
+
+class Catalog(DcatBaseModel):
+    """Pydantic model for dcat:Catalog."""
+    rdf_type: ClassVar[str] = str(DCAT.Catalog)
+    
+    id: str
+    title: Annotated[Optional[List[str]], RdfProperty(DCTERMS.title)] = None
+    publisher: Annotated[Optional[List[Union[URIRef, str]]], RdfProperty(DCTERMS.publisher)] = None
+    spatial: Annotated[Optional[List[Union[URIRef, str]]], RdfProperty(DCTERMS.spatial)] = None
+    dataset: Annotated[Optional[List[Dataset]], RdfProperty(DCAT.dataset)] = None
+    service: Annotated[Optional[List[DataService]], RdfProperty(DCAT.service)] = None
+    homepage: Annotated[Optional[List[URIRef]], RdfProperty(FOAF.homepage)] = None
 
 class DcatGenerator:
     server: SocrataServer    
@@ -45,90 +106,74 @@ class DcatGenerator:
                 raise ValueError(f"Unexpected dataset type: {type(item)}")
 
     def get_graph(self) -> Graph:
-        g = Graph()
-        
         #
         # Initialize Catalog
         #
-        dcat_catalog = dcat.Catalog()
-        dcat_catalog.set_uri(f"https://{self.server.host}")
-        dcat_catalog.add_title(self.server.name)
-        dcat_catalog.add_publisher(f"https://{self.server.host}")
-        for value in self.server.publisher:
-            dcat_catalog.add_publisher(value)
-        for value in self.server.spatial:
-            dcat_catalog.add_spatial(value)
+        catalog = Catalog(
+            id=f"https://{self.server.host}",
+            title=[self.server.name] if self.server.name else [],
+            publisher=[f"https://{self.server.host}"] + self.server.publisher,
+            spatial=self.server.spatial or [],
+            dataset=[],
+            service=[]
+        )
         
         # Loop over datasets
         for socrata_ds in self.datasets:
             #
             # populate DCAT dataset
             #
-            dcat_ds = dcat.Dataset()
-            dcat_ds.set_uri(socrata_ds.landing_page)
-            dcat_ds.add_title(socrata_ds.name)
+            dcat_ds = Dataset(
+                id=socrata_ds.landing_page,
+                title=[socrata_ds.name],
+                description=[socrata_ds.description] if socrata_ds.description else [],
+                keyword=socrata_ds.tags or [],
+                landing_page=[URIRef(socrata_ds.landing_page)],
+                publisher=[f"https://{socrata_ds.server.host}"] + (socrata_ds.server.publisher or []),
+                spatial=socrata_ds.server.spatial or [],
+                distribution=[]
+            )
 
-            if socrata_ds.description:
-                dcat_ds.add_description(socrata_ds.description)
+            # License
+            licenses = []
+            if socrata_ds.license_id: licenses.append(socrata_ds.license_id)
+            if socrata_ds.license_name: licenses.append(socrata_ds.license_name)
+            if socrata_ds.license_link: licenses.append(socrata_ds.license_link)
+            dcat_ds.license = licenses
 
-            if socrata_ds.tags:
-                for keyword in socrata_ds.tags:
-                    dcat_ds.add_keyword(keyword)
-                
-            dcat_ds.add_landing_page(socrata_ds.landing_page)
-            
-            if socrata_ds.license_id:
-                dcat_ds.add_license(socrata_ds.license_id)
-            if socrata_ds.license_name:
-                dcat_ds.add_license(socrata_ds.license_name)
-            if socrata_ds.license_link:
-                dcat_ds.add_license(socrata_ds.license_link)
+            # Dates
             if socrata_ds.rows_updated_at:
-                dcat_ds.add_modified_date(socrata_ds.rows_updated_at)
+                dcat_ds.modified = [socrata_ds.rows_updated_at]
             elif socrata_ds.view_last_modified:
-                dcat_ds.add_modified_date(socrata_ds.view_last_modified)
+                dcat_ds.modified = [socrata_ds.view_last_modified]
             
-            dcat_ds.add_publisher(f"https://{socrata_ds.server.host}")
-            for value in socrata_ds.server.publisher:
-                dcat_ds.add_publisher(value)
-
-            for value in socrata_ds.server.spatial:
-                dcat_ds.add_spatial(value)
-
             # add dataset to catalog
-            dcat_catalog.add_dataset(dcat_ds)
+            catalog.dataset.append(dcat_ds)
 
             #
             # populate DCAT CSV distribution
             #
-            dcat_csv = dcat.Distribution()
-            dcat_csv.set_uri(socrata_ds.csv_download_url)
-            dcat_csv.add_download_url(socrata_ds.csv_download_url)
-            dcat_csv.add_media_type("http://www.iana.org/assignments/media-types/text/csv")
-
-            # add distribution to graph
-            dcat_csv.add_to_rdf_graph(g)
-            # add distribution dataset
-            dcat_ds.add_distribution(dcat_csv)
+            dcat_csv = Distribution(
+                id=socrata_ds.csv_download_url,
+                download_url=[URIRef(socrata_ds.csv_download_url)],
+                media_type=[URIRef("http://www.iana.org/assignments/media-types/text/csv")]
+            )
+            # add distribution to dataset
+            dcat_ds.distribution.append(dcat_csv)
 
             #
             # populate DCAT API service
             #
-            dcat_api = dcat.DataService()
-            dcat_api.set_uri(socrata_ds.api_endpoint_url)
-            dcat_api.add_served_dataset(dcat_ds)
-            dcat_api.add_conforms_to(socrata_ds.api_foundry_url)
-            dcat_api.add_endpoint_url(socrata_ds.api_endpoint_url)
-            dcat_api.add_type("https://highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")
+            dcat_api = DataService(
+                id=socrata_ds.api_endpoint_url,
+                endpoint_url=[URIRef(socrata_ds.api_endpoint_url)],
+                serves_dataset=[dcat_ds],
+                conforms_to=[URIRef(socrata_ds.api_foundry_url)],
+                type=[URIRef("https://highvaluedata.net/vocab/service_type#SocrataOpenDataAPI")]
+            )
             # add service to catalog
-            dcat_catalog.add_service(dcat_api)
-            
-            # add dataset resources to graph
-            dcat_ds.add_to_rdf_graph(g)
-            dcat_csv.add_to_rdf_graph(g)
-            dcat_api.add_to_rdf_graph(g)
+            catalog.service.append(dcat_api)
         
-        # add catalog to graph
-        dcat_catalog.add_to_rdf_graph(g)
-        return g
+        # return the graph
+        return catalog.to_rdf_graph()
     
