@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "dartfx-socrata"
+name = "hatch-foo"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
@@ -18,35 +18,39 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
-dependencies = [
-  "dartfx-dcat>=0.0.1",
-  "dartfx-rdf>=0.0.1",
-  "jinja2>=3",
-  "markdownify>=0.13.0",
-  "mlcroissant>=1.0.16",
-  "pydantic>=2",
-  "requests>=2.25.0",
-  "python-dotenv>=1.0.0",
-]
-[project.urls]
-Documentation = "https://github.com/DataArtifex/socrata-toolkit#readme"
-Issues = "https://github.com/DataArtifex/socrata-toolkit/issues"
-Source = "https://github.com/DataArtifex/socrata-toolkit"
+dependencies = []
 
+[project.urls]
+Documentation = "https://github.com/DataArtifex/hatch-foo#readme"
+Issues = "https://github.com/DataArtifex/hatch-foo/issues"
+Source = "https://github.com/DataArtifex/hatch-foo"
+
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/.github", "/docs"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dartfx"]
+
+[tool.hatch.version]
+path = "src/dartfx/hatch_foo/__about__.py"
 
 [dependency-groups]
 dev = [
   "coverage[toml]>=6.5",
   "pytest>=9",
-  "lxml>=5.0.0",
   "pytest-benchmark>=4.0.0",
   "mypy>=1.0.0",
   "python-dotenv>=1.0.0",
   "ruff>=0.3.0",
   "pre-commit>=3.0.0",
 ]
-docs = ["sphinx>=8.0.0", "sphinx_rtd_theme>=3.0.0", "myst_parser>=4.0.0"]
-
+docs = [
+  "sphinx>=7.0.0",
+  "sphinx-rtd-theme>=1.2.0",
+  "myst-parser>=1.0.0",
+  "sphinx-copybutton>=0.5.0",
+]
 
 [tool.hatch.envs.default]
 dependencies = ["dev"]
@@ -62,7 +66,7 @@ python = ["3.12", "3.13"]
 [tool.hatch.envs.types]
 dependencies = ["dev"]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/dartfx/socrata tests}"
+check = "mypy --install-types --non-interactive {args:src/dartfx/hatch_foo tests}"
 
 [tool.hatch.envs.docs]
 dependencies = ["docs"]
@@ -74,14 +78,14 @@ serve = "python -m http.server -d docs/build/html"
 allow-direct-references = true
 
 [tool.coverage.run]
-source_pkgs = ["socrata", "tests"]
+source_pkgs = ["hatch_foo", "tests"]
 branch = true
 parallel = true
-omit = ["src/dartfx/socrata/__about__.py"]
+omit = ["src/dartfx/hatch_foo/__about__.py"]
 
 [tool.coverage.paths]
-source = ["src/dartfx/socrata", "*/socrata-toolkit/src/dartfx/socrata"]
-tests = ["tests", "*/dartfx/socrata/tests"]
+source = ["src/dartfx/hatch_foo", "*/hatch-foo/src/dartfx/hatch_foo"]
+tests = ["tests", "*/dartfx/hatch-foo/tests"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
@@ -90,7 +94,7 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 pythonpath = "src"
 testpaths = ["tests"]
 log_cli = true
-log_cli_level = "INFO"
+log_cli_level = "DEBUG"
 log_cli_format = "%(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 
