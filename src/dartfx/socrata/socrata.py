@@ -1,18 +1,18 @@
-from dataclasses import field
-from datetime import datetime
 import json
 import logging
-from jinja2 import Environment, FileSystemLoader
-from markdownify import markdownify
-import mlcroissant as mlc
 import os
-from pydantic import BaseModel, Field, PrivateAttr
-from typing import Optional
-import requests
+from dataclasses import field
+from datetime import datetime
 from xml.sax.saxutils import escape
 
+import mlcroissant as mlc
+import requests
+from jinja2 import Environment, FileSystemLoader
+from markdownify import markdownify
+from pydantic import BaseModel, Field, PrivateAttr
 
-jinja_env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)),'templates')))
+jinja_env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")))
+
 
 class SocrataApiError(Exception):
     """Custom exception for Socrata API errors."""
@@ -37,72 +37,73 @@ SERVERS = {
     "data.calgary.ca": {
         "name": "Calgary Open Data",
         "publisher": ["City of Calgary"],
-        "spatial": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"]
+        "spatial": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"],
     },
     "data.cityofchicago.org": {
         "name": "Chicago Data Portal",
         "publisher": ["City of Chicago"],
-        "spatial": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"]
+        "spatial": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"],
     },
     "data.cdc.gov": {
         "name": "U.S. Centers for Disease Control and Prevention",
         "publisher": ["U.S. Centers for Disease Control and Prevention"],
-        "spatial": ["United States", "http://sws.geonames.org/6252001"]
+        "spatial": ["United States", "http://sws.geonames.org/6252001"],
     },
     "data.cityofnewyork.us": {
         "name": "NYC Open Data",
         "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
-        "spatial": ["New York City, New York, USA", "http://sws.geonames.org/5128581"]
+        "spatial": ["New York City, New York, USA", "http://sws.geonames.org/5128581"],
     },
     "data.edmonton.ca": {
         "name": "City of Edmonton's Open Data Portal",
         "publisher": ["City of Edmonton"],
-        "spatial": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"]
+        "spatial": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"],
     },
     "data.ny.gov": {
         "name": "New York State Open Data",
         "publisher": ["New York State"],
-        "spatial": ["New York, USA", "http://sws.geonames.org/5128638"]
+        "spatial": ["New York, USA", "http://sws.geonames.org/5128638"],
     },
     "data.sfgov.org": {
         "name": "San Francisco Open Data Portal",
         "publisher": ["City of San Francisco"],
-        "spatial": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"]
+        "spatial": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"],
     },
     "opendata.utah.gov": {
         "name": "State of Utah Open Data Catalog",
         "publisher": ["State of Utah"],
-        "spatial": ["Utah, USA", "http://sws.geonames.org/5549030"]
+        "spatial": ["Utah, USA", "http://sws.geonames.org/5549030"],
     },
     "data.wa.gov": {
         "name": "Washington State Open Data Portal",
         "publisher": ["Washington state government"],
-        "spatial": ["Washington, USA", "http://sws.geonames.org/5815135"]
+        "spatial": ["Washington, USA", "http://sws.geonames.org/5815135"],
     },
     "datos.gov.co": {
         "name": "Datos abierrtos de Columbia",
         "publisher": ["Ministerio de Tecnologías de la Información y las Comunicaciones"],
         "spatial": ["Washington, USA", "http://sws.geonames.org/3686110"],
-        "languages": ["es"]
-    }
+        "languages": ["es"],
+    },
 }
+
 
 class SocrataServer(BaseModel):
     host: str
     name: str | None = Field(default=None)
-    disk_cache_root: str | None = Field(default=None) # a directory will be created here for this server
+    disk_cache_root: str | None = Field(default=None)  # a directory will be created here for this server
     _in_memory_cache: dict = PrivateAttr(default_factory=dict)
-    
+
     # attributes not available in Dataset metadata
-    publisher: Optional[list[str]] = field(default_factory=list)
-    spatial: Optional[list[str]] = field(default_factory=list)
+    publisher: list[str] | None = field(default_factory=list)
+    spatial: list[str] | None = field(default_factory=list)
 
     def model_post_init(self, __context):
         # set metadata for know servers
         if self.host in SERVERS:
-            self.name = SERVERS[self.host].get("name",self.host)
-            self.publisher = SERVERS[self.host].get("publisher",[])
-            self.spatial = SERVERS[self.host].get("spatial",[])
+            self.name = SERVERS[self.host].get("name", self.host)
+            self.publisher = SERVERS[self.host].get("publisher", [])
+            self.spatial = SERVERS[self.host].get("spatial", [])
         else:
             self.name = self.host
             self.publisher = [self.host_url]
@@ -125,7 +126,7 @@ class SocrataServer(BaseModel):
     @property
     def host_url(self):
         return f"https://{self.host}"
-    
+
     def get_dataset_info(self, dataset_id, refresh=False):
         # check if in memory cache
         if dataset_id in self.memory_cache and not refresh:
@@ -148,8 +149,8 @@ class SocrataServer(BaseModel):
             if results.status_code == 200:
                 data = results.json()
                 # save to disk cache if enabled
-                if self.disk_cache_dir: # save to local cache if enabled
-                    with open(file_path, 'w') as f:
+                if self.disk_cache_dir:  # save to local cache if enabled
+                    with open(file_path, "w") as f:
                         json.dump(data, f, indent=4)
                 # save to in memory cache
                 self.memory_cache[dataset_id] = data
@@ -157,8 +158,8 @@ class SocrataServer(BaseModel):
             else:
                 raise SocrataApiError("Error getting dataset info", url, results.status_code, results.text)
         return
-    
-    def search_datasets(self, limit:int=None, offset:int = None, order:str = None, sort_order:str = None):
+
+    def search_datasets(self, limit: int = None, offset: int = None, order: str = None, sort_order: str = None):
         """Calls the Socrata Discovery API
 
         See https://dev.socrata.com/docs/other/discovery
@@ -173,7 +174,18 @@ class SocrataServer(BaseModel):
         if offset:
             url += f"&offset={offset}"
         if order:
-            valid_order = ["name", "owner", "dataset_id", "datatype", "domain_category", "page_views_total", "page_views_last_month", "page_views_last_week", "updatedAt", "createdAt"]
+            valid_order = [
+                "name",
+                "owner",
+                "dataset_id",
+                "datatype",
+                "domain_category",
+                "page_views_total",
+                "page_views_last_month",
+                "page_views_last_week",
+                "updatedAt",
+                "createdAt",
+            ]
             if order not in valid_order:
                 raise SocrataApiError(f"sort must be one of {valid_order}")
             url += f"&order={order}"
@@ -186,20 +198,20 @@ class SocrataServer(BaseModel):
         results = requests.get(url)
         if results.status_code == 200:
             data = results.json()
-            return(data)
+            return data
         else:
             raise SocrataApiError("Search error", url, results.status_code, results.text)
-        
-    
+
+
 class SocrataDataset(BaseModel):
     server: SocrataServer
     id: str
-    _data: dict|None = None
+    _data: dict | None = None
     _variables: list["SocrataVariable"] = PrivateAttr(default_factory=list)
 
     def model_post_init(self, __context):
         self._data = self.server.get_dataset_info(self.id)
-        if self.asset_type != 'dataset':
+        if self.asset_type != "dataset":
             raise ValueError(f"Unexpected asset type: {self.asset_type}. Must be 'dataset'.")
 
     @property
@@ -210,12 +222,11 @@ class SocrataDataset(BaseModel):
     def api_endpoint_url(self):
         return f"https://{self.server.host}/resource/{self.id}.json"
 
-
-    @property   
+    @property
     def csv_download_url(self):
         return f"https://{self.server.host}/resource/{self.id}.csv"
 
-    @property   
+    @property
     def data(self):
         return self._data
 
@@ -229,9 +240,9 @@ class SocrataDataset(BaseModel):
 
     @property
     def landing_page(self):
-        #category = self._data.get("category").replace(" ", "-")
-        #name = self._data.get("name").replace(" ", "-")
-        #return f"https://{self.server.host}/{category}/{name}/{self.id}"
+        # category = self._data.get("category").replace(" ", "-")
+        # name = self._data.get("name").replace(" ", "-")
+        # return f"https://{self.server.host}/{category}/{name}/{self.id}"
         return f"https://{self.server.host}/d/{self.id}"
 
     @property
@@ -239,21 +250,21 @@ class SocrataDataset(BaseModel):
         """Combines available license properties or returns Unknown if not available"""
         license_terms = [x for x in [self.license_name, self.license_id, self.license_link] if x is not None]
         if license_terms:
-            license = ', '.join(license_terms)
+            license = ", ".join(license_terms)
         else:
-            license = ['Unknown']
+            license = ["Unknown"]
         return license
 
     @property
     def license_id(self):
         if self._data.get("licenseId"):
             return self._data.get("licenseId")
-        
+
     @property
     def license_name(self):
         if self._data.get("license"):
             return self._data["license"].get("name")
-        
+
     @property
     def license_link(self):
         if self._data.get("license"):
@@ -264,43 +275,42 @@ class SocrataDataset(BaseModel):
         return self._data.get("name")
 
     @property
-    def publication_date(self) -> datetime|None:
+    def publication_date(self) -> datetime | None:
         if self._data.get("publicationDate"):
             return datetime.fromtimestamp(self._data.get("publicationDate"))
 
     @property
-    def rows_updated_at(self) -> datetime|None:
+    def rows_updated_at(self) -> datetime | None:
         if self._data.get("rowsUpdatedAt"):
             return datetime.fromtimestamp(self._data.get("rowsUpdatedAt"))
 
     @property
     def tags(self):
         return self._data.get("tags")
-    
+
     @property
     def variables(self) -> list["SocrataVariable"]:
         if not self._variables:
             self._variables = []
-            for index, column in enumerate(self._data["columns"]):
+            for index, _column in enumerate(self._data["columns"]):
                 self._variables.append(SocrataVariable(dataset=self, index=index))
         return self._variables
 
     @property
-    def view_last_modified(self) -> datetime|None:
+    def view_last_modified(self) -> datetime | None:
         if self._data:
             if self._data.get("viewLastModified"):
                 return datetime.fromtimestamp(self._data["viewLastModified"])
 
-    def get_code(self, environment, options: dict = None, *args, **kwargs) -> str:
-        """Generates code/script for a given environment.
-        """
+    def get_code(self, environment, options: dict = None, *_args, **_kwargs) -> str:
+        """Generates code/script for a given environment."""
         code = None
         template_file = f"generate_{environment}.j2"
         template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
         if os.path.isfile(template_path):
             template = jinja_env.get_template(template_file)
             code = template.render(host=self.server.host, dataset_id=self.id, options=options)
-        else: 
+        else:
             raise ValueError(f"Unsupported environment: {environment}.")
         return code
 
@@ -321,27 +331,29 @@ class SocrataDataset(BaseModel):
         publishers = []
         for publisher in self.server.publisher:
             publishers.append(mlc.Organization(name=publisher, url=self.server.host))
-        metadata = mlc.Metadata(ctx=context, 
+        metadata = mlc.Metadata(
+            ctx=context,
             id=self.id,
             name=self.name,
             description=markdownify(self.description) if self.description else None,
-            cite_as = f'{self.name}, {self.server.name}, {self.landing_page}',
-            date_modified = self.rows_updated_at,
-            date_published = self.publication_date,
-            license = self.license,
+            cite_as=f"{self.name}, {self.server.name}, {self.landing_page}",
+            date_modified=self.rows_updated_at,
+            date_published=self.publication_date,
+            license=self.license,
             publisher=publishers,
-            version = int(self.rows_updated_at.timestamp())
+            version=int(self.rows_updated_at.timestamp()),
         )
         # distribution
         distribution = []
         content_url = self.csv_download_url
         if not include_computed:
-            content_url += f'?$select={",".join(selected_variables_names)}'
-        csv_file = mlc.FileObject(ctx=context, 
-            id=self.id+'.csv',
-            name=self.name+'.csv',
+            content_url += f"?$select={','.join(selected_variables_names)}"
+        csv_file = mlc.FileObject(
+            ctx=context,
+            id=self.id + ".csv",
+            name=self.name + ".csv",
             content_url=content_url,
-            encoding_formats=mlc.EncodingFormat.CSV
+            encoding_formats=mlc.EncodingFormat.CSV,
         )
         distribution.append(csv_file)
         metadata.distribution = distribution
@@ -349,18 +361,19 @@ class SocrataDataset(BaseModel):
         fields = []
         classifications_record_sets = []
         for variable in selected_variables:
-            field = mlc.Field(ctx=context,
+            field = mlc.Field(
+                ctx=context,
                 id=variable.name,
                 name=variable.name,
                 description=variable.label,
-                source=mlc.Source(file_object=csv_file.id, extract=mlc.Extract(ctx=context, column=variable.name))
+                source=mlc.Source(file_object=csv_file.id, extract=mlc.Extract(ctx=context, column=variable.name)),
             )
             field.data_types.append(variable.croissant_data_type)
             fields.append(field)
             # classifications
             if include_codes:
-                if variable.cached_content: # we have statistics
-                    if variable.top: # we have top codes
+                if variable.cached_content:  # we have statistics
+                    if variable.top:  # we have top codes
                         classification_id = f"{variable.name}_codes"
                         value_field_id = f"{classification_id}/value"
                         freq_field_id = f"{classification_id}/freq"
@@ -373,15 +386,16 @@ class SocrataDataset(BaseModel):
                         code_count = 0
                         for code in variable.top:
                             code_count += 1
-                            classification_records.append({
-                                value_field_id: str(code.get("item")),
-                                freq_field_id: code.get("count")
-                            })
+                            classification_records.append(
+                                {value_field_id: str(code.get("item")), freq_field_id: code.get("count")}
+                            )
                             if code_count >= max_codes:
                                 break
                         # create record set
                         classification_record_set = mlc.RecordSet(id=classification_id, fields=classification_fields)
-                        classification_record_set.description = f"Top {min(len(variable.top), max_codes)} values and frequencies for {field.name}."
+                        classification_record_set.description = (
+                            f"Top {min(len(variable.top), max_codes)} values and frequencies for {field.name}."
+                        )
                         if variable.cardinality and variable.cardinality <= max_codes:
                             # complete data
                             classification_record_set.data = classification_records
@@ -389,19 +403,20 @@ class SocrataDataset(BaseModel):
                             # partial data
                             classification_record_set.examples = classification_records
                             if variable.cardinality:
-                                classification_record_set.description = f"This is partial list. The full list has {variable.cardinality} codes."
+                                classification_record_set.description = (
+                                    f"This is partial list. The full list has {variable.cardinality} codes."
+                                )
                             else:
-                                classification_record_set.description = "This may be a partial list. The variable cardinality is unknown."
+                                classification_record_set.description = (
+                                    "This may be a partial list. The variable cardinality is unknown."
+                                )
                         classifications_record_sets.append(classification_record_set)
                         # add classification reference to the variable
-                        field.references = mlc.Source(
-                            id=f"{classification_id}/value"
-                        )
+                        field.references = mlc.Source(id=f"{classification_id}/value")
         # create data file record set
-        data_record_set = mlc.RecordSet(fields=fields) 
+        data_record_set = mlc.RecordSet(fields=fields)
         record_sets = [data_record_set] + classifications_record_sets
         metadata.record_sets = record_sets
-
 
         return metadata
 
@@ -413,79 +428,92 @@ class SocrataDataset(BaseModel):
         """
         uid = f"socrata_{self.server.host}_{self.id}"
         urn = f"urn:socrata:{self.server.host}:{self.id}"
-        xml = f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" xmlns="ddi:codebook:{codebook_version.replace(".", "_")}">'
+        xml = (
+            f'<codeBook ID="{uid}" ddiCodebookUrn="{urn}" version="{codebook_version}" '
+            f'xmlns="ddi:codebook:{codebook_version.replace(".", "_")}">'
+        )
         # docDscr
-        xml += '<docDscr>'
-        xml += '<citation>'
-        xml += '<titlStmt>'
-        xml += f'<titl>{escape(self.name)}</titl>'
+        xml += "<docDscr>"
+        xml += "<citation>"
+        xml += "<titlStmt>"
+        xml += f"<titl>{escape(self.name)}</titl>"
         xml += f'<IDNo agency="socrata.com">{self.server.host}-{self.id}</IDNo>'
-        xml += '</titlStmt>'
-        xml += '<prodStmt>'
+        xml += "</titlStmt>"
+        xml += "<prodStmt>"
         prodDate = datetime.now().isoformat()[:-7]
         xml += f'<prodDate date="{prodDate}">{prodDate}</prodDate>'
         xml += '<software version="0.1.0">Data Artifex - Socrata (dartfx-socrata)</software>'
-        xml += '</prodStmt>'
-        xml += '</citation>'
-        xml += '</docDscr>'
+        xml += "</prodStmt>"
+        xml += "</citation>"
+        xml += "</docDscr>"
         # stdyDscr
-        xml += '<stdyDscr>'
-        xml += '<citation>'
-        xml += '<titlStmt>'
-        xml += f'<titl>{escape(self.name)}</titl>'
+        xml += "<stdyDscr>"
+        xml += "<citation>"
+        xml += "<titlStmt>"
+        xml += f"<titl>{escape(self.name)}</titl>"
         xml += f'<IDNo agency="socrata.com">{self.server.host}-{self.id}</IDNo>'
-        xml += '</titlStmt>'
-        xml += '<prodStmt>'
-        xml += '<software>Socrata</software>'
-        xml += '</prodStmt>'
-        xml += '</citation>'
+        xml += "</titlStmt>"
+        xml += "<prodStmt>"
+        xml += "<software>Socrata</software>"
+        xml += "</prodStmt>"
+        xml += "</citation>"
         if self.description:
-            xml += '<stdyInfo>'
-            xml += f'<abstract><![CDATA[{escape(self.description)}]]></abstract>'
-            xml += '</stdyInfo>'
-        xml += '</stdyDscr>'
+            xml += "<stdyInfo>"
+            xml += f"<abstract><![CDATA[{escape(self.description)}]]></abstract>"
+            xml += "</stdyInfo>"
+        xml += "</stdyDscr>"
         # fileDscr
         xml += '<fileDscr ID="F1">'
-        xml += '<fileTxt>'
-        xml += f'<fileName>{self.name}</fileName>'
-        xml += '<dimensns>'
-        xml += f'<caseQnty>{self.get_record_count()}</caseQnty>'
-        xml += f'<varQnty>{self.get_variable_count()}</varQnty>'
-        xml += '</dimensns>'
-        xml += '<fileType>socrata</fileType>'
-        xml += '</fileTxt>'
-        xml += '</fileDscr>'
+        xml += "<fileTxt>"
+        xml += f"<fileName>{self.name}</fileName>"
+        xml += "<dimensns>"
+        xml += f"<caseQnty>{self.get_record_count()}</caseQnty>"
+        xml += f"<varQnty>{self.get_variable_count()}</varQnty>"
+        xml += "</dimensns>"
+        xml += "<fileType>socrata</fileType>"
+        xml += "</fileTxt>"
+        xml += "</fileDscr>"
         # dataDscr
-        xml += '<dataDscr>'
+        xml += "<dataDscr>"
         for var in self.variables:
             if var.is_hidden:
                 continue
             xml += f'<var ID="V{var.id}" name="{var.name}" files="F1">'
-            xml += f'<labl>{escape(var.label)}</labl>'
-            if var.socrata_data_type == 'number':
-                type = 'numeric'
+            xml += f"<labl>{escape(var.label)}</labl>"
+            if var.socrata_data_type == "number":
+                type = "numeric"
             else:
-                type = 'character'
+                type = "character"
             if var.cached_content:
                 # summary statistics
-                xml += f'<sumStat type="other" otherType="count">{var.count}</sumStat>' if var.count else ''
-                xml += f'<sumStat type="min">{escape(var.smallest)}</sumStat>' if var.smallest else ''
-                xml += f'<sumStat type="max">{escape(var.largest)}</sumStat>' if var.largest else ''
-                xml += f'<sumStat type="other" otherType="cardinality">{var.cardinality}</sumStat>' if var.cardinality else ''
-                xml += f'<sumStat type="vald">{var.non_null}</sumStat>' if var.non_null else ''
-                xml += f'<sumStat type="invd">{var.null}</sumStat>' if var.null else ''
-                if var.top and var.cardinality <=  category_count_threshold:
+                xml += f'<sumStat type="other" otherType="count">{var.count}</sumStat>' if var.count else ""
+                xml += f'<sumStat type="min">{escape(var.smallest)}</sumStat>' if var.smallest else ""
+                xml += f'<sumStat type="max">{escape(var.largest)}</sumStat>' if var.largest else ""
+                xml += (
+                    f'<sumStat type="other" otherType="cardinality">{var.cardinality}</sumStat>'
+                    if var.cardinality
+                    else ""
+                )
+                xml += f'<sumStat type="vald">{var.non_null}</sumStat>' if var.non_null else ""
+                xml += f'<sumStat type="invd">{var.null}</sumStat>' if var.null else ""
+                if var.top and var.cardinality <= category_count_threshold:
                     for item in var.top:
-                        xml += '<catgry>'
-                        xml += f'<catValu>{escape(str(item["item"]))}</catValu>'
-                        xml += f'<labl>{escape(str(item["item"]))}</labl>' # Socrata does not provide category labels. Use code value.
+                        xml += "<catgry>"
+                        xml += f"<catValu>{escape(str(item['item']))}</catValu>"
+                        xml += f"<labl>{escape(str(item['item']))}</labl>"
                         xml += f'<catStat type="freq">{item["count"]}</catStat>'
-                        xml += '</catgry>'                    
+                        xml += "</catgry>"
             xml += f'<varFormat type="{type}" schema="other" formatname="socrata">{var.socrata_data_type}</varFormat>'
-            xml += '</var>'
-        xml += '<notes type="dartfx" subject="variables">Be wary that Socrata does not provide category labels and by default only lists information on the top/most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>'
-        xml += '</dataDscr>'
-        xml += '</codeBook>'
+            xml += "</var>"
+        xml += (
+            '<notes type="dartfx" subject="variables">'
+            "Be wary that Socrata does not provide category labels and by default "
+            "only lists information on the top/most used codes. The DDI var/catgry "
+            "sets may therefore be incomplete."
+            "</notes>"
+        )
+        xml += "</dataDscr>"
+        xml += "</codeBook>"
         return xml
 
     def get_variable_count(self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True) -> int:
@@ -500,8 +528,10 @@ class SocrataDataset(BaseModel):
                     continue
             count += 1
         return count
-    
-    def get_variables(self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True) -> list["SocrataVariable"]:
+
+    def get_variables(
+        self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True
+    ) -> list["SocrataVariable"]:
         """Helper function for getting a list of variables based on visibility attributes."""
         variables = []
         for variable in self.variables:
@@ -514,7 +544,7 @@ class SocrataDataset(BaseModel):
                     continue
             variables.append(variable)
         return variables
-    
+
     def get_visible_variables(self) -> list["SocrataVariable"]:
         """Helper to get a list of the visible variables."""
         return self.get_variables()
@@ -526,13 +556,14 @@ class SocrataDataset(BaseModel):
             names.append(variable.name)
         return names
 
-    def get_markdown(self, sections=[]):
+    def get_markdown(self, sections=None):
+        sections = sections or []
         md = f"# {markdownify(self.name)}\n\n"
-        if not sections or 'links' in sections:
+        if not sections or "links" in sections:
             md += f"###### [View online]({self.landing_page})\n\n"
         if self.description:
             md += f"{markdownify(self.description)}\n\n"
-        if not sections or 'variables' in sections:
+        if not sections or "variables" in sections:
             md += "\n## Variables\n\n"
             md += "| Name | Label | Type | Info |\n"
             md += "|---|---|---|---|\n"
@@ -561,43 +592,44 @@ class SocrataDataset(BaseModel):
             count = variable0.cached_content.get("count")
             return count
 
+
 class SocrataVariable(BaseModel):
     """Helper class to process/use Socrata dataset variables (columns).
 
     This uses a standard terminology and hides Socrata proprietary attribute names.
 
     """
+
     dataset: SocrataDataset
     index: int
 
     @property
     def cached_content(self):
-        return self.data.get('cachedContents')
+        return self.data.get("cachedContents")
 
     @property
     def cardinality(self):
-        if self.cached_content and self.cached_content.get('cardinality'):
-            return int(self.cached_content.get('cardinality'))
-
+        if self.cached_content and self.cached_content.get("cardinality"):
+            return int(self.cached_content.get("cardinality"))
 
     @property
     def count(self):
-        if self.cached_content and self.cached_content.get('count'):
-            return int(self.cached_content.get('count'))
+        if self.cached_content and self.cached_content.get("count"):
+            return int(self.cached_content.get("count"))
 
     @property
     def croissant_data_type(self):
         # https://dev.socrata.com/docs/datatypes
-        if self.socrata_data_type == 'number':
+        if self.socrata_data_type == "number":
             return mlc.DataType.FLOAT
-        elif self.socrata_data_type == 'calendar_date':
+        elif self.socrata_data_type == "calendar_date":
             return mlc.DataType.DATE
-        elif self.socrata_data_type =='point':
+        elif self.socrata_data_type == "point":
             return mlc.DataType.TEXT
-        elif self.socrata_data_type =='url':
+        elif self.socrata_data_type == "url":
             return mlc.DataType.URL
         return mlc.DataType.TEXT
-        
+
     @property
     def data(self):
         return self.dataset._data["columns"][self.index]
@@ -630,13 +662,14 @@ class SocrataVariable(BaseModel):
     @property
     def label(self):
         # Note that the 'name' property is actually the variable label
-        # Be aware that variables marked for deletion, that are hidden from users, have a 'name' that starts with 'DELETE -'
+        # Be aware that variables marked for deletion and hidden from users
+        # have a 'name' that starts with 'DELETE -'
         return self.data["name"]
 
     @property
     def largest(self):
         if self.cached_content:
-            return self.cached_content.get('largest')
+            return self.cached_content.get("largest")
 
     @property
     def name(self):
@@ -646,13 +679,13 @@ class SocrataVariable(BaseModel):
 
     @property
     def non_null(self):
-        if self.cached_content and self.cached_content.get('non_null'):
-            return int(self.cached_content.get('non_null'))
+        if self.cached_content and self.cached_content.get("non_null"):
+            return int(self.cached_content.get("non_null"))
 
     @property
     def null(self):
-        if self.cached_content and self.cached_content.get('null'):
-            return int(self.cached_content.get('null'))
+        if self.cached_content and self.cached_content.get("null"):
+            return int(self.cached_content.get("null"))
 
     @property
     def position(self):
@@ -661,7 +694,7 @@ class SocrataVariable(BaseModel):
     @property
     def smallest(self):
         if self.cached_content:
-            return self.cached_content.get('smallest')
+            return self.cached_content.get("smallest")
 
     @property
     def socrata_data_type(self):
@@ -669,15 +702,14 @@ class SocrataVariable(BaseModel):
 
     @property
     def generic_data_type(self):
-        #TODO: implement
+        # TODO: implement
         return None
-        
+
     @property
     def socrata_render_type(self):
         return self.data["renderTypeName"]
 
-
     @property
     def top(self):
-        if self.cached_content and self.cached_content.get('top'):
-            return self.cached_content.get('top')
+        if self.cached_content and self.cached_content.get("top"):
+            return self.cached_content.get("top")

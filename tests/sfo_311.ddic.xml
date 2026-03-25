@@ -7,7 +7,7 @@
 				<IDNo agency="socrata.com">data.sfgov.org-vw6y-z8j6</IDNo>
 			</titlStmt>
 			<prodStmt>
-				<prodDate date="2026-02-06T17:25:26">2026-02-06T17:25:26</prodDate>
+				<prodDate date="2026-03-24T22:35:40">2026-03-24T22:35:40</prodDate>
 				<software version="0.1.0">Data Artifex - Socrata (dartfx-socrata)</software>
 			</prodStmt>
 		</citation>
@@ -42,7 +42,7 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		<fileTxt>
 			<fileName>311 Cases</fileName>
 			<dimensns>
-				<caseQnty>8386364</caseQnty>
+				<caseQnty>8491589</caseQnty>
 				<varQnty>25</varQnty>
 			</dimensns>
 			<fileType>socrata</fileType>
@@ -51,176 +51,176 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 	<dataDscr>
 		<var ID="V599267137" name="service_request_id" files="F1">
 			<labl>CaseID</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">240215</sumStat>
-			<sumStat type="max">101003451289</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="max">101003733959</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267138" name="requested_datetime" files="F1">
 			<labl>Opened</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">2008-07-01T00:13:13.000</sumStat>
-			<sumStat type="max">2026-02-05T23:56:00.000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="max">2026-03-23T23:58:50.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267139" name="closed_date" files="F1">
 			<labl>Closed</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">1899-12-31T23:07:00.000</sumStat>
-			<sumStat type="max">2026-02-05T23:48:14.000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8243809</sumStat>
-			<sumStat type="invd">142555</sumStat>
+			<sumStat type="max">2026-12-22T00:00:00.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8347276</sumStat>
+			<sumStat type="invd">144313</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267140" name="updated_datetime" files="F1">
 			<labl>Updated</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">2008-07-01T06:10:23.000</sumStat>
-			<sumStat type="max">2026-02-05T23:57:03.000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="max">2026-03-23T23:59:19.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267141" name="status_description" files="F1">
 			<labl>Status</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">Closed</sumStat>
 			<sumStat type="max">Open</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267142" name="status_notes" files="F1">
 			<labl>Status Notes</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">- ?????</sumStat>
 			<sumStat type="max">Wrong Park, Work is Pending - This is actually Golden Gate Park, not GG Heights Park. The projected start date for this work is April or May.</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8376279</sumStat>
-			<sumStat type="invd">10085</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8481412</sumStat>
+			<sumStat type="invd">10177</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267143" name="agency_responsible" files="F1">
 			<labl>Responsible Agency</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">311 - Content Team</sumStat>
 			<sumStat type="max">Yerba Buena CBD Queue</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267144" name="service_name" files="F1">
 			<labl>Category</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">311 Complaints</sumStat>
 			<sumStat type="max">Well-Being Check</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267145" name="service_subtype" files="F1">
 			<labl>Request Type</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">abandoned_parklet</sumStat>
 			<sumStat type="max">Yellow Color Curb Request</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8371308</sumStat>
-			<sumStat type="invd">15056</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8476020</sumStat>
+			<sumStat type="invd">15569</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267146" name="service_details" files="F1">
 			<labl>Request Details</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">-  -</sumStat>
 			<sumStat type="max">Z - X - Y</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">7879647</sumStat>
-			<sumStat type="invd">506717</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">7947860</sumStat>
+			<sumStat type="invd">543729</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267147" name="address" files="F1">
 			<labl>Address</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">1000 14TH ST, SAN FRANCISCO, CA 94114</sumStat>
 			<sumStat type="max">Youngblood-Coleman Playground, 1398 HUDSON ST, SAN FRANCISCO, CA, 94124</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386349</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491574</sumStat>
 			<sumStat type="invd">15</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267148" name="street" files="F1">
 			<labl>Street</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">101/103 LUNDY LANE</sumStat>
 			<sumStat type="max">ZOO RD</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8014873</sumStat>
-			<sumStat type="invd">371491</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8118888</sumStat>
+			<sumStat type="invd">372701</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267149" name="supervisor_district" files="F1">
 			<labl>Supervisor District</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">0.0</sumStat>
 			<sumStat type="max">11.0</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8009002</sumStat>
-			<sumStat type="invd">377362</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8112652</sumStat>
+			<sumStat type="invd">378937</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267150" name="neighborhoods_sffind_boundaries" files="F1">
 			<labl>Neighborhood</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">8</sumStat>
 			<sumStat type="max">YERBA BUENA ISLAND</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8005089</sumStat>
-			<sumStat type="invd">381275</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8108777</sumStat>
+			<sumStat type="invd">382812</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267192" name="analysis_neighborhood" files="F1">
 			<labl>Analysis Neighborhood</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">Bayview Hunters Point</sumStat>
 			<sumStat type="max">West of Twin Peaks</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">7808787</sumStat>
-			<sumStat type="invd">577577</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">7912538</sumStat>
+			<sumStat type="invd">579051</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267151" name="police_district" files="F1">
 			<labl>Police District</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
-			<sumStat type="min">BAYVIEW</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
+			<sumStat type="min">Bayview</sumStat>
 			<sumStat type="max">UNASSIGNED</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8002038</sumStat>
-			<sumStat type="invd">384326</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8104626</sumStat>
+			<sumStat type="invd">386963</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
 		<var ID="V599267152" name="lat" files="F1">
 			<labl>Latitude</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
-			<sumStat type="min">0E-12</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
+			<sumStat type="min">0.0</sumStat>
 			<sumStat type="max">38.6821821</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8363947</sumStat>
-			<sumStat type="invd">22417</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8467728</sumStat>
+			<sumStat type="invd">23861</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267153" name="long" files="F1">
 			<labl>Longitude</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">-141.219150990916</sumStat>
-			<sumStat type="max">0E-12</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8363947</sumStat>
-			<sumStat type="invd">22417</sumStat>
+			<sumStat type="max">0.0</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8467728</sumStat>
+			<sumStat type="invd">23861</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267154" name="point" files="F1">
@@ -229,19 +229,19 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		</var>
 		<var ID="V599267155" name="point_geom" files="F1">
 			<labl>point_geom</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8363947</sumStat>
-			<sumStat type="invd">22417</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8467728</sumStat>
+			<sumStat type="invd">23861</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">point</varFormat>
 		</var>
 		<var ID="V599267157" name="source" files="F1">
 			<labl>Source</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">Email</sumStat>
 			<sumStat type="max">Web</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386362</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491587</sumStat>
 			<sumStat type="invd">2</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">text</varFormat>
 		</var>
@@ -251,30 +251,30 @@ For more information about Open311, see http://www.open311.org/.]]></abstract>
 		</var>
 		<var ID="V599267162" name="bos_2012" files="F1">
 			<labl>BOS_2012</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">1.00000</sumStat>
 			<sumStat type="max">11.00000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
 			<sumStat type="vald">6289097</sumStat>
-			<sumStat type="invd">2097267</sumStat>
+			<sumStat type="invd">2202492</sumStat>
 			<varFormat type="numeric" schema="other" formatname="socrata">number</varFormat>
 		</var>
 		<var ID="V599267163" name="data_as_of" files="F1">
 			<labl>data_as_of</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">2024-02-15T08:34:00.000</sumStat>
-			<sumStat type="max">2026-02-06T01:00:00.000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="max">2026-03-24T01:00:00.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<var ID="V599267164" name="data_loaded_at" files="F1">
 			<labl>data_loaded_at</labl>
-			<sumStat type="other" otherType="count">8386364</sumStat>
+			<sumStat type="other" otherType="count">8491589</sumStat>
 			<sumStat type="min">2024-09-11T17:09:50.000</sumStat>
-			<sumStat type="max">2026-02-06T03:05:19.000</sumStat>
-			<sumStat type="other" otherType="cardinality">8386364</sumStat>
-			<sumStat type="vald">8386364</sumStat>
+			<sumStat type="max">2026-03-24T03:05:42.000</sumStat>
+			<sumStat type="other" otherType="cardinality">8491589</sumStat>
+			<sumStat type="vald">8491589</sumStat>
 			<varFormat type="character" schema="other" formatname="socrata">calendar_date</varFormat>
 		</var>
 		<notes type="dartfx" subject="variables">Be wary that Socrata does not provide category labels and by default only lists information on the top/most used codes. The DDI var/catgry sets may therefore be incomplete.</notes>

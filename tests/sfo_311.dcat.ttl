@@ -3,10 +3,10 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://data.sfgov.org> a dcat:Catalog ;
-    dcterms:publisher "City of San Francisco",
-        "https://data.sfgov.org" ;
-    dcterms:spatial "San Francisco, California, USA",
-        "http://sws.geonames.org/5391959" ;
+    dcterms:publisher <https://data.sfgov.org>,
+        "City of San Francisco" ;
+    dcterms:spatial <http://sws.geonames.org/5391959>,
+        "San Francisco, California, USA" ;
     dcterms:title "San Francisco Open Data Portal" ;
     dcat:dataset <https://data.sfgov.org/d/vw6y-z8j6> ;
     dcat:service <https://data.sfgov.org/resource/vw6y-z8j6.json> .
@@ -35,14 +35,14 @@ Download data using 'export' button to the right. For more information on this d
 Check out https://sf.connect.socrata.com/
 
 For more information about Open311, see http://www.open311.org/.""" ;
-    dcterms:license "Open Data Commons Public Domain Dedication and License",
-        "PDDL",
-        "http://opendatacommons.org/licenses/pddl/1.0/" ;
-    dcterms:modified "2026-02-06T04:06:12"^^xsd:dateTime ;
-    dcterms:publisher "City of San Francisco",
-        "https://data.sfgov.org" ;
-    dcterms:spatial "San Francisco, California, USA",
-        "http://sws.geonames.org/5391959" ;
+    dcterms:license <http://opendatacommons.org/licenses/pddl/1.0/>,
+        "Open Data Commons Public Domain Dedication and License",
+        "PDDL" ;
+    dcterms:modified "2026-03-24T04:07:41"^^xsd:dateTime ;
+    dcterms:publisher <https://data.sfgov.org>,
+        "City of San Francisco" ;
+    dcterms:spatial <http://sws.geonames.org/5391959>,
+        "San Francisco, California, USA" ;
     dcterms:title "311 Cases" ;
     dcat:distribution <https://data.sfgov.org/resource/vw6y-z8j6.csv> ;
     dcat:keyword "311",
