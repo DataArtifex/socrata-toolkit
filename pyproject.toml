@@ -33,6 +33,17 @@ Documentation = "https://github.com/DataArtifex/socrata-toolkit#readme"
 Issues = "https://github.com/DataArtifex/socrata-toolkit/issues"
 Source = "https://github.com/DataArtifex/socrata-toolkit"
 
+[tool.hatch.build.targets.sdist]
+exclude = ["/.github", "/docs"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dartfx"]
+
+[tool.hatch.version]
+path = "src/dartfx/hatch_foo/__about__.py"
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/dartfx/socrata/py.typed" = "dartfx/socrata/py.typed"
 
 [dependency-groups]
 dev = [
