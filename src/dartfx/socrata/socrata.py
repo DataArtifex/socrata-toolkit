@@ -1,8 +1,9 @@
 import json
 import logging
 import os
-from dataclasses import field
+import typing
 from datetime import datetime
+from typing import Any
 from xml.sax.saxutils import escape
 
 import mlcroissant as mlc
@@ -17,15 +18,23 @@ jinja_env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(os.
 class SocrataApiError(Exception):
     """Custom exception for Socrata API errors."""
 
-    def __init__(self, message, url, status_code=None, response=None):
+    def __init__(
+        self,
+        message: str,
+        url: str | None = None,
+        status_code: int | None = None,
+        response: str | None = None,
+    ):
         super().__init__(message)
         self.message = message
         self.url = url
         self.status_code = status_code
         self.response = response
 
-    def __str__(self):
+    def __str__(self) -> str:
         base_message = f"SocrataApiError: {self.message}"
+        if self.url is not None:
+            base_message += f" (URL: {self.url})"
         if self.status_code is not None:
             base_message += f" (Status Code: {self.status_code})"
         if self.response is not None:
@@ -92,24 +101,24 @@ class SocrataServer(BaseModel):
     host: str
     name: str | None = Field(default=None)
     disk_cache_root: str | None = Field(default=None)  # a directory will be created here for this server
-    _in_memory_cache: dict = PrivateAttr(default_factory=dict)
+    _in_memory_cache: dict[str, Any] = PrivateAttr(default_factory=dict)
 
     # attributes not available in Dataset metadata
-    publisher: list[str] | None = field(default_factory=list)
-    spatial: list[str] | None = field(default_factory=list)
+    publisher: list[str] = Field(default_factory=list)
+    spatial: list[str] = Field(default_factory=list)
 
-    def model_post_init(self, __context):
+    def model_post_init(self, __context: Any) -> None:
         # set metadata for know servers
         if self.host in SERVERS:
-            self.name = SERVERS[self.host].get("name", self.host)
-            self.publisher = SERVERS[self.host].get("publisher", [])
-            self.spatial = SERVERS[self.host].get("spatial", [])
+            self.name = str(SERVERS[self.host].get("name", self.host))
+            self.publisher = list(SERVERS[self.host].get("publisher", []))
+            self.spatial = list(SERVERS[self.host].get("spatial", []))
         else:
             self.name = self.host
             self.publisher = [self.host_url]
 
     @property
-    def disk_cache_dir(self):
+    def disk_cache_dir(self) -> str | None:
         if self.disk_cache_root:
             if os.path.isdir(self.disk_cache_root):
                 if self.disk_cache_root:
@@ -118,19 +127,20 @@ class SocrataServer(BaseModel):
                     return path
             else:
                 raise ValueError(f"Cache root directory does not exist: {self.disk_cache_root}")
+        return None
 
     @property
-    def memory_cache(self):
+    def memory_cache(self) -> dict[str, Any]:
         return self._in_memory_cache
 
     @property
-    def host_url(self):
+    def host_url(self) -> str:
         return f"https://{self.host}"
 
-    def get_dataset_info(self, dataset_id, refresh=False):
+    def get_dataset_info(self, dataset_id: str, refresh: bool = False) -> dict[str, Any]:
         # check if in memory cache
         if dataset_id in self.memory_cache and not refresh:
-            return self.memory_cache[dataset_id]
+            return typing.cast(dict[str, Any], self.memory_cache[dataset_id])
         # init local file if cache is enabled
         file_name = f"{dataset_id}.json"
         if self.disk_cache_dir:
@@ -139,7 +149,7 @@ class SocrataServer(BaseModel):
             # load from disk cache
             logging.debug(f"Loading from disk cache {file_path}")
             with open(file_path) as f:
-                data = json.load(f)
+                data = typing.cast(dict[str, Any], json.load(f))
                 self.memory_cache[dataset_id] = data
                 return data
         else:
@@ -147,7 +157,7 @@ class SocrataServer(BaseModel):
             url = f"https://{self.host}/api/views/{file_name}"
             results = requests.get(url)
             if results.status_code == 200:
-                data = results.json()
+                data = typing.cast(dict[str, Any], results.json())
                 # save to disk cache if enabled
                 if self.disk_cache_dir:  # save to local cache if enabled
                     with open(file_path, "w") as f:
@@ -157,9 +167,15 @@ class SocrataServer(BaseModel):
                 return data
             else:
                 raise SocrataApiError("Error getting dataset info", url, results.status_code, results.text)
-        return
+        return {}
 
-    def search_datasets(self, limit: int = None, offset: int = None, order: str = None, sort_order: str = None):
+    def search_datasets(
+        self,
+        limit: int | None = None,
+        offset: int | None = None,
+        order: str | None = None,
+        sort_order: str | None = None,
+    ) -> dict[str, Any]:
         """Calls the Socrata Discovery API
 
         See https://dev.socrata.com/docs/other/discovery
@@ -197,7 +213,7 @@ class SocrataServer(BaseModel):
         logging.debug(f"Calling {url}")
         results = requests.get(url)
         if results.status_code == 200:
-            data = results.json()
+            data = typing.cast(dict[str, Any], results.json())
             return data
         else:
             raise SocrataApiError("Search error", url, results.status_code, results.text)
@@ -206,86 +222,96 @@ class SocrataServer(BaseModel):
 class SocrataDataset(BaseModel):
     server: SocrataServer
     id: str
-    _data: dict | None = None
+    _data: dict[str, Any] = PrivateAttr(default_factory=dict)
     _variables: list["SocrataVariable"] = PrivateAttr(default_factory=list)
 
-    def model_post_init(self, __context):
+    def model_post_init(self, __context: Any) -> None:
         self._data = self.server.get_dataset_info(self.id)
         if self.asset_type != "dataset":
             raise ValueError(f"Unexpected asset type: {self.asset_type}. Must be 'dataset'.")
 
     @property
-    def api_foundry_url(self):
+    def api_foundry_url(self) -> str:
         return f"https://dev.socrata.com/foundry/{self.server.host}/{self.id}"
 
     @property
-    def api_endpoint_url(self):
+    def api_endpoint_url(self) -> str:
         return f"https://{self.server.host}/resource/{self.id}.json"
 
     @property
-    def csv_download_url(self):
+    def csv_download_url(self) -> str:
         return f"https://{self.server.host}/resource/{self.id}.csv"
 
     @property
-    def data(self):
+    def data(self) -> dict[str, Any]:
         return self._data
 
     @property
-    def asset_type(self):
+    def asset_type(self) -> str | None:
         return self._data.get("assetType")
 
     @property
-    def description(self):
+    def description(self) -> str | None:
         return self._data.get("description")
 
     @property
-    def landing_page(self):
+    def landing_page(self) -> str:
         # category = self._data.get("category").replace(" ", "-")
         # name = self._data.get("name").replace(" ", "-")
         # return f"https://{self.server.host}/{category}/{name}/{self.id}"
         return f"https://{self.server.host}/d/{self.id}"
 
     @property
-    def license(self):
+    def license(self) -> str:
         """Combines available license properties or returns Unknown if not available"""
         license_terms = [x for x in [self.license_name, self.license_id, self.license_link] if x is not None]
         if license_terms:
-            license = ", ".join(license_terms)
+            license_value = ", ".join(license_terms)
         else:
-            license = ["Unknown"]
-        return license
+            license_value = "Unknown"
+        return license_value
 
     @property
-    def license_id(self):
-        if self._data.get("licenseId"):
-            return self._data.get("licenseId")
+    def license_id(self) -> str | None:
+        value = self._data.get("licenseId")
+        if isinstance(value, str):
+            return value
+        return None
 
     @property
-    def license_name(self):
-        if self._data.get("license"):
-            return self._data["license"].get("name")
+    def license_name(self) -> str | None:
+        license_obj = self._data.get("license")
+        if isinstance(license_obj, dict):
+            return license_obj.get("name")
+        return None
 
     @property
-    def license_link(self):
-        if self._data.get("license"):
-            return self._data["license"].get("termsLink")
+    def license_link(self) -> str | None:
+        license_obj = self._data.get("license")
+        if isinstance(license_obj, dict):
+            return license_obj.get("termsLink")
+        return None
 
     @property
-    def name(self):
-        return self._data.get("name")
+    def name(self) -> str:
+        return str(self._data.get("name") or self.id)
 
     @property
     def publication_date(self) -> datetime | None:
-        if self._data.get("publicationDate"):
-            return datetime.fromtimestamp(self._data.get("publicationDate"))
+        timestamp = self._data.get("publicationDate")
+        if isinstance(timestamp, int | float):
+            return datetime.fromtimestamp(float(timestamp))
+        return None
 
     @property
     def rows_updated_at(self) -> datetime | None:
-        if self._data.get("rowsUpdatedAt"):
-            return datetime.fromtimestamp(self._data.get("rowsUpdatedAt"))
+        timestamp = self._data.get("rowsUpdatedAt")
+        if isinstance(timestamp, int | float):
+            return datetime.fromtimestamp(float(timestamp))
+        return None
 
     @property
-    def tags(self):
+    def tags(self) -> list[str] | None:
         return self._data.get("tags")
 
     @property
@@ -298,23 +324,25 @@ class SocrataDataset(BaseModel):
 
     @property
     def view_last_modified(self) -> datetime | None:
-        if self._data:
-            if self._data.get("viewLastModified"):
-                return datetime.fromtimestamp(self._data["viewLastModified"])
+        timestamp = self._data.get("viewLastModified")
+        if isinstance(timestamp, int | float):
+            return datetime.fromtimestamp(float(timestamp))
+        return None
 
-    def get_code(self, environment, options: dict = None, *_args, **_kwargs) -> str:
+    def get_code(self, environment: str, options: dict[str, Any] | None = None, *_args: Any, **_kwargs: Any) -> str:
         """Generates code/script for a given environment."""
-        code = None
         template_file = f"generate_{environment}.j2"
         template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
         if os.path.isfile(template_path):
             template = jinja_env.get_template(template_file)
-            code = template.render(host=self.server.host, dataset_id=self.id, options=options)
+            code = typing.cast(str, template.render(host=self.server.host, dataset_id=self.id, options=options))
         else:
             raise ValueError(f"Unsupported environment: {environment}.")
         return code
 
-    def get_croissant(self, include_computed=False, include_codes=True, max_codes=100) -> mlc.Metadata:
+    def get_croissant(
+        self, include_computed: bool = False, include_codes: bool = True, max_codes: int = 100
+    ) -> mlc.Metadata:
         context = mlc.Context()
         context.is_live_dataset = True
         # selected variables
@@ -331,17 +359,20 @@ class SocrataDataset(BaseModel):
         publishers = []
         for publisher in self.server.publisher:
             publishers.append(mlc.Organization(name=publisher, url=self.server.host))
+        rows_updated_at = self.rows_updated_at
+        publication_date = self.publication_date
+        metadata_version = int(rows_updated_at.timestamp()) if rows_updated_at else int(datetime.now().timestamp())
         metadata = mlc.Metadata(
             ctx=context,
             id=self.id,
             name=self.name,
             description=markdownify(self.description) if self.description else None,
             cite_as=f"{self.name}, {self.server.name}, {self.landing_page}",
-            date_modified=self.rows_updated_at,
-            date_published=self.publication_date,
+            date_modified=rows_updated_at,
+            date_published=publication_date,
             license=self.license,
             publisher=publishers,
-            version=int(self.rows_updated_at.timestamp()),
+            version=metadata_version,
         )
         # distribution
         distribution = []
@@ -420,7 +451,7 @@ class SocrataDataset(BaseModel):
 
         return metadata
 
-    def get_ddi_codebook(self, category_count_threshold=500, codebook_version="2.5") -> str:
+    def get_ddi_codebook(self, category_count_threshold: int = 500, codebook_version: str = "2.5") -> str:
         """Generate DDI-Codebook XML for this dataset.
 
         Returns:
@@ -496,7 +527,7 @@ class SocrataDataset(BaseModel):
                 )
                 xml += f'<sumStat type="vald">{var.non_null}</sumStat>' if var.non_null else ""
                 xml += f'<sumStat type="invd">{var.null}</sumStat>' if var.null else ""
-                if var.top and var.cardinality <= category_count_threshold:
+                if var.top and var.cardinality is not None and var.cardinality <= category_count_threshold:
                     for item in var.top:
                         xml += "<catgry>"
                         xml += f"<catValu>{escape(str(item['item']))}</catValu>"
@@ -516,7 +547,9 @@ class SocrataDataset(BaseModel):
         xml += "</codeBook>"
         return xml
 
-    def get_variable_count(self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True) -> int:
+    def get_variable_count(
+        self, exclude_hidden: bool = True, exclude_deleted: bool = True, exclude_computed: bool = True
+    ) -> int:
         count = 0
         for variable in self.variables:
             if variable.is_hidden and exclude_hidden:
@@ -530,7 +563,7 @@ class SocrataDataset(BaseModel):
         return count
 
     def get_variables(
-        self, exclude_hidden=True, exclude_deleted=True, exclude_computed=True
+        self, exclude_hidden: bool = True, exclude_deleted: bool = True, exclude_computed: bool = True
     ) -> list["SocrataVariable"]:
         """Helper function for getting a list of variables based on visibility attributes."""
         variables = []
@@ -556,7 +589,7 @@ class SocrataDataset(BaseModel):
             names.append(variable.name)
         return names
 
-    def get_markdown(self, sections=None):
+    def get_markdown(self, sections: list[str] | None = None) -> str:
         sections = sections or []
         md = f"# {markdownify(self.name)}\n\n"
         if not sections or "links" in sections:
@@ -586,11 +619,13 @@ class SocrataDataset(BaseModel):
                 md += f" | {info} |\n"
         return md
 
-    def get_record_count(self):
+    def get_record_count(self) -> int | None:
         variable0 = self.variables[0]
         if variable0.cached_content:
             count = variable0.cached_content.get("count")
-            return count
+            if isinstance(count, int | float):
+                return int(count)
+        return None
 
 
 class SocrataVariable(BaseModel):
@@ -604,21 +639,27 @@ class SocrataVariable(BaseModel):
     index: int
 
     @property
-    def cached_content(self):
+    def cached_content(self) -> dict[str, Any] | None:
         return self.data.get("cachedContents")
 
     @property
-    def cardinality(self):
-        if self.cached_content and self.cached_content.get("cardinality"):
-            return int(self.cached_content.get("cardinality"))
+    def cardinality(self) -> int | None:
+        if self.cached_content:
+            value = self.cached_content.get("cardinality")
+            if value is not None:
+                return int(value)
+        return None
 
     @property
-    def count(self):
-        if self.cached_content and self.cached_content.get("count"):
-            return int(self.cached_content.get("count"))
+    def count(self) -> int | None:
+        if self.cached_content:
+            value = self.cached_content.get("count")
+            if value is not None:
+                return int(value)
+        return None
 
     @property
-    def croissant_data_type(self):
+    def croissant_data_type(self) -> Any:
         # https://dev.socrata.com/docs/datatypes
         if self.socrata_data_type == "number":
             return mlc.DataType.FLOAT
@@ -631,85 +672,112 @@ class SocrataVariable(BaseModel):
         return mlc.DataType.TEXT
 
     @property
-    def data(self):
-        return self.dataset._data["columns"][self.index]
+    def data(self) -> dict[str, Any]:
+        result = self.dataset._data["columns"][self.index]
+        if isinstance(result, dict):
+            return result
+        return {}
 
     @property
-    def id(self):
+    def id(self) -> int:
         """The variable is which is always a number"""
-        return self.data["id"]
+        value = self.data["id"]
+        if isinstance(value, int):
+            return value
+        return int(value)
 
     @property
-    def is_computed(self):
+    def is_computed(self) -> bool:
         """The name, which is the 'fieldname' property, starts with ':@computed'"""
         return self.name.startswith(":@computed")
 
     @property
-    def is_deleted(self):
+    def is_deleted(self) -> bool:
         """The label, which is the 'name' property, starts with 'DELETE -'"""
         return self.label.startswith("DELETE -")
 
     @property
-    def is_hidden(self):
+    def is_hidden(self) -> bool:
         """Is either computed or deleted"""
         return self.is_computed or self.is_deleted
 
     @property
-    def is_visible(self):
+    def is_visible(self) -> bool:
         """Not hdden"""
         return not self.is_hidden
 
     @property
-    def label(self):
+    def label(self) -> str:
         # Note that the 'name' property is actually the variable label
         # Be aware that variables marked for deletion and hidden from users
         # have a 'name' that starts with 'DELETE -'
-        return self.data["name"]
+        value = self.data["name"]
+        if isinstance(value, str):
+            return value
+        return str(value)
 
     @property
-    def largest(self):
+    def largest(self) -> Any | None:
         if self.cached_content:
             return self.cached_content.get("largest")
+        return None
 
     @property
-    def name(self):
+    def name(self) -> str:
         # Note that the 'filedName' property is actually the variable name
         # Be aware that compute variables, that are hidden from users, start with :@computed
-        return self.data["fieldName"]
+        value = self.data["fieldName"]
+        if isinstance(value, str):
+            return value
+        return str(value)
 
     @property
-    def non_null(self):
-        if self.cached_content and self.cached_content.get("non_null"):
-            return int(self.cached_content.get("non_null"))
+    def non_null(self) -> int | None:
+        if self.cached_content:
+            value = self.cached_content.get("non_null")
+            if value is not None:
+                return int(value)
+        return None
 
     @property
-    def null(self):
-        if self.cached_content and self.cached_content.get("null"):
-            return int(self.cached_content.get("null"))
+    def null(self) -> int | None:
+        if self.cached_content:
+            value = self.cached_content.get("null")
+            if value is not None:
+                return int(value)
+        return None
 
     @property
-    def position(self):
+    def position(self) -> Any:
         return self.data["position"]
 
     @property
-    def smallest(self):
+    def smallest(self) -> Any | None:
         if self.cached_content:
             return self.cached_content.get("smallest")
+        return None
 
     @property
-    def socrata_data_type(self):
-        return self.data["dataTypeName"]
+    def socrata_data_type(self) -> str:
+        value = self.data["dataTypeName"]
+        if isinstance(value, str):
+            return value
+        return str(value)
 
     @property
-    def generic_data_type(self):
+    def generic_data_type(self) -> None:
         # TODO: implement
         return None
 
     @property
-    def socrata_render_type(self):
-        return self.data["renderTypeName"]
+    def socrata_render_type(self) -> str:
+        value = self.data["renderTypeName"]
+        if isinstance(value, str):
+            return value
+        return str(value)
 
     @property
-    def top(self):
+    def top(self) -> list[dict[str, Any]] | None:
         if self.cached_content and self.cached_content.get("top"):
             return self.cached_content.get("top")
+        return None
