@@ -20,11 +20,11 @@ classifiers = [
 ]
 dependencies = [
   "dartfx-dcat @ git+https://github.com/DataArtifex/dcat-toolkit.git",
-  "jinja2>=3",
+  "jinja2>=3.1.5",
   "markdownify>=0.13.0",
   "mlcroissant>=1.0.16",
-  "pydantic>=2",
-  "requests>=2.25.0",
+  "pydantic>=2.10.0",
+  "requests>=2.32.0",
   "python-dotenv>=1.0.0",
 ]
 [project.urls]
@@ -119,8 +119,6 @@ show_error_codes = true
 mypy_path = "src"
 explicit_package_bases = true
 plugins = ["pydantic.mypy"]
-namespace_packages = true
-no_implicit_optional = false
 exclude = ["^tests/sfo_311_python-pandas\\.py$"]
 
 [tool.ruff]
