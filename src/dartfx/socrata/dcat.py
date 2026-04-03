@@ -17,7 +17,7 @@ class DcatGenerator:
     server: SocrataServer
     datasets: list[SocrataDataset]
 
-    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset | str] = None):
+    def __init__(self, server: SocrataServer, datasets: list[SocrataDataset | str] | None = None):
         """Initialize the DCAT generator.
 
         Args:
