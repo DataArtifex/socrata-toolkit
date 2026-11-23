@@ -112,6 +112,7 @@ def test_data_description_variables_pk_and_stats(
         ("json", None),
         ("json-ld", None),
         ("ttl", "turtle"),
+        ("turtle", "turtle"),
         ("xml", "xml"),
         ("n3", "n3"),
     ],

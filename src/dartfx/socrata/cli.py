@@ -88,6 +88,7 @@ class SerializationFlavor(StrEnum):
     JSON = "json"
     JSON_LD = "json-ld"
     TTL = "ttl"
+    TURTLE = "turtle"
     XML = "xml"
     N3 = "n3"
 
@@ -446,7 +447,7 @@ def search(
     ] = SearchFormat.TABLE.value,
     flavor: Annotated[
         SerializationFlavor | None,
-        typer.Option("--flavor", help="Serialization flavor for CDIF output (json, json-ld, ttl, xml, n3)"),
+        typer.Option("--flavor", help="Serialization flavor for CDIF output (json, json-ld, ttl, turtle, xml, n3)"),
     ] = None,
     json_output: Annotated[bool, typer.Option("--json", help="Output results as JSON")] = False,
     markdown_output: Annotated[bool, typer.Option("--markdown", "--md", help="Output results as Markdown")] = False,
@@ -911,7 +912,8 @@ def metadata(
         typer.Option(
             "--flavor",
             help=(
-                "Serialization flavor for multi-serialization formats like CDIF and DCAT (json, json-ld, ttl, xml, n3)"
+                "Serialization flavor for multi-serialization formats like CDIF and DCAT "
+                "(json, json-ld, ttl, turtle, xml, n3)"
             ),
         ),
     ] = None,

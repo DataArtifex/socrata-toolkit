@@ -340,6 +340,7 @@ def test_cli_metadata_cdif_discovery_json_flavors(flavor: str) -> None:
     ("flavor", "expected_marker"),
     [
         ("ttl", "@prefix schema:"),
+        ("turtle", "@prefix schema:"),
         ("xml", "<rdf:RDF"),
         ("n3", "@prefix schema:"),
     ],
