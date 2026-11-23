@@ -1,6 +1,7 @@
 from rdflib import DCAT, DCTERMS, Graph, URIRef
 
-from dartfx.socrata import DcatGenerator
+from dartfx.dcat import dcat_ap, dcat_ap_hvd, dcat_us
+from dartfx.socrata import DcatGenerator, DcatProfile
 
 
 def test_sfo_311(sfo_server, sfo_dataset_311, tmp_path):
@@ -54,3 +55,27 @@ def test_multi_dataset(sfo_server, sfo_dataset_311, sfo_dataset_police):
     # Verify both have titles
     for ds in datasets:
         assert (ds, DCTERMS.title, None) in g
+
+
+def test_dcat_profiles(sfo_server, sfo_dataset_311):
+    # Default profile is DCAT-US 3.0
+    gen_default = DcatGenerator(sfo_server, [sfo_dataset_311])
+    assert gen_default.profile == DcatProfile.US
+    g_us = gen_default.get_graph()
+    ds_uri = URIRef(sfo_dataset_311.landing_page)
+    assert (ds_uri, dcat_us.DCAT_US.accessRestriction, None) in g_us
+
+    # W3C DCAT 3 profile omits DCAT-US accessRestriction
+    g_w3c = gen_default.get_graph(profile="w3c")
+    assert (ds_uri, DCAT.landingPage, None) in g_w3c
+    assert (ds_uri, dcat_us.DCAT_US.accessRestriction, None) not in g_w3c
+
+    # DCAT-AP profile
+    g_ap = DcatGenerator(sfo_server, [sfo_dataset_311], profile="ap").get_graph()
+    assert (ds_uri, DCAT.landingPage, None) in g_ap
+
+    # DCAT-AP HVD profile adds HVD legislation and accessURL
+    g_hvd = DcatGenerator(sfo_server, [sfo_dataset_311], profile="ap-hvd").get_graph()
+    assert (ds_uri, dcat_ap.DCATAP.applicableLegislation, URIRef(dcat_ap_hvd.HVD_REGULATION)) in g_hvd
+    dist_uri = URIRef(sfo_dataset_311.csv_download_url)
+    assert (dist_uri, DCAT.accessURL, dist_uri) in g_hvd

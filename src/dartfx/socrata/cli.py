@@ -6,6 +6,7 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Annotated, Any
 
+import requests
 import typer
 from dotenv import find_dotenv, load_dotenv
 from rich.console import Console
@@ -13,8 +14,15 @@ from rich.panel import Panel
 from rich.table import Table
 
 from dartfx.socrata.__about__ import __version__
-from dartfx.socrata.dcat import DcatGenerator
-from dartfx.socrata.socrata import SERVERS, SocrataDataset, SocrataServer, jinja_env
+from dartfx.socrata.cdif import CdifGenerator, resolve_serialization_flavor
+from dartfx.socrata.dcat import DcatGenerator, DcatProfile
+from dartfx.socrata.socrata import (
+    SERVERS,
+    SocrataDataset,
+    SocrataServer,
+    get_known_servers,
+    jinja_env,
+)
 
 load_dotenv(find_dotenv(usecwd=True))
 
@@ -50,6 +58,7 @@ app = typer.Typer(
     help="CLI for discovering, searching, and exporting catalog metadata from Socrata servers.",
     add_completion=False,
     rich_markup_mode="rich",
+    no_args_is_help=True,
 )
 
 
@@ -75,12 +84,42 @@ class OutputFormat(StrEnum):
     MD = "md"
 
 
-class ExportFormat(StrEnum):
+class SerializationFlavor(StrEnum):
+    JSON = "json"
+    JSON_LD = "json-ld"
+    TTL = "ttl"
+    XML = "xml"
+    N3 = "n3"
+
+
+class SearchFormat(StrEnum):
+    TABLE = "table"
+    JSON = "json"
+    CSV = "csv"
+    MARKDOWN = "markdown"
+    MD = "md"
+    CDIF_DISCOVERY = "cdif-discovery"
+
+
+class MetadataFormat(StrEnum):
+    SOCRATA = "socrata"
+    NATIVE = "native"
+    JSON = "json"
     DCAT = "dcat"
+    CDIF = "cdif"
+    CDIF_DISCOVERY = "cdif-discovery"
+    CDIF_DATA_DESCRIPTION = "cdif-data-description"
     CROISSANT = "croissant"
     DDI = "ddi"
     MARKDOWN = "markdown"
     MD = "md"
+
+
+ExportFormat = MetadataFormat
+
+
+class DataFormat(StrEnum):
+    CSV = "csv"
     JSON = "json"
 
 
@@ -109,6 +148,22 @@ ENV_MAP: dict[str, tuple[str, str, str]] = {
     "javascript": ("jquery", "javascript", "js"),
     "js": ("jquery", "javascript", "js"),
 }
+
+
+def _resolve_enum_prefix[E: StrEnum](value: str, enum_cls: type[E], param_name: str = "--format") -> E:
+    """Resolve an enum value by exact match or unique case-insensitive prefix."""
+    cleaned = value.strip().lower()
+    for member in enum_cls:
+        if member.value == cleaned:
+            return member
+    matches = [member for member in enum_cls if member.value.startswith(cleaned)]
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        options = ", ".join(m.value for m in matches)
+        raise typer.BadParameter(f"Ambiguous value '{value}' for {param_name}. Matches: {options}")
+    valid = ", ".join(m.value for m in enum_cls)
+    raise typer.BadParameter(f"Invalid value '{value}' for {param_name}. Choose from: {valid}")
 
 
 def get_server(hostname: str | None = None, disk_cache_dir: str | None = None) -> SocrataServer:
@@ -153,30 +208,66 @@ def version() -> None:
 def list_servers(
     query: Annotated[
         str | None,
-        typer.Option("--query", "-q", help="Filter portals by name or hostname."),
+        typer.Option("--query", "-q", help="Filter portals by name, hostname, country, or domain."),
     ] = None,
     format: Annotated[OutputFormat, typer.Option("--format", "-f", help="Output format")] = OutputFormat.TABLE,
     json_output: Annotated[bool, typer.Option("--json", help="Output results as JSON")] = False,
     markdown_output: Annotated[bool, typer.Option("--markdown", "--md", help="Output results as Markdown")] = False,
     output: Annotated[str | None, typer.Option("--output", "-o", help="Write output to a file")] = None,
+    file: Annotated[
+        Path | None,
+        typer.Option("--file", help="Path to custom servers.yaml / data.yaml registry"),
+    ] = None,
 ) -> None:
     """List known Socrata open data portals."""
+    known = get_known_servers(file) if file else SERVERS
     items: list[dict[str, Any]] = []
-    for host, meta in SERVERS.items():
+    for host, meta in known.items():
         name = str(meta.get("name", host))
         publishers = list(meta.get("publisher", []))
         spatial = list(meta.get("spatial", []))
+        custodian = meta.get("custodian") or {}
+        geocov = meta.get("geocoverage") or {}
+        domains = list(meta.get("domains") or [])
+        country_code = meta.get("country_code")
+
         if query:
             q_lower = query.lower()
-            if q_lower not in host.lower() and q_lower not in name.lower():
+            searchable = " ".join(
+                [
+                    host,
+                    name,
+                    str(country_code or ""),
+                    str(custodian.get("name", "")),
+                    str(geocov.get("description", "")),
+                    " ".join(domains),
+                ]
+            ).lower()
+            if q_lower not in searchable:
                 continue
+
+        pub_name = (
+            publishers[0]
+            if publishers
+            else (str(custodian.get("name")) if isinstance(custodian, dict) and custodian.get("name") else host)
+        )
+        spatial_desc = (
+            spatial[0]
+            if spatial
+            else (str(geocov.get("description")) if isinstance(geocov, dict) and geocov.get("description") else "-")
+        )
+
         items.append(
             {
                 "hostname": host,
                 "name": name,
-                "publisher": publishers[0] if publishers else host,
-                "spatial": spatial[0] if spatial else "-",
-                "url": f"https://{host}",
+                "publisher": pub_name,
+                "spatial": spatial_desc,
+                "country_code": country_code,
+                "domains": domains,
+                "custodian": custodian,
+                "geocoverage": geocov,
+                "url": meta.get("url") or f"https://{host}",
             }
         )
 
@@ -220,7 +311,11 @@ def list_servers(
         from io import StringIO
 
         buf = StringIO()
-        writer = csv.DictWriter(buf, fieldnames=["hostname", "name", "publisher", "spatial", "url"])
+        writer = csv.DictWriter(
+            buf,
+            fieldnames=["hostname", "name", "publisher", "spatial", "url"],
+            extrasaction="ignore",
+        )
         writer.writeheader()
         for it in items:
             writer.writerow(it)
@@ -236,7 +331,7 @@ def list_servers(
 
     for it in items:
         clickable_host = f"[link={it['url']}]{it['hostname']}[/link]"
-        table.add_row(it["name"], clickable_host, it["publisher"], it["spatial"])
+        table.add_row(str(it["name"]), clickable_host, str(it["publisher"]), str(it["spatial"]))
 
     if out_path:
         fc = Console(record=True, width=120)
@@ -341,7 +436,18 @@ def search(
         typer.Option("--order", help="Sort order (updatedAt, createdAt, name, page_views_total)"),
     ] = None,
     sort_order: Annotated[str | None, typer.Option("--sort-order", help="Sort direction: 'asc' or 'desc'")] = None,
-    format: Annotated[OutputFormat, typer.Option("--format", "-f", help="Output format")] = OutputFormat.TABLE,
+    format: Annotated[
+        str,
+        typer.Option(
+            "--format",
+            "-f",
+            help="Output format (table, json, csv, markdown, cdif-discovery; unique prefixes supported)",
+        ),
+    ] = SearchFormat.TABLE.value,
+    flavor: Annotated[
+        SerializationFlavor | None,
+        typer.Option("--flavor", help="Serialization flavor for CDIF output (json, json-ld, ttl, xml, n3)"),
+    ] = None,
     json_output: Annotated[bool, typer.Option("--json", help="Output results as JSON")] = False,
     markdown_output: Annotated[bool, typer.Option("--markdown", "--md", help="Output results as Markdown")] = False,
     output: Annotated[str | None, typer.Option("--output", "-o", help="Write output to a file")] = None,
@@ -366,21 +472,40 @@ def search(
     results = results_data.get("results", [])
     total = results_data.get("resultSetSize", len(results))
 
-    effective_format = OutputFormat.JSON if json_output else (OutputFormat.MARKDOWN if markdown_output else format)
+    resolved_format = _resolve_enum_prefix(format, SearchFormat)
+    effective_format: SearchFormat = (
+        SearchFormat.JSON if json_output else (SearchFormat.MARKDOWN if markdown_output else resolved_format)
+    )
+
+    if effective_format == SearchFormat.CDIF_DISCOVERY:
+        generator = CdifGenerator(server=server_client)
+        cdif_models = generator.build_from_search_results(results_data)
+        chosen_flavor = flavor.value if flavor else SerializationFlavor.JSON_LD.value
+        target_fmt, cdif_ext = resolve_serialization_flavor(chosen_flavor, default="json-ld")
+        cdif_content = generator.serialize(cdif_models, flavor=chosen_flavor)
+        out_path = _resolve_output_path(output, "search.cdif-discovery", cdif_ext)
+        if out_path:
+            _write_or_print(cdif_content, out_path, "CDIF Discovery search results saved to:")
+        elif target_fmt in ("json", "json-ld"):
+            console.print_json(cdif_content)
+        else:
+            typer.echo(cdif_content.rstrip("\n"))
+        return
+
     ext = (
         "json"
-        if effective_format == OutputFormat.JSON
+        if effective_format == SearchFormat.JSON
         else (
             "csv"
-            if effective_format == OutputFormat.CSV
+            if effective_format == SearchFormat.CSV
             else "md"
-            if effective_format in (OutputFormat.MARKDOWN, OutputFormat.MD)
+            if effective_format in (SearchFormat.MARKDOWN, SearchFormat.MD)
             else "txt"
         )
     )
     out_path = _resolve_output_path(output, "search", ext)
 
-    if effective_format == OutputFormat.JSON:
+    if effective_format == SearchFormat.JSON:
         json_str = json.dumps(results_data, indent=2)
         if out_path:
             _write_or_print(json_str, out_path, "Search results saved to:")
@@ -418,7 +543,7 @@ def search(
             }
         )
 
-    if effective_format in (OutputFormat.MARKDOWN, OutputFormat.MD):
+    if effective_format in (SearchFormat.MARKDOWN, SearchFormat.MD):
         md_lines = [
             f"# Catalog Search: '{query}' on {server_client.host} (Total: {total:,})",
             "",
@@ -433,7 +558,7 @@ def search(
         _write_or_print("\n".join(md_lines), out_path, "Search results saved to:")
         return
 
-    if effective_format == OutputFormat.CSV:
+    if effective_format == SearchFormat.CSV:
         from io import StringIO
 
         buf = StringIO()
@@ -767,14 +892,37 @@ def list_variables(
         console.print(table)
 
 
-@app.command(name="export")
-@app.command(name="metadata", help="Alias for 'export'. Export dataset metadata in standard formats.")
-def export_metadata(
+@app.command(name="metadata")
+def metadata(
     dataset_ids: Annotated[list[str], typer.Argument(help="One or more Socrata dataset IDs (e.g. vw6y-z8j6)")],
     format: Annotated[
-        ExportFormat,
-        typer.Option("--format", "-f", help="Export metadata format: dcat, croissant, ddi, markdown, json"),
-    ] = ExportFormat.DCAT,
+        str,
+        typer.Option(
+            "--format",
+            "-f",
+            help=(
+                "Metadata format: socrata (default), dcat, cdif-discovery, cdif-data-description, "
+                "cdif, croissant, ddi, markdown, json (unique prefixes like cdif-disco, cdif-data supported)"
+            ),
+        ),
+    ] = MetadataFormat.SOCRATA.value,
+    flavor: Annotated[
+        SerializationFlavor | None,
+        typer.Option(
+            "--flavor",
+            help=(
+                "Serialization flavor for multi-serialization formats like CDIF and DCAT (json, json-ld, ttl, xml, n3)"
+            ),
+        ),
+    ] = None,
+    profile: Annotated[
+        str | None,
+        typer.Option(
+            "--profile",
+            "-p",
+            help="Format-dependent profile (e.g., for dcat: us [default], w3c, ap, ap-hvd)",
+        ),
+    ] = None,
     rdf_format: Annotated[
         str,
         typer.Option("--rdf-format", "-r", help="RDF serialization format for DCAT (turtle, json-ld, pretty-xml, nt)"),
@@ -785,47 +933,87 @@ def export_metadata(
     ] = None,
     include_computed: Annotated[
         bool,
-        typer.Option("--include-computed", help="Include computed variables (Croissant)"),
+        typer.Option("--include-computed", help="Include computed variables (Croissant, CDIF)"),
     ] = False,
-    include_codes: Annotated[
+    include_stats: Annotated[
         bool,
-        typer.Option("--include-codes/--no-codes", help="Include code classifications (Croissant)"),
+        typer.Option("--include-stats/--no-stats", help="Include summary statistics (CDIF data description)"),
     ] = True,
-    max_codes: Annotated[int, typer.Option("--max-codes", help="Maximum codes per variable (Croissant)")] = 100,
+    include_codes: Annotated[
+        bool | None,
+        typer.Option(
+            "--include-codes/--no-codes",
+            help="Include code classifications (Croissant, CDIF data description)",
+        ),
+    ] = None,
+    max_codes: Annotated[
+        int | None,
+        typer.Option("--max-codes", help="Maximum codes per variable (Croissant, CDIF data description)"),
+    ] = None,
     threshold: Annotated[int, typer.Option("--threshold", help="Category count threshold (DDI-Codebook)")] = 500,
     cache_dir: Annotated[str | None, typer.Option("--cache-dir", help="Directory for disk cache")] = None,
     output: Annotated[str | None, typer.Option("--output", "-o", help="Write exported metadata to a file")] = None,
 ) -> None:
-    """Export dataset metadata in DCAT (RDF), Croissant (ML), DDI-Codebook (XML), Markdown, or JSON."""
+    """Export dataset metadata in Socrata JSON, DCAT, CDIF Discovery/Data Description, Croissant, DDI, or Markdown."""
+    resolved_format = _resolve_enum_prefix(format, MetadataFormat)
+    dcat_profile: DcatProfile = DcatProfile.US
+    if profile is not None:
+        if resolved_format == MetadataFormat.DCAT:
+            dcat_profile = _resolve_enum_prefix(profile, DcatProfile, param_name="--profile")
+        else:
+            raise typer.BadParameter(f"--profile is not supported for format '{resolved_format.value}'.")
     server_client = get_server(server, disk_cache_dir=cache_dir)
 
     if not dataset_ids:
         console.print("[bold red]Error:[/] At least one dataset ID must be provided.")
         raise typer.Exit(code=1)
 
-    with console.status(f"[bold green]Generating {format} metadata for {len(dataset_ids)} dataset(s)..."):
+    with console.status(f"[bold green]Generating {resolved_format} metadata for {len(dataset_ids)} dataset(s)..."):
         try:
-            if format == ExportFormat.DCAT:
+            if resolved_format in (MetadataFormat.SOCRATA, MetadataFormat.NATIVE, MetadataFormat.JSON):
+                if len(dataset_ids) == 1:
+                    ds = SocrataDataset(server=server_client, id=dataset_ids[0])
+                    combined_content = json.dumps(ds.data, indent=2)
+                else:
+                    multi_data = [SocrataDataset(server=server_client, id=did).data for did in dataset_ids]
+                    combined_content = json.dumps(multi_data, indent=2)
+
+                out_path = _resolve_output_path(output, f"metadata.{dataset_ids[0]}", "json")
+                if out_path:
+                    _write_or_print(combined_content, out_path, "Socrata metadata saved to:")
+                else:
+                    console.print_json(combined_content)
+                return
+
+            if resolved_format == MetadataFormat.DCAT:
                 dcat_datasets: list[SocrataDataset | str] = list(dataset_ids)
-                generator = DcatGenerator(server=server_client, datasets=dcat_datasets)
+                generator = DcatGenerator(server=server_client, datasets=dcat_datasets, profile=dcat_profile)
                 graph = generator.get_graph()
 
-                clean_rdf = rdf_format.lower()
-                if clean_rdf in ("ttl", "turtle"):
-                    target_rdf = "turtle"
-                    ext = "ttl"
-                elif clean_rdf in ("jsonld", "json-ld"):
-                    target_rdf = "json-ld"
-                    ext = "json"
-                elif clean_rdf in ("xml", "rdf", "pretty-xml"):
-                    target_rdf = "pretty-xml"
-                    ext = "xml"
-                elif clean_rdf == "nt":
-                    target_rdf = "nt"
-                    ext = "nt"
+                if flavor is not None:
+                    target_rdf, ext = resolve_serialization_flavor(flavor.value)
+                    if target_rdf == "json":
+                        target_rdf = "json-ld"
                 else:
-                    target_rdf = clean_rdf
-                    ext = "rdf"
+                    clean_rdf = rdf_format.lower()
+                    if clean_rdf in ("ttl", "turtle"):
+                        target_rdf = "turtle"
+                        ext = "ttl"
+                    elif clean_rdf in ("jsonld", "json-ld", "json"):
+                        target_rdf = "json-ld"
+                        ext = "json"
+                    elif clean_rdf in ("xml", "rdf", "pretty-xml"):
+                        target_rdf = "pretty-xml"
+                        ext = "xml"
+                    elif clean_rdf == "nt":
+                        target_rdf = "nt"
+                        ext = "nt"
+                    elif clean_rdf == "n3":
+                        target_rdf = "n3"
+                        ext = "n3"
+                    else:
+                        target_rdf = clean_rdf
+                        ext = "rdf"
 
                 raw_bytes_or_str = graph.serialize(format=target_rdf)
                 content = (
@@ -842,44 +1030,139 @@ def export_metadata(
                         typer.echo(content.rstrip("\n"))
                 return
 
+            if resolved_format in (
+                MetadataFormat.CDIF,
+                MetadataFormat.CDIF_DISCOVERY,
+                MetadataFormat.CDIF_DATA_DESCRIPTION,
+            ):
+                cdif_profile = (
+                    "data_description" if resolved_format == MetadataFormat.CDIF_DATA_DESCRIPTION else "discovery"
+                )
+                chosen_flavor = flavor.value if flavor else SerializationFlavor.JSON_LD.value
+                target_fmt, cdif_ext = resolve_serialization_flavor(chosen_flavor, default="json-ld")
+                cdif_generator = CdifGenerator(server=server_client, datasets=list(dataset_ids))
+                cdif_models = cdif_generator.get_models(
+                    profile=cdif_profile,
+                    include_computed=include_computed,
+                    include_stats=include_stats,
+                    include_codes=include_codes if include_codes is not None else False,
+                    max_codes=max_codes if max_codes is not None else 20,
+                )
+                cdif_content = cdif_generator.serialize(cdif_models, flavor=chosen_flavor)
+                file_prefix = f"{resolved_format.value}.{dataset_ids[0]}"
+                out_path = _resolve_output_path(output, file_prefix, cdif_ext)
+                if out_path:
+                    _write_or_print(cdif_content, out_path, f"{resolved_format.value.upper()} metadata saved to:")
+                elif target_fmt in ("json", "json-ld"):
+                    console.print_json(cdif_content)
+                else:
+                    typer.echo(cdif_content.rstrip("\n"))
+                return
+
             all_contents: list[str] = []
             for ds_id in dataset_ids:
                 ds = SocrataDataset(server=server_client, id=ds_id)
-                if format == ExportFormat.CROISSANT:
+                if resolved_format == MetadataFormat.CROISSANT:
                     croissant_obj = ds.get_croissant(
                         include_computed=include_computed,
-                        include_codes=include_codes,
-                        max_codes=max_codes,
+                        include_codes=include_codes if include_codes is not None else True,
+                        max_codes=max_codes if max_codes is not None else 100,
                     )
                     content = json.dumps(croissant_obj.to_json(), indent=2, default=str)
                     ext = "croissant.json"
-                elif format == ExportFormat.DDI:
+                elif resolved_format == MetadataFormat.DDI:
                     content = ds.get_ddi_codebook(category_count_threshold=threshold)
                     ext = "ddic.xml"
-                elif format in (ExportFormat.MARKDOWN, ExportFormat.MD):
+                elif resolved_format in (MetadataFormat.MARKDOWN, MetadataFormat.MD):
                     content = ds.get_markdown()
                     ext = "md"
-                elif format == ExportFormat.JSON:
-                    content = json.dumps(ds.data, indent=2)
-                    ext = "json"
                 else:
-                    raise ValueError(f"Unsupported format: {format}")
+                    raise ValueError(f"Unsupported format: {resolved_format}")
                 all_contents.append(content)
 
         except Exception as e:
-            console.print(f"[bold red]Export Error:[/] {e}")
+            console.print(f"[bold red]Metadata Error:[/] {e}")
             raise typer.Exit(code=1) from e
 
     combined_content = "\n\n".join(all_contents)
-    out_path = _resolve_output_path(output, f"{format}.{dataset_ids[0]}", ext)
+    out_path = _resolve_output_path(output, f"{resolved_format.value}.{dataset_ids[0]}", ext)
 
     if out_path:
-        _write_or_print(combined_content, out_path, f"{format.upper()} metadata saved to:")
+        _write_or_print(combined_content, out_path, f"{resolved_format.value.upper()} metadata saved to:")
     else:
-        if format in (ExportFormat.CROISSANT, ExportFormat.JSON) and len(all_contents) == 1:
+        if resolved_format == MetadataFormat.CROISSANT and len(all_contents) == 1:
             console.print_json(all_contents[0])
         else:
             typer.echo(combined_content.rstrip("\n"))
+
+
+@app.command(name="export")
+def export_data(
+    dataset_id: Annotated[str, typer.Argument(help="Socrata dataset 4x4 ID (e.g. vw6y-z8j6)")],
+    format: Annotated[
+        DataFormat,
+        typer.Option("--format", "-f", help="Data export format (csv, json)"),
+    ] = DataFormat.CSV,
+    limit: Annotated[int | None, typer.Option("--limit", "-l", help="Maximum number of records to export")] = None,
+    where: Annotated[str | None, typer.Option("--where", "-w", help="SoQL query $where filter condition")] = None,
+    select: Annotated[str | None, typer.Option("--select", help="SoQL query $select column list")] = None,
+    order: Annotated[str | None, typer.Option("--order", help="SoQL query $order sort clause")] = None,
+    server: Annotated[
+        str | None,
+        typer.Option("--server", "-s", envvar="SOCRATA_SERVER", help="Socrata server hostname"),
+    ] = None,
+    app_token: Annotated[
+        str | None,
+        typer.Option("--app-token", envvar="SOCRATA_APP_TOKEN", help="Socrata App Token (optional)"),
+    ] = None,
+    cache_dir: Annotated[str | None, typer.Option("--cache-dir", help="Directory for disk cache")] = None,
+    output: Annotated[str | None, typer.Option("--output", "-o", help="Write exported data to a file")] = None,
+) -> None:
+    """Export dataset data records from Socrata in CSV or JSON format."""
+    server_client = get_server(server, disk_cache_dir=cache_dir)
+    endpoint = f"https://{server_client.host}/resource/{dataset_id}.{format.value}"
+
+    params: dict[str, Any] = {}
+    if limit is not None:
+        params["$limit"] = limit
+    if where is not None:
+        params["$where"] = where
+    if select is not None:
+        params["$select"] = select
+    if order is not None:
+        params["$order"] = order
+
+    headers: dict[str, str] = {
+        "User-Agent": "dartfx-socrata/0.1.0 (https://github.com/DataArtifex/socrata-toolkit)",
+    }
+    token = app_token or os.environ.get("SOCRATA_APP_TOKEN")
+    if token:
+        headers["X-App-Token"] = token
+
+    with console.status(f"[bold green]Exporting {format.value.upper()} data for {dataset_id}..."):
+        try:
+            resp = requests.get(endpoint, params=params, headers=headers, timeout=60)
+            if resp.status_code != 200:
+                console.print(f"[bold red]Data Export Error ({resp.status_code}):[/] {resp.text[:300]}")
+                raise typer.Exit(code=1)
+            content = resp.text
+        except typer.Exit:
+            raise
+        except Exception as e:
+            console.print(f"[bold red]Data Export Error:[/] {e}")
+            raise typer.Exit(code=1) from e
+
+    out_path = _resolve_output_path(output, f"data.{dataset_id}", format.value)
+    if out_path:
+        _write_or_print(content, out_path, f"{format.value.upper()} data saved to:")
+    else:
+        if format == DataFormat.JSON:
+            try:
+                console.print_json(content)
+            except Exception:
+                typer.echo(content.rstrip("\n"))
+        else:
+            typer.echo(content.rstrip("\n"))
 
 
 @app.command(name="code")

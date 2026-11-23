@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.1] - 2026-11-23
 
 ### Added
+- CDIF metadata export via `dartfx-cdif` (`CdifGenerator` and `SocrataDataset.get_cdif()`), supporting both **CDIF Discovery** (`cdif-discovery` / `cdif`) and **CDIF Data Description** (`cdif-data-description`) profiles.
+- `--flavor` CLI option (`json`, `json-ld`, `ttl`, `xml`, `n3`) for multi-serialization metadata outputs (`metadata` and `search`).
+- `cdif-discovery` output format in `socrata search --format`.
+- Comprehensive Socrata-to-CDIF crosswalk documentation (`docs/source/cdif.md`) and unit/CLI tests (`tests/test_cdif.py`).
 - Rich interactive Command-Line Interface (`dartfx-socrata`, `socrata`) built with Typer and Rich.
 - `servers` (`list`): Command to list and filter known worldwide Socrata open data portals.
 - `info`: Command to inspect portal status, metadata, and probe catalog dataset volume.

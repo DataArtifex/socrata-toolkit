@@ -9,6 +9,7 @@ src/dartfx/socrata/
 ├── __about__.py           # Dynamic package version
 ├── __init__.py            # Public package API exports
 ├── __main__.py            # Entry point for python -m dartfx.socrata
+├── cdif.py                # CDIF Discovery & Data Description generator via dartfx-cdif
 ├── cli.py                 # Typer & Rich CLI implementation
 ├── dcat.py                # W3C DCAT metadata generator via dartfx-dcat
 ├── socrata.py             # Core Socrata client models & discovery
@@ -39,10 +40,11 @@ The CLI is built with **Typer** and styled with **Rich**, adhering strictly to D
 | `version` | - | Print package version. |
 | `servers` | `list` | Enumerate known Socrata open data portals with publisher and spatial coverage. |
 | `info` | - | Probe a Socrata server's live health, catalog dataset counts, and metadata. |
-| `search` | `catalog` | Search the Socrata Discovery API (`/api/catalog/v1`) with full query, category, sort, and pagination support. |
+| `search` | `catalog` | Search the Socrata Discovery API (`/api/catalog/v1`) with full query, category, sort, pagination, and `cdif-discovery` export support. |
 | `dataset` | `show`, `inspect` | Display comprehensive metadata and schema summary for a dataset ID. |
 | `variables` | `columns` | Detailed column inspection (types, render types, cardinality, nullability, examples). |
-| `export` | `metadata` | Export dataset metadata to standard formats: W3C DCAT (Turtle, JSON-LD, XML, N-Triples), ML Croissant, DDI-Codebook 2.5, Markdown, or JSON. |
+| `metadata` | - | Canonical command for dataset metadata export in native Socrata format (default), W3C DCAT, CDIF Discovery (`cdif-discovery`), CDIF Data Description (`cdif-data-description`), ML Croissant, DDI-Codebook 2.5, Markdown, or JSON, with `--flavor` serialization (`json`, `json-ld`, `ttl`, `xml`, `n3`). |
+| `export` | - | Export dataset data records/rows from Socrata in CSV or JSON format. |
 | `code` | `codegen` | Generate client data access scripts (Python, R, Ruby, Stata, SAS, .NET, PowerShell, jQuery). |
 
 ### 3. Output Formats
@@ -60,21 +62,25 @@ Commands supporting tabular data provide structured output across 4 formats:
   - `limit` / `offset`: Pagination controls
   - `categories`: Domain category filter
   - `order` & `sort_order`: Sorting across `updatedAt`, `createdAt`, `name`, `page_views_total`, etc.
-- **Portal Registry**: `SERVERS` dictionary cataloging known municipal, state, and federal open data portals (NYC, SF, Chicago, CDC, Utah, Washington, Austin, Seattle, Colorado, Los Angeles, Colombia, etc.).
+- **Portal Registry**: Community-maintained registry in `data/servers.yaml` (bundled into `src/dartfx/socrata/data/servers.yaml`) dynamically loaded via `load_bundled_servers_yaml()` and `get_known_servers()`, cataloging 62+ verified international, federal, state, and municipal Socrata portals with custodian ROR, geographic coverage, and domain classifications. The legacy `SERVERS` dictionary is dynamically populated for full backward compatibility.
 - **Caching**: Multi-tiered cache supporting both in-memory session caching and persistent filesystem disk cache (`disk_cache_root` / `disk_cache_dir`).
 
 ## Metadata Transformation Pipeline
 
-1. **W3C DCAT (`dcat.py`)**:
-   - Built on `dartfx.dcat` Pydantic models (`Catalog`, `Dataset`, `Distribution`, `DataService`).
+1. **DCAT (`dcat.py`)**:
+   - Defaults to **DCAT-US 3.0** (`dartfx.dcat.dcat_us`) and supports `--profile` selection (`us`, `w3c`, `ap`, `ap-hvd`) via `dartfx.dcat`.
    - Supports multi-dataset catalog aggregation into a unified RDF graph.
-   - Serializes to Turtle (`ttl`), JSON-LD, RDF/XML (`pretty-xml`), or N-Triples (`nt`).
-2. **ML Croissant (`socrata.py`)**:
+   - Serializes to Turtle (`ttl`), JSON-LD, RDF/XML (`pretty-xml`), N3 (`n3`), or N-Triples (`nt`).
+2. **CDIF Discovery & Data Description (`cdif.py`)**:
+   - Built on `dartfx.cdif` Pydantic + RDF models (`CdifDiscoveryDataset`, `CdifDataDescriptionDataset`, `CdifInstanceVariable`, `CdifKey`, `StatisticsCollection`).
+   - Maps Socrata View API (`/api/views/{id}.json`), Discovery API (`/api/catalog/v1`), and `servers.yaml` portal metadata into validated CDIF 2026 records (see `docs/source/cdif.md` for the full crosswalk).
+   - Supports single and multi-dataset (`@graph` / unified RDF graph) export across `json`, `json-ld`, `ttl`, `xml`, and `n3` flavors.
+3. **ML Croissant (`socrata.py`)**:
    - Generates machine-learning-ready Croissant metadata via `mlcroissant`.
    - Maps Socrata data types to Croissant data types (`DataType.FLOAT`, `DataType.DATE`, `DataType.TEXT`, `DataType.URL`).
    - Converts variable categorical statistics (top codes and frequencies) into Croissant `RecordSet` classification tables.
-3. **DDI-Codebook 2.5 (`socrata.py`)**:
+4. **DDI-Codebook 2.5 (`socrata.py`)**:
    - Generates DDI 2.5 XML documentation (`codeBook`, `docDscr`, `stdyDscr`, `fileDscr`, `dataDscr`).
    - Translates column summary statistics (`sumStat` count, min, max, cardinality, valid, invalid) and code frequencies (`catgry`).
-4. **Code Generation (`templates/`)**:
+5. **Code Generation (`templates/`)**:
    - Jinja2 templates render client code using official libraries (`sodapy`, `RSocrata`, `soda-ruby`, etc.).

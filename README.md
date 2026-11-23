@@ -21,6 +21,7 @@ The **Socrata Toolkit** (`dartfx-socrata`) is a Python library for working with 
 
 - **Dataset Access**: Retrieve dataset information, metadata, and statistics from Socrata servers
 - **DCAT Generation**: Generate W3C DCAT (Data Catalog Vocabulary) metadata using Pydantic-based RDF models
+- **CDIF Export**: Generate Cross-Domain Interoperability Framework (CDIF) Discovery and Data Description metadata in JSON-LD, Turtle, RDF/XML, and N3 formats via `dartfx-cdif`
 - **DDI-Codebook**: Create DDI-Codebook 2.5 XML documentation for datasets
 - **Croissant Metadata**: Generate ML Croissant format metadata for machine learning datasets
 - **Code Generation**: Generate data access code in multiple languages (Python, R, Ruby, SAS, Stata, PowerShell, jQuery, .NET)
@@ -81,9 +82,10 @@ For development or early access, install the package locally:
 
 ### Dependencies
 
-The toolkit requires Python 3.10+ and depends on:
-- `dartfx-rdf` - RDF and Pydantic integration
+The toolkit requires Python 3.12+ and depends on:
+- `dartfx-cdif` - CDIF Discovery and Data Description models
 - `dartfx-dcat` - DCAT vocabulary support
+- `dartfx-rdf` - RDF and Pydantic integration
 - `pydantic>=2` - Data validation
 - `mlcroissant>=1.0.16` - Croissant metadata
 - `jinja2>=3` - Code generation templates
@@ -124,6 +126,21 @@ graph = generator.get_graph()
 # Serialize to Turtle format
 ttl = graph.serialize(format='turtle')
 print(ttl)
+```
+
+### Generate CDIF Discovery & Data Description Metadata
+
+```python
+from dartfx.socrata import CdifGenerator
+
+# CDIF Discovery profile (default JSON-LD)
+discovery = dataset.get_cdif(profile="discovery")
+print(discovery.to_jsonld())
+
+# CDIF Data Description profile (variables, XSD types, primary keys, stats)
+data_desc = dataset.get_cdif(profile="data_description", include_stats=True)
+generator = CdifGenerator(server=server)
+print(generator.serialize(data_desc, flavor="ttl"))
 ```
 
 ### Generate DDI-Codebook

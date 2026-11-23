@@ -1,7 +1,24 @@
 DCAT Metadata Generation
 ========================
 
-The Socrata Toolkit provides comprehensive support for generating W3C DCAT (Data Catalog Vocabulary) metadata from Socrata datasets using modern Pydantic-based RDF models.
+The Socrata Toolkit provides comprehensive support for generating DCAT metadata from Socrata datasets using modern Pydantic-based RDF models from ``dartfx-dcat``. By default, it generates **DCAT-US 3.0** (``us``) metadata, and also supports **W3C DCAT 3** (``w3c``), **DCAT-AP 3.0.1** (``ap``), and **DCAT-AP HVD 3.0.0** (``ap-hvd``).
+
+Supported Profiles
+------------------
+
+* ``us`` *(default)* — **DCAT-US 3.0** (``dartfx.dcat.dcat_us``), adding ``dcat-us:accessRestriction`` from Socrata ``grants``.
+* ``w3c`` — Base **W3C DCAT 3** (``dartfx.dcat.dcat``).
+* ``ap`` — **DCAT-AP 3.0.1** (``dartfx.dcat.dcat_ap``).
+* ``ap-hvd`` — **DCAT-AP HVD 3.0.0** (``dartfx.dcat.dcat_ap_hvd``), adding HVD ``dcatap:applicableLegislation`` and distribution ``dcat:accessURL``.
+
+.. code-block:: bash
+
+   # Default DCAT-US 3.0
+   socrata metadata vw6y-z8j6 -s data.sfgov.org -f dcat
+
+   # Explicit profile selection
+   socrata metadata vw6y-z8j6 -s data.sfgov.org -f dcat --profile w3c
+   socrata metadata vw6y-z8j6 -s data.sfgov.org -f dcat --profile ap-hvd --flavor ttl
 
 Overview
 --------
@@ -26,7 +43,7 @@ The DCAT generator uses Pydantic models that inherit from ``RdfBaseModel``:
 
    class Dataset(RdfBaseModel):
        rdf_type: ClassVar[str] = str(DCAT.Dataset)
-       
+
        id: str
        title: Annotated[Optional[List[str]], RdfProperty(DCTERMS.title)] = None
        description: Annotated[Optional[List[str]], RdfProperty(DCTERMS.description)] = None
@@ -62,17 +79,17 @@ Basic DCAT Generation
 
    # Connect to server
    server = SocrataServer(host="data.sfgov.org")
-   
+
    # Create generator
    generator = DcatGenerator(server=server)
-   
+
    # Add datasets
    dataset = SocrataDataset(server=server, id="vw6y-z8j6")
    generator.add_dataset(dataset)
-   
+
    # Generate RDF graph
    graph = generator.get_graph()
-   
+
    # Serialize to Turtle
    ttl = graph.serialize(format='turtle')
    print(ttl)
@@ -88,7 +105,7 @@ Multiple Datasets
        "vw6y-z8j6",  # Can use dataset IDs
        SocrataDataset(server=server, id="wg3w-h783")  # Or dataset objects
    ])
-   
+
    graph = generator.get_graph()
 
 Export Formats
@@ -100,13 +117,13 @@ The generated RDF graph can be serialized to various formats:
 
    # Turtle
    graph.serialize(format='turtle', destination='catalog.ttl')
-   
+
    # RDF/XML
    graph.serialize(format='xml', destination='catalog.rdf')
-   
+
    # JSON-LD
    graph.serialize(format='json-ld', destination='catalog.jsonld')
-   
+
    # N-Triples
    graph.serialize(format='nt', destination='catalog.nt')
 
@@ -257,7 +274,7 @@ For processing multiple datasets efficiently:
    # Get all dataset IDs from search
    results = server.search_datasets(query="311")
    dataset_ids = [r['resource']['id'] for r in results]
-   
+
    # Generate catalog
    generator = DcatGenerator(server=server)
    generator.add_datasets(dataset_ids)
@@ -271,12 +288,12 @@ The generated graphs are standard ``rdflib.Graph`` objects and can be used with 
 .. code-block:: python
 
    from rdflib import DCAT, DCTERMS
-   
+
    # Query the graph
    for dataset in graph.subjects(predicate=RDF.type, object=DCAT.Dataset):
        title = graph.value(subject=dataset, predicate=DCTERMS.title)
        print(f"Dataset: {title}")
-   
+
    # Merge with other graphs
    other_graph = Graph()
    other_graph.parse("external_catalog.ttl", format="turtle")

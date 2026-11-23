@@ -1,0 +1,1266 @@
+# Socrata Open Data Portals Registry
+# Community-maintained catalog/inventory of known Socrata (Tyler Technologies Data & Insights) servers worldwide.
+# All entries verified live against /api/catalog/v1 and ROR API v2 (2026-11-23).
+#
+# Schema:
+#   name: Human-readable name of the Socrata portal
+#   hostname: Server domain hostname
+#   url: Full web catalog URL
+#   country_code: Two-letter ISO 3166-1 alpha-2 country code (or null for international/multilateral)
+#   description: (Optional) Brief description of the portal
+#   custodian: (Optional) Organization responsible for the portal
+#     name: Organization name
+#     url: Organization home page URL
+#     ror: Research Organization Registry (ROR) identifier (when applicable)
+#   geocoverage: (Optional) Geographic coverage scope
+#     level: Coverage level (global | regional | national | subnational | city | other)
+#     description: Description of the coverage region, country, state, or municipality
+#     geonames: List of GeoNames URIs (e.g. https://www.geonames.org/...)
+#   domains: (Optional) List of domain / topical coverage areas
+
+# ==============================================================================
+# International & Multilateral
+# ==============================================================================
+
+- name: Water Point Data Exchange (WPDx)
+  hostname: data.waterpointdata.org
+  url: https://data.waterpointdata.org
+  country_code: null
+  description: Global repository for sharing water point data from governments, NGOs, and researchers.
+  custodian:
+    name: Water Point Data Exchange
+    url: https://www.waterpointdata.org
+  geocoverage:
+    level: global
+    description: Worldwide
+    geonames: []
+  domains:
+    - water
+    - environment
+    - international-development
+
+# ==============================================================================
+# United States - Federal & National
+# ==============================================================================
+
+- name: Centers for Disease Control and Prevention (CDC)
+  hostname: data.cdc.gov
+  url: https://data.cdc.gov
+  country_code: US
+  description: Public health datasets, surveillance tracking, mortality, and chronic disease indicators from the U.S. CDC.
+  custodian:
+    name: U.S. Centers for Disease Control and Prevention
+    url: https://www.cdc.gov
+    ror: 042twtr12
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - health
+    - public-health
+    - epidemiology
+    - demographics
+
+- name: U.S. Department of Transportation Open Data Portal
+  hostname: data.transportation.gov
+  url: https://data.transportation.gov
+  country_code: US
+  description: Transportation infrastructure, safety, aviation, transit, and maritime datasets.
+  custodian:
+    name: U.S. Department of Transportation
+    url: https://www.transportation.gov
+    ror: 02xfw2e90
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - transportation
+    - infrastructure
+    - safety
+    - aviation
+    - official-statistics
+
+- name: Bureau of Transportation Statistics (BTS)
+  hostname: data.bts.gov
+  url: https://data.bts.gov
+  country_code: US
+  description: National transportation statistics, freight, passenger travel, and border crossing datasets.
+  custodian:
+    name: Bureau of Transportation Statistics
+    url: https://www.bts.gov
+    ror: 05xfdey77
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - transportation
+    - official-statistics
+    - aviation
+    - maritime
+
+- name: U.S. Department of Veterans Affairs Open Data Portal
+  hostname: data.va.gov
+  url: https://data.va.gov
+  country_code: US
+  description: Open data from the U.S. Department of Veterans Affairs covering benefits, healthcare facilities, and veteran demographics.
+  custodian:
+    name: U.S. Department of Veterans Affairs
+    url: https://www.va.gov
+    ror: 05rsv9s98
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - government
+    - health
+    - veterans
+
+- name: ENERGY STAR Open Data
+  hostname: data.energystar.gov
+  url: https://data.energystar.gov
+  country_code: US
+  description: Certified energy-efficient products, appliances, and building benchmarking datasets.
+  custodian:
+    name: U.S. Environmental Protection Agency (EPA)
+    url: https://www.epa.gov
+    ror: 03tns0030
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - energy
+    - environment
+    - sustainability
+
+- name: FCC Open Data
+  hostname: opendata.fcc.gov
+  url: https://opendata.fcc.gov
+  country_code: US
+  description: Telecommunications, broadband availability, licensing, and spectrum datasets from the FCC.
+  custodian:
+    name: Federal Communications Commission (FCC)
+    url: https://www.fcc.gov
+    ror: 03545fq57
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - telecommunications
+    - broadband
+    - public-safety
+    - government
+
+- name: National Library of Medicine Data Discovery
+  hostname: datadiscovery.nlm.nih.gov
+  url: https://datadiscovery.nlm.nih.gov
+  country_code: US
+  description: Biomedical, health, and clinical research datasets hosted by NLM.
+  custodian:
+    name: U.S. National Library of Medicine (NLM)
+    url: https://www.nlm.nih.gov
+    ror: 0060t0j89
+  geocoverage:
+    level: national
+    description: United States
+    geonames:
+      - https://www.geonames.org/6252001/
+  domains:
+    - health
+    - biomedical
+    - research
+
+# ==============================================================================
+# United States - State Portals
+# ==============================================================================
+
+- name: California State Controller's Office (ByTheNumbers)
+  hostname: bythenumbers.sco.ca.gov
+  url: https://bythenumbers.sco.ca.gov
+  country_code: US
+  description: Local government financial data (cities, counties, special districts) in California.
+  custodian:
+    name: California State Controller's Office
+    url: https://www.sco.ca.gov
+  geocoverage:
+    level: subnational
+    description: California, USA
+    geonames:
+      - https://www.geonames.org/5332921/
+  domains:
+    - finance
+    - government
+    - budgets
+
+- name: Colorado Information Marketplace
+  hostname: data.colorado.gov
+  url: https://data.colorado.gov
+  country_code: US
+  description: Official open data portal for the State of Colorado.
+  custodian:
+    name: State of Colorado
+    url: https://www.colorado.gov
+  geocoverage:
+    level: subnational
+    description: Colorado, USA
+    geonames:
+      - https://www.geonames.org/5417618/
+  domains:
+    - government
+    - civic-data
+    - environment
+    - energy
+    - health
+    - water
+    - demographics
+
+- name: Connecticut Open Data
+  hostname: data.ct.gov
+  url: https://data.ct.gov
+  country_code: US
+  description: Official open data portal for the State of Connecticut.
+  custodian:
+    name: State of Connecticut
+    url: https://portal.ct.gov
+  geocoverage:
+    level: subnational
+    description: Connecticut, USA
+    geonames:
+      - https://www.geonames.org/4831725/
+  domains:
+    - government
+    - civic-data
+    - education
+    - health
+    - housing
+    - public-safety
+
+- name: Delaware Open Data
+  hostname: data.delaware.gov
+  url: https://data.delaware.gov
+  country_code: US
+  description: Official open data portal for the State of Delaware.
+  custodian:
+    name: State of Delaware
+    url: https://delaware.gov
+  geocoverage:
+    level: subnational
+    description: Delaware, USA
+    geonames:
+      - https://www.geonames.org/4142224/
+  domains:
+    - government
+    - civic-data
+    - education
+    - environment
+    - finance
+    - health
+    - transportation
+    - public-safety
+
+- name: Data.Illinois.gov
+  hostname: data.illinois.gov
+  url: https://data.illinois.gov
+  country_code: US
+  description: Official open data portal for the State of Illinois.
+  custodian:
+    name: State of Illinois
+    url: https://www.illinois.gov
+  geocoverage:
+    level: subnational
+    description: Illinois, USA
+    geonames:
+      - https://www.geonames.org/4896861/
+  domains:
+    - government
+    - civic-data
+    - health
+    - public-safety
+    - economy
+
+- name: Maryland's Open Data Portal
+  hostname: opendata.maryland.gov
+  url: https://opendata.maryland.gov
+  country_code: US
+  description: Official open data portal for the State of Maryland.
+  custodian:
+    name: Maryland Council on Open Data
+    url: https://www.maryland.gov
+  geocoverage:
+    level: subnational
+    description: Maryland, USA
+    geonames:
+      - https://www.geonames.org/4361885/
+  domains:
+    - government
+    - civic-data
+    - environment
+    - finance
+    - health
+    - public-safety
+    - transportation
+
+- name: Michigan Open Data Portal
+  hostname: data.michigan.gov
+  url: https://data.michigan.gov
+  country_code: US
+  description: Official open data portal for the State of Michigan.
+  custodian:
+    name: State of Michigan
+    url: https://www.michigan.gov
+  geocoverage:
+    level: subnational
+    description: Michigan, USA
+    geonames:
+      - https://www.geonames.org/5001836/
+  domains:
+    - government
+    - civic-data
+    - economy
+    - education
+    - environment
+    - health
+
+- name: Missouri Open Data Portal
+  hostname: data.mo.gov
+  url: https://data.mo.gov
+  country_code: US
+  description: Official open data portal for the State of Missouri.
+  custodian:
+    name: State of Missouri
+    url: https://www.mo.gov
+  geocoverage:
+    level: subnational
+    description: Missouri, USA
+    geonames:
+      - https://www.geonames.org/4398678/
+  domains:
+    - government
+    - civic-data
+    - agriculture
+    - economy
+    - finance
+    - public-safety
+
+- name: New Jersey Open Data
+  hostname: data.nj.gov
+  url: https://data.nj.gov
+  country_code: US
+  description: Official open data portal for the State of New Jersey.
+  custodian:
+    name: State of New Jersey
+    url: https://www.nj.gov
+  geocoverage:
+    level: subnational
+    description: New Jersey, USA
+    geonames:
+      - https://www.geonames.org/5101760/
+  domains:
+    - government
+    - civic-data
+    - economy
+    - finance
+    - public-safety
+    - transportation
+
+- name: New York State Open Data
+  hostname: data.ny.gov
+  url: https://data.ny.gov
+  country_code: US
+  description: Official open data portal for the State of New York.
+  custodian:
+    name: State of New York
+    url: https://www.ny.gov
+  geocoverage:
+    level: subnational
+    description: New York, USA
+    geonames:
+      - https://www.geonames.org/5128638/
+  domains:
+    - government
+    - civic-data
+    - economy
+    - finance
+    - health
+    - housing
+    - public-safety
+    - transportation
+
+- name: New York State Health Data
+  hostname: health.data.ny.gov
+  url: https://health.data.ny.gov
+  country_code: US
+  description: Public health, hospital, and vital statistics datasets from the New York State Department of Health.
+  custodian:
+    name: New York State Department of Health
+    url: https://www.health.ny.gov
+    ror: 04hf5kq57
+  geocoverage:
+    level: subnational
+    description: New York, USA
+    geonames:
+      - https://www.geonames.org/5128638/
+  domains:
+    - health
+    - public-health
+    - healthcare
+
+- name: Oregon Open Data Portal
+  hostname: data.oregon.gov
+  url: https://data.oregon.gov
+  country_code: US
+  description: Official open data portal for the State of Oregon.
+  custodian:
+    name: State of Oregon
+    url: https://www.oregon.gov
+  geocoverage:
+    level: subnational
+    description: Oregon, USA
+    geonames:
+      - https://www.geonames.org/5744337/
+  domains:
+    - government
+    - civic-data
+    - economy
+    - finance
+
+- name: Open Data Pennsylvania
+  hostname: data.pa.gov
+  url: https://data.pa.gov
+  country_code: US
+  description: Official open data portal for the Commonwealth of Pennsylvania.
+  custodian:
+    name: Commonwealth of Pennsylvania
+    url: https://www.pa.gov
+  geocoverage:
+    level: subnational
+    description: Pennsylvania, USA
+    geonames:
+      - https://www.geonames.org/6254927/
+  domains:
+    - government
+    - civic-data
+    - demographics
+    - education
+    - environment
+    - health
+    - public-safety
+
+- name: Texas Open Data Portal
+  hostname: data.texas.gov
+  url: https://data.texas.gov
+  country_code: US
+  description: Official open data portal for the State of Texas.
+  custodian:
+    name: State of Texas
+    url: https://www.texas.gov
+  geocoverage:
+    level: subnational
+    description: Texas, USA
+    geonames:
+      - https://www.geonames.org/4736286/
+  domains:
+    - government
+    - civic-data
+    - licensing
+    - finance
+
+- name: Vermont Open Data Portal
+  hostname: data.vermont.gov
+  url: https://data.vermont.gov
+  country_code: US
+  description: Official open data portal for the State of Vermont.
+  custodian:
+    name: State of Vermont
+    url: https://www.vermont.gov
+  geocoverage:
+    level: subnational
+    description: Vermont, USA
+    geonames:
+      - https://www.geonames.org/5242283/
+  domains:
+    - government
+    - civic-data
+
+- name: Washington State Open Data Portal
+  hostname: data.wa.gov
+  url: https://data.wa.gov
+  country_code: US
+  description: Official open data portal for the State of Washington.
+  custodian:
+    name: Washington State Government
+    url: https://wa.gov
+  geocoverage:
+    level: subnational
+    description: Washington, USA
+    geonames:
+      - https://www.geonames.org/5815135/
+  domains:
+    - government
+    - civic-data
+    - transportation
+    - environment
+
+# ==============================================================================
+# United States - Counties, Regions & Municipalities
+# ==============================================================================
+
+- name: City of Austin Open Data Portal
+  hostname: data.austintexas.gov
+  url: https://data.austintexas.gov
+  country_code: US
+  description: Official open data portal for the City of Austin, Texas.
+  custodian:
+    name: City of Austin
+    url: https://www.austintexas.gov
+  geocoverage:
+    level: city
+    description: Austin, Texas, USA
+    geonames:
+      - https://www.geonames.org/4671654/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - transportation
+
+- name: Open Data BR (Baton Rouge)
+  hostname: data.brla.gov
+  url: https://data.brla.gov
+  country_code: US
+  description: Open data portal for the City of Baton Rouge and Parish of East Baton Rouge.
+  custodian:
+    name: City of Baton Rouge / East Baton Rouge Parish
+    url: https://www.brla.gov
+  geocoverage:
+    level: city
+    description: Baton Rouge, Louisiana, USA
+    geonames:
+      - https://www.geonames.org/4315588/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+
+- name: Bay Area Metro Open Data
+  hostname: data.bayareametro.gov
+  url: https://data.bayareametro.gov
+  country_code: US
+  description: Regional transportation, housing, and planning data for the San Francisco Bay Area.
+  custodian:
+    name: Metropolitan Transportation Commission (MTC)
+    url: https://mtc.ca.gov
+  geocoverage:
+    level: subnational
+    description: San Francisco Bay Area, California, USA
+    geonames:
+      - https://www.geonames.org/5391959/
+  domains:
+    - transportation
+    - urban-planning
+    - housing
+
+- name: Berkeley Open Data
+  hostname: data.cityofberkeley.info
+  url: https://data.cityofberkeley.info
+  country_code: US
+  description: Official open data portal for the City of Berkeley, California.
+  custodian:
+    name: City of Berkeley
+    url: https://berkeleyca.gov
+  geocoverage:
+    level: city
+    description: Berkeley, California, USA
+    geonames:
+      - https://www.geonames.org/5327684/
+  domains:
+    - civic-data
+    - municipal
+
+- name: Cambridge Open Data
+  hostname: data.cambridgema.gov
+  url: https://data.cambridgema.gov
+  country_code: US
+  description: Official open data portal for the City of Cambridge, Massachusetts.
+  custodian:
+    name: City of Cambridge
+    url: https://www.cambridgema.gov
+  geocoverage:
+    level: city
+    description: Cambridge, Massachusetts, USA
+    geonames:
+      - https://www.geonames.org/4931972/
+  domains:
+    - civic-data
+    - municipal
+    - urban-planning
+
+- name: Chicago Data Portal
+  hostname: data.cityofchicago.org
+  url: https://data.cityofchicago.org
+  country_code: US
+  description: Official open data portal for the City of Chicago.
+  custodian:
+    name: City of Chicago
+    url: https://www.chicago.gov
+  geocoverage:
+    level: city
+    description: Chicago, Illinois, USA
+    geonames:
+      - https://www.geonames.org/4887398/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - transportation
+    - finance
+
+- name: Cincinnati Open Data
+  hostname: data.cincinnati-oh.gov
+  url: https://data.cincinnati-oh.gov
+  country_code: US
+  description: Official open data portal for the City of Cincinnati, Ohio.
+  custodian:
+    name: City of Cincinnati
+    url: https://www.cincinnati-oh.gov
+  geocoverage:
+    level: city
+    description: Cincinnati, Ohio, USA
+    geonames:
+      - https://www.geonames.org/4508722/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+
+- name: Cook County Open Data
+  hostname: datacatalog.cookcountyil.gov
+  url: https://datacatalog.cookcountyil.gov
+  country_code: US
+  description: Official open data portal for Cook County, Illinois.
+  custodian:
+    name: Cook County Government
+    url: https://www.cookcountyil.gov
+  geocoverage:
+    level: subnational
+    description: Cook County, Illinois, USA
+    geonames:
+      - https://www.geonames.org/4888671/
+  domains:
+    - civic-data
+    - county-government
+    - finance
+    - property
+
+- name: Dallas OpenData
+  hostname: www.dallasopendata.com
+  url: https://www.dallasopendata.com
+  country_code: US
+  description: Official open data portal for the City of Dallas, Texas.
+  custodian:
+    name: City of Dallas
+    url: https://dallascityhall.com
+  geocoverage:
+    level: city
+    description: Dallas, Texas, USA
+    geonames:
+      - https://www.geonames.org/4684888/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+
+- name: Honolulu Open Data
+  hostname: data.honolulu.gov
+  url: https://data.honolulu.gov
+  country_code: US
+  description: Official open data portal for the City and County of Honolulu, Hawaii.
+  custodian:
+    name: City and County of Honolulu
+    url: https://www.honolulu.gov
+  geocoverage:
+    level: city
+    description: Honolulu, Hawaii, USA
+    geonames:
+      - https://www.geonames.org/5856195/
+  domains:
+    - civic-data
+    - municipal
+    - transportation
+
+- name: Howard County Open Data
+  hostname: opendata.howardcountymd.gov
+  url: https://opendata.howardcountymd.gov
+  country_code: US
+  description: Official open data portal for Howard County, Maryland.
+  custodian:
+    name: Howard County Government
+    url: https://www.howardcountymd.gov
+  geocoverage:
+    level: subnational
+    description: Howard County, Maryland, USA
+    geonames:
+      - https://www.geonames.org/4358478/
+  domains:
+    - civic-data
+    - county-government
+
+- name: Open Data KC (Kansas City)
+  hostname: data.kcmo.org
+  url: https://data.kcmo.org
+  country_code: US
+  description: Official open data portal for Kansas City, Missouri.
+  custodian:
+    name: City of Kansas City, Missouri
+    url: https://www.kcmo.gov
+  geocoverage:
+    level: city
+    description: Kansas City, Missouri, USA
+    geonames:
+      - https://www.geonames.org/4393217/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+
+- name: King County Open Data
+  hostname: data.kingcounty.gov
+  url: https://data.kingcounty.gov
+  country_code: US
+  description: Official open data portal for King County, Washington.
+  custodian:
+    name: King County
+    url: https://kingcounty.gov
+  geocoverage:
+    level: subnational
+    description: King County, Washington, USA
+    geonames:
+      - https://www.geonames.org/5799783/
+  domains:
+    - civic-data
+    - county-government
+    - health
+    - environment
+
+- name: Los Angeles Open Data
+  hostname: data.lacity.org
+  url: https://data.lacity.org
+  country_code: US
+  description: Official open data portal for the City of Los Angeles, California.
+  custodian:
+    name: City of Los Angeles
+    url: https://lacity.gov
+  geocoverage:
+    level: city
+    description: Los Angeles, California, USA
+    geonames:
+      - https://www.geonames.org/5368361/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - transportation
+
+- name: Los Angeles Controller's Open Data
+  hostname: controllerdata.lacity.org
+  url: https://controllerdata.lacity.org
+  country_code: US
+  description: Financial transparency, budgets, payroll, and audit datasets from the LA City Controller.
+  custodian:
+    name: Office of the Los Angeles City Controller
+    url: https://controller.lacity.gov
+  geocoverage:
+    level: city
+    description: Los Angeles, California, USA
+    geonames:
+      - https://www.geonames.org/5368361/
+  domains:
+    - finance
+    - budgets
+    - municipal
+
+- name: Marin County Open Data
+  hostname: data.marincounty.gov
+  url: https://data.marincounty.gov
+  country_code: US
+  description: Official open data portal for Marin County, California.
+  custodian:
+    name: County of Marin
+    url: https://www.marincounty.gov
+  geocoverage:
+    level: subnational
+    description: Marin County, California, USA
+    geonames:
+      - https://www.geonames.org/5370492/
+  domains:
+    - civic-data
+    - county-government
+
+- name: dataMontgomery (Montgomery County)
+  hostname: data.montgomerycountymd.gov
+  url: https://data.montgomerycountymd.gov
+  country_code: US
+  description: Official open data portal for Montgomery County, Maryland.
+  custodian:
+    name: Montgomery County Government
+    url: https://www.montgomerycountymd.gov
+  geocoverage:
+    level: subnational
+    description: Montgomery County, Maryland, USA
+    geonames:
+      - https://www.geonames.org/4362716/
+  domains:
+    - civic-data
+    - county-government
+    - public-safety
+    - finance
+
+- name: City of New Orleans Open Data
+  hostname: data.nola.gov
+  url: https://data.nola.gov
+  country_code: US
+  description: Official open data portal for the City of New Orleans, Louisiana.
+  custodian:
+    name: City of New Orleans
+    url: https://nola.gov
+  geocoverage:
+    level: city
+    description: New Orleans, Louisiana, USA
+    geonames:
+      - https://www.geonames.org/4335045/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - housing
+
+- name: NYC Open Data
+  hostname: data.cityofnewyork.us
+  url: https://data.cityofnewyork.us
+  country_code: US
+  description: Official open data portal for New York City agencies and organizations.
+  custodian:
+    name: City of New York
+    url: https://opendata.cityofnewyork.us/
+  geocoverage:
+    level: city
+    description: New York City, New York, USA
+    geonames:
+      - https://www.geonames.org/5128581/
+  domains:
+    - civic-data
+    - municipal
+    - transportation
+    - housing
+    - public-safety
+    - education
+
+- name: Norfolk Open Data
+  hostname: data.norfolk.gov
+  url: https://data.norfolk.gov
+  country_code: US
+  description: Official open data portal for the City of Norfolk, Virginia.
+  custodian:
+    name: City of Norfolk
+    url: https://www.norfolk.gov
+  geocoverage:
+    level: city
+    description: Norfolk, Virginia, USA
+    geonames:
+      - https://www.geonames.org/4776222/
+  domains:
+    - civic-data
+    - municipal
+
+- name: City of Oakland Open Data
+  hostname: data.oaklandca.gov
+  url: https://data.oaklandca.gov
+  country_code: US
+  description: Official open data portal for the City of Oakland, California.
+  custodian:
+    name: City of Oakland
+    url: https://www.oaklandca.gov
+  geocoverage:
+    level: city
+    description: Oakland, California, USA
+    geonames:
+      - https://www.geonames.org/5378538/
+  domains:
+    - civic-data
+    - municipal
+    - finance
+
+- name: Pierce County Open Data
+  hostname: open.piercecountywa.gov
+  url: https://open.piercecountywa.gov
+  country_code: US
+  description: Official open data portal for Pierce County, Washington.
+  custodian:
+    name: Pierce County
+    url: https://www.piercecountywa.gov
+  geocoverage:
+    level: subnational
+    description: Pierce County, Washington, USA
+    geonames:
+      - https://www.geonames.org/5806844/
+  domains:
+    - civic-data
+    - county-government
+
+- name: Providence Open Data
+  hostname: data.providenceri.gov
+  url: https://data.providenceri.gov
+  country_code: US
+  description: Official open data portal for the City of Providence, Rhode Island.
+  custodian:
+    name: City of Providence
+    url: https://www.providenceri.gov
+  geocoverage:
+    level: city
+    description: Providence, Rhode Island, USA
+    geonames:
+      - https://www.geonames.org/5224151/
+  domains:
+    - civic-data
+    - municipal
+    - finance
+    - public-safety
+
+- name: Ramsey County Open Data
+  hostname: data.ramseycounty.us
+  url: https://data.ramseycounty.us
+  country_code: US
+  description: Official open data portal for Ramsey County, Minnesota.
+  custodian:
+    name: Ramsey County
+    url: https://www.ramseycounty.us
+  geocoverage:
+    level: subnational
+    description: Ramsey County, Minnesota, USA
+    geonames:
+      - https://www.geonames.org/5042590/
+  domains:
+    - civic-data
+    - county-government
+    - environment
+    - health
+    - housing
+    - public-safety
+
+- name: Richmond Open Data
+  hostname: data.richmondgov.com
+  url: https://data.richmondgov.com
+  country_code: US
+  description: Official open data portal for the City of Richmond, Virginia.
+  custodian:
+    name: City of Richmond
+    url: https://www.rva.gov
+  geocoverage:
+    level: city
+    description: Richmond, Virginia, USA
+    geonames:
+      - https://www.geonames.org/4781708/
+  domains:
+    - civic-data
+    - municipal
+    - economy
+    - public-safety
+
+- name: San Francisco Open Data Portal (DataSF)
+  hostname: data.sfgov.org
+  url: https://data.sfgov.org
+  country_code: US
+  description: Official open data portal for the City and County of San Francisco.
+  custodian:
+    name: City and County of San Francisco
+    url: https://datasf.org/
+  geocoverage:
+    level: city
+    description: San Francisco, California, USA
+    geonames:
+      - https://www.geonames.org/5391959/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - transportation
+    - housing
+    - health
+
+- name: San Mateo County Open Data
+  hostname: data.smcgov.org
+  url: https://data.smcgov.org
+  country_code: US
+  description: Official open data portal for San Mateo County, California.
+  custodian:
+    name: County of San Mateo
+    url: https://www.smcgov.org
+  geocoverage:
+    level: subnational
+    description: San Mateo County, California, USA
+    geonames:
+      - https://www.geonames.org/5392427/
+  domains:
+    - civic-data
+    - county-government
+    - education
+    - environment
+    - health
+    - public-safety
+    - transportation
+
+- name: Santa Clara County Open Data
+  hostname: data.sccgov.org
+  url: https://data.sccgov.org
+  country_code: US
+  description: Official open data portal for Santa Clara County, California.
+  custodian:
+    name: County of Santa Clara
+    url: https://www.sccgov.org
+  geocoverage:
+    level: subnational
+    description: Santa Clara County, California, USA
+    geonames:
+      - https://www.geonames.org/5393021/
+  domains:
+    - civic-data
+    - county-government
+    - environment
+    - health
+    - public-safety
+
+- name: Seattle Open Data
+  hostname: data.seattle.gov
+  url: https://data.seattle.gov
+  country_code: US
+  description: Official open data portal for the City of Seattle, Washington.
+  custodian:
+    name: City of Seattle
+    url: https://www.seattle.gov
+  geocoverage:
+    level: city
+    description: Seattle, Washington, USA
+    geonames:
+      - https://www.geonames.org/5809844/
+  domains:
+    - civic-data
+    - municipal
+    - public-safety
+    - transportation
+
+- name: Somerville Open Data
+  hostname: data.somervillema.gov
+  url: https://data.somervillema.gov
+  country_code: US
+  description: Official open data portal for the City of Somerville, Massachusetts.
+  custodian:
+    name: City of Somerville
+    url: https://www.somervillema.gov
+  geocoverage:
+    level: city
+    description: Somerville, Massachusetts, USA
+    geonames:
+      - https://www.geonames.org/4951257/
+  domains:
+    - civic-data
+    - municipal
+    - environment
+    - finance
+    - health
+    - public-safety
+    - transportation
+    - urban-planning
+
+# ==============================================================================
+# Canada
+# ==============================================================================
+
+- name: Calgary Open Data
+  hostname: data.calgary.ca
+  url: https://data.calgary.ca
+  country_code: CA
+  description: Official open data portal for the City of Calgary, Alberta.
+  custodian:
+    name: City of Calgary
+    url: https://www.calgary.ca
+  geocoverage:
+    level: city
+    description: Calgary, Alberta, Canada
+    geonames:
+      - https://www.geonames.org/5913490/
+  domains:
+    - civic-data
+    - municipal
+    - demographics
+    - environment
+    - health
+    - public-safety
+    - transportation
+    - urban-planning
+
+- name: City of Edmonton's Open Data Portal
+  hostname: data.edmonton.ca
+  url: https://data.edmonton.ca
+  country_code: CA
+  description: Official open data portal for the City of Edmonton, Alberta.
+  custodian:
+    name: City of Edmonton
+    url: https://www.edmonton.ca
+  geocoverage:
+    level: city
+    description: Edmonton, Alberta, Canada
+    geonames:
+      - https://www.geonames.org/5946768/
+  domains:
+    - civic-data
+    - municipal
+    - environment
+    - public-safety
+    - transportation
+    - urban-planning
+
+- name: City of Winnipeg Open Data Portal
+  hostname: data.winnipeg.ca
+  url: https://data.winnipeg.ca
+  country_code: CA
+  description: Official open data portal for the City of Winnipeg, Manitoba.
+  custodian:
+    name: City of Winnipeg
+    url: https://www.winnipeg.ca
+  geocoverage:
+    level: city
+    description: Winnipeg, Manitoba, Canada
+    geonames:
+      - https://www.geonames.org/6183235/
+  domains:
+    - civic-data
+    - municipal
+    - housing
+    - public-safety
+    - transportation
+    - urban-planning
+
+- name: Nova Scotia Open Data Portal
+  hostname: data.novascotia.ca
+  url: https://data.novascotia.ca
+  country_code: CA
+  description: Official open data portal for the Province of Nova Scotia.
+  custodian:
+    name: Government of Nova Scotia
+    url: https://novascotia.ca
+  geocoverage:
+    level: subnational
+    description: Nova Scotia, Canada
+    geonames:
+      - https://www.geonames.org/6091530/
+  domains:
+    - government
+    - civic-data
+    - education
+    - environment
+    - finance
+    - health
+    - public-safety
+    - transportation
+
+- name: Government of New Brunswick Open Data
+  hostname: gnb.socrata.com
+  url: https://gnb.socrata.com
+  country_code: CA
+  description: Open data catalog for the Province of New Brunswick.
+  custodian:
+    name: Government of New Brunswick
+    url: https://www.gnb.ca
+  geocoverage:
+    level: subnational
+    description: New Brunswick, Canada
+    geonames:
+      - https://www.geonames.org/6087430/
+  domains:
+    - government
+    - civic-data
+    - finance
+
+# ==============================================================================
+# Latin America
+# ==============================================================================
+
+- name: Datos Abiertos de Colombia
+  hostname: datos.gov.co
+  url: https://www.datos.gov.co
+  country_code: CO
+  description: El portal oficial de datos abiertos de Colombia para fomentar la transparencia y la innovación.
+  custodian:
+    name: Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC)
+    url: https://www.mintic.gov.co
+  geocoverage:
+    level: national
+    description: Colombia
+    geonames:
+      - https://www.geonames.org/3686110/
+  domains:
+    - government
+    - civic-data
+    - finance
+    - health
+    - procurement
+    - official-statistics
+
+# ==============================================================================
+# Asia-Pacific & Europe
+# ==============================================================================
+
+- name: Australian Capital Territory Open Data Portal
+  hostname: data.act.gov.au
+  url: https://data.act.gov.au
+  country_code: AU
+  description: Official open data portal for the Australian Capital Territory.
+  custodian:
+    name: Australian Capital Territory Government
+    url: https://www.act.gov.au
+  geocoverage:
+    level: subnational
+    description: Australian Capital Territory, Australia
+    geonames:
+      - https://www.geonames.org/2172517/
+  domains:
+    - government
+    - civic-data
+    - education
+    - environment
+    - public-safety
+    - transportation
+
+- name: Open Data Catalonia (Generalitat de Catalunya)
+  hostname: analisi.transparenciacatalunya.cat
+  url: https://analisi.transparenciacatalunya.cat
+  country_code: ES
+  description: Open data catalog for the Government of Catalonia (Generalitat de Catalunya).
+  custodian:
+    name: Generalitat de Catalunya
+    url: https://web.gencat.cat
+    ror: 01bg62x04
+  geocoverage:
+    level: subnational
+    description: Catalonia, Spain
+    geonames:
+      - https://www.geonames.org/3336901/
+  domains:
+    - government
+    - civic-data
+    - economy
+    - environment
+    - health
+    - official-statistics
+    - urban-planning

@@ -6,7 +6,7 @@ Welcome to the **Socrata Toolkit** documentation! This Python library provides c
 Overview
 --------
 
-Socrata is an open data platform designed to help government agencies and organizations publish, manage, and share data effectively. It is used by a wide range of government agencies and organizations worldwide to manage and share open data. 
+Socrata is an open data platform designed to help government agencies and organizations publish, manage, and share data effectively. It is used by a wide range of government agencies and organizations worldwide to manage and share open data.
 
 The Socrata Open Data Catalog, also known as the Open Data Network, is a global search engine and discovery tool for open datasets. Socrata offers a comprehensive API called the `Socrata Open Data API (SODA) <https://dev.socrata.com/>`_ for accessing and interacting with datasets hosted on Socrata-powered open data portals.
 
@@ -19,6 +19,7 @@ The Socrata Toolkit provides:
 
 * **Dataset Access**: Retrieve dataset information, metadata, and statistics from Socrata servers
 * **DCAT Generation**: Generate W3C DCAT (Data Catalog Vocabulary) metadata using Pydantic-based RDF models
+* **CDIF Export**: Generate CDIF Discovery and CDIF Data Description metadata in JSON-LD and RDF formats via ``dartfx-cdif``
 * **DDI-Codebook**: Create DDI-Codebook 2.5 XML documentation for datasets
 * **Croissant Metadata**: Generate ML Croissant format metadata for machine learning datasets
 * **Code Generation**: Generate data access code in multiple languages (Python, Ruby, SAS, Stata, PowerShell, jQuery, .NET)
@@ -85,6 +86,7 @@ Documentation Contents
    quickstart
    metadata
    dcat
+   cdif
 
 .. toctree::
    :maxdepth: 2

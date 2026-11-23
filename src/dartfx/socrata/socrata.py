@@ -1,14 +1,17 @@
+import importlib.resources
 import json
 import logging
 import os
 import typing
 from datetime import datetime
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 from xml.sax.saxutils import escape
 
 import mlcroissant as mlc
 import requests
+import yaml
 from jinja2 import Environment, FileSystemLoader
 from markdownify import markdownify
 from pydantic import BaseModel, Field, PrivateAttr
@@ -43,59 +46,123 @@ class SocrataApiError(Exception):
         return base_message
 
 
-SERVERS = {
-    "data.calgary.ca": {
-        "name": "Calgary Open Data",
-        "publisher": ["City of Calgary"],
-        "spatial": ["Calgary, Alberta, Canada", "http://sws.geonames.org/5913490"],
-    },
-    "data.cityofchicago.org": {
-        "name": "Chicago Data Portal",
-        "publisher": ["City of Chicago"],
-        "spatial": ["Chicago, Illinois, USA", "http://sws.geonames.org/4887398"],
-    },
-    "data.cdc.gov": {
-        "name": "U.S. Centers for Disease Control and Prevention",
-        "publisher": ["U.S. Centers for Disease Control and Prevention"],
-        "spatial": ["United States", "http://sws.geonames.org/6252001"],
-    },
-    "data.cityofnewyork.us": {
-        "name": "NYC Open Data",
-        "publisher": ["City of New York", "https://opendata.cityofnewyork.us/"],
-        "spatial": ["New York City, New York, USA", "http://sws.geonames.org/5128581"],
-    },
-    "data.edmonton.ca": {
-        "name": "City of Edmonton's Open Data Portal",
-        "publisher": ["City of Edmonton"],
-        "spatial": ["Edmonton, Alberta, Canada", "http://sws.geonames.org/5946768"],
-    },
-    "data.ny.gov": {
-        "name": "New York State Open Data",
-        "publisher": ["New York State"],
-        "spatial": ["New York, USA", "http://sws.geonames.org/5128638"],
-    },
-    "data.sfgov.org": {
-        "name": "San Francisco Open Data Portal",
-        "publisher": ["City of San Francisco"],
-        "spatial": ["San Francisco, California, USA", "http://sws.geonames.org/5391959"],
-    },
-    "opendata.utah.gov": {
-        "name": "State of Utah Open Data Catalog",
-        "publisher": ["State of Utah"],
-        "spatial": ["Utah, USA", "http://sws.geonames.org/5549030"],
-    },
-    "data.wa.gov": {
-        "name": "Washington State Open Data Portal",
-        "publisher": ["Washington state government"],
-        "spatial": ["Washington, USA", "http://sws.geonames.org/5815135"],
-    },
-    "datos.gov.co": {
-        "name": "Datos abierrtos de Columbia",
-        "publisher": ["Ministerio de Tecnologías de la Información y las Comunicaciones"],
-        "spatial": ["Washington, USA", "http://sws.geonames.org/3686110"],
-        "languages": ["es"],
-    },
-}
+def load_bundled_servers_yaml(path: str | Path | None = None) -> list[dict[str, Any]]:
+    """Load Socrata servers registry from bundled or local servers.yaml file."""
+    # 1. Direct path argument
+    if path:
+        p = Path(path)
+        if p.is_file():
+            try:
+                with open(p, encoding="utf-8") as f:
+                    content = yaml.safe_load(f)
+                    if isinstance(content, list):
+                        return content
+                    if isinstance(content, dict):
+                        candidates = content.get("servers") or content.get("portals")
+                        if isinstance(candidates, list):
+                            return candidates
+            except Exception as e:
+                logging.debug(f"Failed loading servers from path ({p}): {e}")
+
+    # 2. Environment variable override
+    env_path = os.environ.get("SOCRATA_SERVERS_FILE")
+    if env_path and Path(env_path).is_file():
+        try:
+            with open(env_path, encoding="utf-8") as f:
+                content = yaml.safe_load(f)
+                if isinstance(content, list):
+                    return content
+                if isinstance(content, dict):
+                    candidates = content.get("servers") or content.get("portals")
+                    if isinstance(candidates, list):
+                        return candidates
+        except Exception as e:
+            logging.debug(f"Failed loading servers from SOCRATA_SERVERS_FILE ({env_path}): {e}")
+
+    # 3. Package resources (wheel / installed package)
+    try:
+        pkg_files = importlib.resources.files("dartfx.socrata")
+        for rel_loc in [("data", "servers.yaml"), ("data", "data.yaml"), ("servers.yaml",)]:
+            pkg_yaml = pkg_files.joinpath(*rel_loc)
+            if pkg_yaml.is_file():
+                content = yaml.safe_load(pkg_yaml.read_text(encoding="utf-8"))
+                if isinstance(content, list):
+                    return content
+                if isinstance(content, dict):
+                    candidates = content.get("servers") or content.get("portals")
+                    if isinstance(candidates, list):
+                        return candidates
+    except Exception as e:
+        logging.debug(f"Failed loading packaged servers.yaml: {e}")
+
+    # 4. Source repository root (development checkout)
+    for rel_path in [("data", "servers.yaml"), ("data", "data.yaml"), ("servers.yaml",)]:
+        try:
+            repo_file = Path(__file__).resolve().parents[3].joinpath(*rel_path)
+            if repo_file.is_file():
+                with open(repo_file, encoding="utf-8") as f:
+                    content = yaml.safe_load(f)
+                    if isinstance(content, list):
+                        return content
+                    if isinstance(content, dict):
+                        candidates = content.get("servers") or content.get("portals")
+                        if isinstance(candidates, list):
+                            return candidates
+        except Exception as e:
+            logging.debug(f"Failed loading repo servers.yaml ({rel_path}): {e}")
+
+    # 5. Current working directory
+    for rel_path in [("data", "servers.yaml"), ("data", "data.yaml"), ("servers.yaml",), ("data.yaml",)]:
+        try:
+            cwd_file = Path.cwd().joinpath(*rel_path)
+            if cwd_file.is_file():
+                with open(cwd_file, encoding="utf-8") as f:
+                    content = yaml.safe_load(f)
+                    if isinstance(content, list):
+                        return content
+                    if isinstance(content, dict):
+                        candidates = content.get("servers") or content.get("portals")
+                        if isinstance(candidates, list):
+                            return candidates
+        except Exception as e:
+            logging.debug(f"Failed loading cwd servers.yaml ({rel_path}): {e}")
+
+    return []
+
+
+def get_known_servers(path: str | Path | None = None) -> dict[str, dict[str, Any]]:
+    """Return dictionary of known Socrata servers keyed by hostname."""
+    items = load_bundled_servers_yaml(path)
+    result: dict[str, dict[str, Any]] = {}
+    for item in items:
+        host = str(item.get("hostname", "")).strip()
+        if not host:
+            continue
+        custodian = item.get("custodian") or {}
+        publishers: list[str] = []
+        if isinstance(custodian, dict) and custodian.get("name"):
+            publishers.append(str(custodian["name"]))
+            if custodian.get("url"):
+                publishers.append(str(custodian["url"]))
+        elif item.get("name"):
+            publishers.append(str(item["name"]))
+
+        geocov = item.get("geocoverage") or {}
+        spatial: list[str] = []
+        if isinstance(geocov, dict):
+            if geocov.get("description"):
+                spatial.append(str(geocov["description"]))
+            for gn in geocov.get("geonames") or []:
+                spatial.append(str(gn))
+
+        entry = dict(item)
+        entry["publisher"] = publishers
+        entry["spatial"] = spatial
+        result[host] = entry
+    return result
+
+
+SERVERS: dict[str, dict[str, Any]] = get_known_servers()
 
 
 class SocrataServer(BaseModel):
@@ -107,13 +174,22 @@ class SocrataServer(BaseModel):
     # attributes not available in Dataset metadata
     publisher: list[str] = Field(default_factory=list)
     spatial: list[str] = Field(default_factory=list)
+    country_code: str | None = Field(default=None)
+    custodian: dict[str, Any] = Field(default_factory=dict)
+    geocoverage: dict[str, Any] = Field(default_factory=dict)
+    domains: list[str] = Field(default_factory=list)
 
     def model_post_init(self, __context: Any) -> None:
-        # set metadata for know servers
+        # set metadata for known servers
         if self.host in SERVERS:
-            self.name = str(SERVERS[self.host].get("name", self.host))
-            self.publisher = list(SERVERS[self.host].get("publisher", []))
-            self.spatial = list(SERVERS[self.host].get("spatial", []))
+            known = SERVERS[self.host]
+            self.name = str(known.get("name", self.host))
+            self.publisher = list(known.get("publisher", []))
+            self.spatial = list(known.get("spatial", []))
+            self.country_code = known.get("country_code")
+            self.custodian = dict(known.get("custodian") or {})
+            self.geocoverage = dict(known.get("geocoverage") or {})
+            self.domains = list(known.get("domains") or [])
         else:
             self.name = self.host
             self.publisher = [self.host_url]
@@ -260,6 +336,28 @@ class SocrataDataset(BaseModel):
         return self._data.get("assetType")
 
     @property
+    def attribution(self) -> str | None:
+        value = self._data.get("attribution")
+        return value if isinstance(value, str) else None
+
+    @property
+    def attribution_link(self) -> str | None:
+        value = self._data.get("attributionLink")
+        return value if isinstance(value, str) else None
+
+    @property
+    def category(self) -> str | None:
+        value = self._data.get("category")
+        return value if isinstance(value, str) else None
+
+    @property
+    def created_at(self) -> datetime | None:
+        timestamp = self._data.get("createdAt")
+        if isinstance(timestamp, int | float):
+            return datetime.fromtimestamp(float(timestamp))
+        return None
+
+    @property
     def description(self) -> str | None:
         return self._data.get("description")
 
@@ -320,6 +418,19 @@ class SocrataDataset(BaseModel):
         return None
 
     @property
+    def row_identifier_column_id(self) -> int | None:
+        value = self._data.get("rowIdentifierColumnId")
+        if value is None:
+            metadata = self._data.get("metadata")
+            if isinstance(metadata, dict):
+                value = metadata.get("rowIdentifier")
+        if isinstance(value, int):
+            return value
+        if isinstance(value, str) and value.isdigit():
+            return int(value)
+        return None
+
+    @property
     def tags(self) -> list[str] | None:
         return self._data.get("tags")
 
@@ -348,6 +459,42 @@ class SocrataDataset(BaseModel):
         else:
             raise ValueError(f"Unsupported environment: {environment}.")
         return code
+
+    def get_cdif(
+        self,
+        profile: str = "discovery",
+        include_computed: bool = False,
+        include_stats: bool = True,
+        include_codes: bool = False,
+        max_codes: int = 20,
+    ) -> Any:
+        """Generate a CDIF metadata model for this dataset.
+
+        Args:
+            profile: Target CDIF profile ('discovery' or 'data_description').
+            include_computed: Include Socrata computed columns.
+            include_stats: Include dataset/variable statistics (Data Description profile).
+            include_codes: Include top value frequency categories (Data Description profile).
+            max_codes: Maximum number of top categories per variable.
+
+        Returns:
+            CdifDiscoveryDataset or CdifDataDescriptionDataset instance.
+        """
+        from .cdif import CdifGenerator
+
+        generator = CdifGenerator(server=self.server)
+        normalized = profile.strip().lower().replace("-", "_")
+        if normalized in ("discovery", "cdif_discovery"):
+            return generator.build_discovery(self, include_computed=include_computed)
+        if normalized in ("data_description", "datadescription", "cdif_data_description"):
+            return generator.build_data_description(
+                self,
+                include_computed=include_computed,
+                include_stats=include_stats,
+                include_codes=include_codes,
+                max_codes=max_codes,
+            )
+        raise ValueError(f"Unsupported CDIF profile: {profile}. Use 'discovery' or 'data_description'.")
 
     def get_croissant(
         self, include_computed: bool = False, include_codes: bool = True, max_codes: int = 100
@@ -686,6 +833,13 @@ class SocrataVariable(BaseModel):
         if isinstance(result, dict):
             return result
         return {}
+
+    @property
+    def description(self) -> str | None:
+        value = self.data.get("description")
+        if isinstance(value, str):
+            return value
+        return None
 
     @property
     def id(self) -> int:
