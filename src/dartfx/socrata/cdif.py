@@ -814,4 +814,4 @@ class CdifGenerator:
 
         graph = self.to_rdf_graph(models)
         raw = graph.serialize(format=target_format)
-        return raw.decode("utf-8") if isinstance(raw, bytes) else str(raw)
+        return raw.decode("utf-8") if isinstance(raw, bytes) else raw

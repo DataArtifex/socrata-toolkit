@@ -11,7 +11,7 @@ from xml.sax.saxutils import escape
 
 import mlcroissant as mlc
 import requests
-import yaml
+import yaml  # type: ignore[import-untyped]
 from jinja2 import Environment, FileSystemLoader
 from markdownify import markdownify
 from pydantic import BaseModel, Field, PrivateAttr
@@ -455,7 +455,7 @@ class SocrataDataset(BaseModel):
         template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
         if os.path.isfile(template_path):
             template = jinja_env.get_template(template_file)
-            code = typing.cast(str, template.render(host=self.server.host, dataset_id=self.id, options=options))
+            code = template.render(host=self.server.host, dataset_id=self.id, options=options)
         else:
             raise ValueError(f"Unsupported environment: {environment}.")
         return code

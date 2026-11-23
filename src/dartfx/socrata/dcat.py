@@ -105,7 +105,10 @@ class DcatGenerator:
     def _model_classes(profile: DcatProfile) -> tuple[type[Any], type[Any], type[Any], type[Any]]:
         """Return ``(Catalog, Dataset, Distribution, DataService)`` classes for the profile."""
         if profile == DcatProfile.US:
-            return dcat_us.Catalog, dcat_us.Dataset, dcat_us.Distribution, dcat.DataService
+            cat_cls: type[Any] = getattr(dcat_us, "Catalog", dcat.Catalog)
+            ds_cls: type[Any] = getattr(dcat_us, "Dataset", dcat.Dataset)
+            dist_cls: type[Any] = getattr(dcat_us, "Distribution", dcat.Distribution)
+            return cat_cls, ds_cls, dist_cls, dcat.DataService
         if profile == DcatProfile.AP:
             return dcat_ap.Catalog, dcat_ap.Dataset, dcat_ap.Distribution, dcat_ap.DataService
         if profile == DcatProfile.AP_HVD:

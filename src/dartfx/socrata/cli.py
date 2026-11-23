@@ -1016,9 +1016,7 @@ def metadata(
                         ext = "rdf"
 
                 raw_bytes_or_str = graph.serialize(format=target_rdf)
-                content = (
-                    raw_bytes_or_str.decode("utf-8") if isinstance(raw_bytes_or_str, bytes) else str(raw_bytes_or_str)
-                )
+                content = raw_bytes_or_str.decode("utf-8") if isinstance(raw_bytes_or_str, bytes) else raw_bytes_or_str
                 out_path = _resolve_output_path(output, f"dcat.{dataset_ids[0]}", ext)
 
                 if out_path:
@@ -1060,6 +1058,7 @@ def metadata(
                 return
 
             all_contents: list[str] = []
+            ext = "json"
             for ds_id in dataset_ids:
                 ds = SocrataDataset(server=server_client, id=ds_id)
                 if resolved_format == MetadataFormat.CROISSANT:
