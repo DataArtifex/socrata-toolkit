@@ -1,17 +1,9 @@
-import os
-from pathlib import Path
-
 from rdflib import DCAT, DCTERMS, Graph, URIRef
 
-from dartfx.socrata import DcatGenerator, SocrataDataset, SocrataServer
-
-sfo_server = SocrataServer(host="data.sfgov.org")
-sfo_dataset_311 = SocrataDataset(server=sfo_server, id="vw6y-z8j6")
-# A second dataset for testing multiple datasets in a catalog
-sfo_dataset_police = SocrataDataset(server=sfo_server, id="wg3w-h783")
+from dartfx.socrata import DcatGenerator
 
 
-def test_sfo_311(tests_dir: Path):
+def test_sfo_311(sfo_server, sfo_dataset_311, tmp_path):
     generator = DcatGenerator(sfo_server)
     generator.add_dataset(sfo_dataset_311)
 
@@ -43,10 +35,10 @@ def test_sfo_311(tests_dir: Path):
     assert (svc_uri, DCAT.endpointURL, svc_uri) in g
 
     # Save for manual inspection
-    g.serialize(destination=os.path.join(tests_dir, "sfo_311.dcat.ttl"), format="ttl")
+    g.serialize(destination=str(tmp_path / "sfo_311.dcat.ttl"), format="ttl")
 
 
-def test_multi_dataset():
+def test_multi_dataset(sfo_server, sfo_dataset_311, sfo_dataset_police):
     generator = DcatGenerator(sfo_server)
     generator.add_datasets([sfo_dataset_311, sfo_dataset_police])
 

@@ -4,11 +4,6 @@ from xml.dom import minidom
 import pytest
 from lxml import etree as ET
 
-from dartfx.socrata import SocrataDataset, SocrataServer
-
-sfo_server = SocrataServer(host="data.sfgov.org")
-sfo_dataset_311 = SocrataDataset(server=sfo_server, id="vw6y-z8j6")
-
 
 @pytest.fixture
 def ddi_schema(tests_dir):
@@ -17,11 +12,11 @@ def ddi_schema(tests_dir):
     return xml_schema
 
 
-def test_sfo_311_ddi_codebook(tests_dir, ddi_schema):
+def test_sfo_311_ddi_codebook(sfo_server, sfo_dataset_311, ddi_schema, tmp_path):
     xml_str = sfo_dataset_311.get_ddi_codebook()
     assert xml_str
-    # save to file (pretty printed)
-    with open(os.path.join(tests_dir, "sfo_311.ddic.xml"), "w") as f:
+    # save to tmp_path (pretty printed)
+    with open(tmp_path / "sfo_311.ddic.xml", "w") as f:
         dom = minidom.parseString(xml_str)
         f.write(dom.toprettyxml())
     # validate codebook

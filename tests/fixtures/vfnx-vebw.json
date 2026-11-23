@@ -1,0 +1,2180 @@
+{
+    "id": "vfnx-vebw",
+    "name": "2018 Central Park Squirrel Census - Squirrel Data",
+    "assetType": "dataset",
+    "attribution": "The Squirrel Census",
+    "attributionLink": "https://www.thesquirrelcensus.com/",
+    "averageRating": 0,
+    "category": "Environment",
+    "createdAt": 1571002304,
+    "description": "The Squirrel Census (https://www.thesquirrelcensus.com/) is a multimedia science, design, and storytelling project focusing on the Eastern gray (Sciurus carolinensis). They count squirrels and present their findings to the public. This table contains squirrel data for each of the 3,023 sightings, including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and with humans.",
+    "displayType": "table",
+    "downloadCount": 91746,
+    "hideFromCatalog": false,
+    "hideFromDataJson": false,
+    "indexUpdatedAt": 1571421292,
+    "locked": false,
+    "newBackend": true,
+    "numberOfComments": 0,
+    "oid": 32615267,
+    "provenance": "official",
+    "publicationAppendEnabled": false,
+    "publicationDate": 1571003249,
+    "publicationGroup": 16630888,
+    "publicationStage": "published",
+    "rowClass": "",
+    "rowsUpdatedAt": 1571421291,
+    "rowsUpdatedBy": "8u8s-8cxv",
+    "tableId": 16630888,
+    "totalTimesRated": 0,
+    "viewCount": 220895,
+    "viewLastModified": 1681846197,
+    "viewType": "tabular",
+    "approvals": [
+        {
+            "reviewedAt": 1571141812,
+            "reviewedAutomatically": true,
+            "state": "approved",
+            "submissionId": 1351657,
+            "submissionObject": "public_audience_request",
+            "submissionOutcome": "change_audience",
+            "submittedAt": 1571141812,
+            "targetAudience": "public",
+            "workflowId": 2285,
+            "submissionDetails": {
+                "permissionType": "READ"
+            },
+            "submissionOutcomeApplication": {
+                "endedAt": 1571141812,
+                "failureCount": 0,
+                "startedAt": 1571141812,
+                "status": "success"
+            },
+            "submitter": {
+                "id": "8u8s-8cxv",
+                "displayName": "Zachary Feder (NYC Open Data)"
+            }
+        }
+    ],
+    "clientContext": {
+        "clientContextVariables": [],
+        "inheritedVariables": {}
+    },
+    "columns": [
+        {
+            "id": 433060273,
+            "name": "X",
+            "dataTypeName": "number",
+            "description": "Longitude coordinate for squirrel sighting point",
+            "fieldName": "x",
+            "position": 1,
+            "renderTypeName": "number",
+            "tableColumnId": 89149327,
+            "cachedContents": {
+                "largest": "-73.9497217674555",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "-73.9811218801005",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9811078442462",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9810843611086",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9810149147578",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9810032206428",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9809876538513",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9809688694074",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9809610117171",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.980948293606",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9809446489564",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9809342290598",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.980919134781",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.980897497712",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.980854228628",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9808517324721",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9808247660048",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9808202088503",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9807982742225",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.9807898224726",
+                        "count": "1"
+                    },
+                    {
+                        "item": "-73.980777106431",
+                        "count": "1"
+                    }
+                ],
+                "smallest": "-73.9811585807616",
+                "count": "3023",
+                "cardinality": "3023"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060286,
+            "name": "Y",
+            "dataTypeName": "number",
+            "description": "Latitude coordinate for squirrel sighting point",
+            "fieldName": "y",
+            "position": 2,
+            "renderTypeName": "number",
+            "tableColumnId": 89149340,
+            "cachedContents": {
+                "largest": "40.8001185184892",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "40.7899599350145",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7943889087123",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7686351097159",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7888234959792",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7770454318226",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7676126748454",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7778169845999",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7981463047425",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7735903424522",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7925807808307",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7705452529783",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7768612676036",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7763496875058",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7747554568985",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7689824531444",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7984783584388",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7693162287509",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.788722645116",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7714534847379",
+                        "count": "1"
+                    },
+                    {
+                        "item": "40.7718955594385",
+                        "count": "1"
+                    }
+                ],
+                "smallest": "40.7649106677138",
+                "count": "3023",
+                "cardinality": "3023"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060285,
+            "name": "Unique Squirrel ID",
+            "dataTypeName": "text",
+            "description": "Identification tag for each squirrel sightings. The tag is comprised of \"Hectare ID\" + \"Shift\" + \"Date\" + \"Hectare Squirrel Number.\"",
+            "fieldName": "unique_squirrel_id",
+            "position": 3,
+            "renderTypeName": "text",
+            "tableColumnId": 89149339,
+            "cachedContents": {
+                "largest": "9I-PM-1010-07",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "40B-AM-1019-06",
+                        "count": "2"
+                    },
+                    {
+                        "item": "4C-PM-1010-05",
+                        "count": "2"
+                    },
+                    {
+                        "item": "7D-PM-1010-01",
+                        "count": "2"
+                    },
+                    {
+                        "item": "37E-PM-1006-03",
+                        "count": "2"
+                    },
+                    {
+                        "item": "1F-AM-1010-04",
+                        "count": "2"
+                    },
+                    {
+                        "item": "10A-PM-1014-03",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10A-PM-1014-02",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10A-AM-1006-03",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-AM-1006-03",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-AM-1006-02",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-AM-1006-04",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-PM-1014-01",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-PM-1014-02",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-PM-1014-03",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10A-PM-1014-01",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10C-AM-1018-02",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10C-AM-1018-01",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10B-AM-1006-01",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10C-AM-1018-03",
+                        "count": "1"
+                    },
+                    {
+                        "item": "10C-AM-1018-04",
+                        "count": "1"
+                    }
+                ],
+                "smallest": "10A-AM-1006-01",
+                "count": "3023",
+                "cardinality": "3018"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060284,
+            "name": "Hectare",
+            "dataTypeName": "text",
+            "description": "ID tag, which is derived from the hectare grid used to divide and count the park area. One axis that runs predominantly north-to-south is numerical (1-42), and the axis that runs predominantly east-to-west is roman characters (A-I). ",
+            "fieldName": "hectare",
+            "position": 4,
+            "renderTypeName": "text",
+            "tableColumnId": 89149338,
+            "cachedContents": {
+                "largest": "42I",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "14D",
+                        "count": "32"
+                    },
+                    {
+                        "item": "32E",
+                        "count": "30"
+                    },
+                    {
+                        "item": "14E",
+                        "count": "28"
+                    },
+                    {
+                        "item": "01B",
+                        "count": "27"
+                    },
+                    {
+                        "item": "07H",
+                        "count": "26"
+                    },
+                    {
+                        "item": "13D",
+                        "count": "25"
+                    },
+                    {
+                        "item": "13E",
+                        "count": "24"
+                    },
+                    {
+                        "item": "04C",
+                        "count": "22"
+                    },
+                    {
+                        "item": "03D",
+                        "count": "22"
+                    },
+                    {
+                        "item": "33E",
+                        "count": "22"
+                    },
+                    {
+                        "item": "38C",
+                        "count": "21"
+                    },
+                    {
+                        "item": "08I",
+                        "count": "21"
+                    },
+                    {
+                        "item": "03B",
+                        "count": "21"
+                    },
+                    {
+                        "item": "03F",
+                        "count": "21"
+                    },
+                    {
+                        "item": "12F",
+                        "count": "21"
+                    },
+                    {
+                        "item": "02C",
+                        "count": "21"
+                    },
+                    {
+                        "item": "30B",
+                        "count": "21"
+                    },
+                    {
+                        "item": "36I",
+                        "count": "21"
+                    },
+                    {
+                        "item": "10G",
+                        "count": "21"
+                    },
+                    {
+                        "item": "35A",
+                        "count": "20"
+                    }
+                ],
+                "smallest": "01A",
+                "count": "3023",
+                "cardinality": "339"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060283,
+            "name": "Shift",
+            "dataTypeName": "text",
+            "description": "Value is either \"AM\" or \"PM,\" to communicate whether or not the sighting session occurred in the morning or late afternoon. ",
+            "fieldName": "shift",
+            "position": 5,
+            "renderTypeName": "text",
+            "tableColumnId": 89149337,
+            "cachedContents": {
+                "largest": "PM",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "PM",
+                        "count": "1676"
+                    },
+                    {
+                        "item": "AM",
+                        "count": "1347"
+                    }
+                ],
+                "smallest": "AM",
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060272,
+            "name": "Date",
+            "dataTypeName": "text",
+            "description": "Concatenation of the sighting session day and month.",
+            "fieldName": "date",
+            "position": 6,
+            "renderTypeName": "text",
+            "tableColumnId": 89149326,
+            "cachedContents": {
+                "largest": "10202018",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "10132018",
+                        "count": "434"
+                    },
+                    {
+                        "item": "10072018",
+                        "count": "405"
+                    },
+                    {
+                        "item": "10142018",
+                        "count": "368"
+                    },
+                    {
+                        "item": "10062018",
+                        "count": "337"
+                    },
+                    {
+                        "item": "10102018",
+                        "count": "335"
+                    },
+                    {
+                        "item": "10082018",
+                        "count": "285"
+                    },
+                    {
+                        "item": "10122018",
+                        "count": "218"
+                    },
+                    {
+                        "item": "10172018",
+                        "count": "216"
+                    },
+                    {
+                        "item": "10182018",
+                        "count": "200"
+                    },
+                    {
+                        "item": "10192018",
+                        "count": "158"
+                    },
+                    {
+                        "item": "10202018",
+                        "count": "67"
+                    }
+                ],
+                "smallest": "10062018",
+                "count": "3023",
+                "cardinality": "11"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060282,
+            "name": "Hectare Squirrel Number",
+            "dataTypeName": "number",
+            "description": "Number within the chronological sequence of squirrel sightings for a discrete sighting session. ",
+            "fieldName": "hectare_squirrel_number",
+            "position": 7,
+            "renderTypeName": "number",
+            "tableColumnId": 89149336,
+            "cachedContents": {
+                "largest": "23",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "1",
+                        "count": "614"
+                    },
+                    {
+                        "item": "2",
+                        "count": "533"
+                    },
+                    {
+                        "item": "3",
+                        "count": "441"
+                    },
+                    {
+                        "item": "4",
+                        "count": "364"
+                    },
+                    {
+                        "item": "5",
+                        "count": "287"
+                    },
+                    {
+                        "item": "6",
+                        "count": "223"
+                    },
+                    {
+                        "item": "7",
+                        "count": "161"
+                    },
+                    {
+                        "item": "8",
+                        "count": "119"
+                    },
+                    {
+                        "item": "9",
+                        "count": "85"
+                    },
+                    {
+                        "item": "10",
+                        "count": "54"
+                    },
+                    {
+                        "item": "11",
+                        "count": "42"
+                    },
+                    {
+                        "item": "12",
+                        "count": "33"
+                    },
+                    {
+                        "item": "13",
+                        "count": "23"
+                    },
+                    {
+                        "item": "14",
+                        "count": "16"
+                    },
+                    {
+                        "item": "15",
+                        "count": "10"
+                    },
+                    {
+                        "item": "16",
+                        "count": "8"
+                    },
+                    {
+                        "item": "17",
+                        "count": "4"
+                    },
+                    {
+                        "item": "22",
+                        "count": "1"
+                    },
+                    {
+                        "item": "18",
+                        "count": "1"
+                    },
+                    {
+                        "item": "20",
+                        "count": "1"
+                    }
+                ],
+                "smallest": "1",
+                "count": "3023",
+                "cardinality": "23"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060281,
+            "name": "Age",
+            "dataTypeName": "text",
+            "description": "Value is either \"Adult\" or \"Juvenile.\"",
+            "fieldName": "age",
+            "position": 8,
+            "renderTypeName": "text",
+            "tableColumnId": 89149335,
+            "cachedContents": {
+                "largest": "Juvenile",
+                "non_null": "2902",
+                "null": "121",
+                "top": [
+                    {
+                        "item": "Adult",
+                        "count": "2568"
+                    },
+                    {
+                        "item": "Juvenile",
+                        "count": "330"
+                    },
+                    {
+                        "item": "?",
+                        "count": "4"
+                    }
+                ],
+                "smallest": "?",
+                "count": "3023",
+                "cardinality": "3"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060280,
+            "name": "Primary Fur Color",
+            "dataTypeName": "text",
+            "description": "Value is either \"Gray,\" \"Cinnamon\" or \"Black.\"",
+            "fieldName": "primary_fur_color",
+            "position": 9,
+            "renderTypeName": "text",
+            "tableColumnId": 89149334,
+            "cachedContents": {
+                "largest": "Gray",
+                "non_null": "2968",
+                "null": "55",
+                "top": [
+                    {
+                        "item": "Gray",
+                        "count": "2473"
+                    },
+                    {
+                        "item": "Cinnamon",
+                        "count": "392"
+                    },
+                    {
+                        "item": "Black",
+                        "count": "103"
+                    }
+                ],
+                "smallest": "Black",
+                "count": "3023",
+                "cardinality": "3"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060279,
+            "name": "Highlight Fur Color",
+            "dataTypeName": "text",
+            "description": "Discrete value or string values comprised of \"Gray,\" \"Cinnamon\" or \"Black.\"",
+            "fieldName": "highlight_fur_color",
+            "position": 10,
+            "renderTypeName": "text",
+            "tableColumnId": 89149333,
+            "cachedContents": {
+                "largest": "White",
+                "non_null": "1937",
+                "null": "1086",
+                "top": [
+                    {
+                        "item": "Cinnamon",
+                        "count": "767"
+                    },
+                    {
+                        "item": "White",
+                        "count": "585"
+                    },
+                    {
+                        "item": "Cinnamon, White",
+                        "count": "268"
+                    },
+                    {
+                        "item": "Gray",
+                        "count": "170"
+                    },
+                    {
+                        "item": "Gray, White",
+                        "count": "59"
+                    },
+                    {
+                        "item": "Black",
+                        "count": "34"
+                    },
+                    {
+                        "item": "Black, Cinnamon, White",
+                        "count": "32"
+                    },
+                    {
+                        "item": "Black, White",
+                        "count": "10"
+                    },
+                    {
+                        "item": "Black, Cinnamon",
+                        "count": "9"
+                    },
+                    {
+                        "item": "Gray, Black",
+                        "count": "3"
+                    }
+                ],
+                "smallest": "Black",
+                "count": "3023",
+                "cardinality": "10"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060278,
+            "name": "Combination of Primary and Highlight Color",
+            "dataTypeName": "text",
+            "description": "A combination of the previous two columns; this column gives the total permutations of primary and highlight colors observed.",
+            "fieldName": "combination_of_primary_and",
+            "position": 11,
+            "renderTypeName": "text",
+            "tableColumnId": 89149332,
+            "cachedContents": {
+                "largest": "Gray+White",
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": "Gray+",
+                        "count": "895"
+                    },
+                    {
+                        "item": "Gray+Cinnamon",
+                        "count": "752"
+                    },
+                    {
+                        "item": "Gray+White",
+                        "count": "489"
+                    },
+                    {
+                        "item": "Gray+Cinnamon, White",
+                        "count": "265"
+                    },
+                    {
+                        "item": "Cinnamon+Gray",
+                        "count": "162"
+                    },
+                    {
+                        "item": "Cinnamon+White",
+                        "count": "94"
+                    },
+                    {
+                        "item": "Black+",
+                        "count": "74"
+                    },
+                    {
+                        "item": "Cinnamon+",
+                        "count": "62"
+                    },
+                    {
+                        "item": "Cinnamon+Gray, White",
+                        "count": "58"
+                    },
+                    {
+                        "item": "+",
+                        "count": "55"
+                    },
+                    {
+                        "item": "Gray+Black, Cinnamon, White",
+                        "count": "32"
+                    },
+                    {
+                        "item": "Gray+Black",
+                        "count": "24"
+                    },
+                    {
+                        "item": "Black+Cinnamon",
+                        "count": "15"
+                    },
+                    {
+                        "item": "Cinnamon+Black",
+                        "count": "10"
+                    },
+                    {
+                        "item": "Gray+Black, Cinnamon",
+                        "count": "9"
+                    },
+                    {
+                        "item": "Black+Gray",
+                        "count": "8"
+                    },
+                    {
+                        "item": "Gray+Black, White",
+                        "count": "7"
+                    },
+                    {
+                        "item": "Cinnamon+Black, White",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Cinnamon+Gray, Black",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Black+Cinnamon, White",
+                        "count": "3"
+                    }
+                ],
+                "smallest": "+",
+                "count": "3023",
+                "cardinality": "22"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060277,
+            "name": "Color notes",
+            "dataTypeName": "text",
+            "description": "Sighters occasionally added commentary on the squirrel fur conditions. These notes are provided here.",
+            "fieldName": "color_notes",
+            "position": 12,
+            "renderTypeName": "text",
+            "tableColumnId": 89149331,
+            "cachedContents": {
+                "largest": "young adult",
+                "non_null": "182",
+                "null": "2841",
+                "top": [
+                    {
+                        "item": "Gray & Cinnamon selected as Primary. White selected as Highlights. Made executive adjustments.",
+                        "count": "9"
+                    },
+                    {
+                        "item": "white belly",
+                        "count": "5"
+                    },
+                    {
+                        "item": "Gray & Cinnamon selected as Primary. Nothing selected as Highlights. Made executive adjustments.",
+                        "count": "4"
+                    },
+                    {
+                        "item": "white back legs",
+                        "count": "4"
+                    },
+                    {
+                        "item": "White tail",
+                        "count": "4"
+                    },
+                    {
+                        "item": "Nothing selected as Primary. Gray selected as Highlights. Made executive adjustments.",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Gray & Cinnamon selected as Primary. Cinnamon & White selected as Highlights. Made executive adjustments.",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Gray & Cinnamon selected as Primary. Gray & White selected as Highlights. Made executive adjustments.",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Listed as primary white with cinnamon highlights, I changed to Gray/cinnamon - JO",
+                        "count": "3"
+                    },
+                    {
+                        "item": "cinnamon tail",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Cinnamon stripe on back",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Cinnamon belly",
+                        "count": "2"
+                    },
+                    {
+                        "item": "\"Brown\" written in as Primary",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Gray & Cinnamon selected as Primary. Cinnamon selected as Highlights. Made executive adjustments.",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Gray, Cinnamon & White selected as Primary. Gray & White selected as Highlights. Made executive adjustments.",
+                        "count": "2"
+                    },
+                    {
+                        "item": "white on tail",
+                        "count": "2"
+                    },
+                    {
+                        "item": "standard coloration",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Cinnamon flanks",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Cinnamon on shoulders",
+                        "count": "2"
+                    },
+                    {
+                        "item": "Gray, Black, & Cinnamon selected as Primary. Gray, Cinnamon, & White selected as Highlights. Made executive adjustments.",
+                        "count": "2"
+                    }
+                ],
+                "smallest": "!!!",
+                "count": "3023",
+                "cardinality": "135"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060276,
+            "name": "Location",
+            "dataTypeName": "text",
+            "description": "Value is either \"Ground Plane\" or \"Above Ground.\" Sighters were instructed to indicate the location of where the squirrel was when first sighted.",
+            "fieldName": "location",
+            "position": 13,
+            "renderTypeName": "text",
+            "tableColumnId": 89149330,
+            "cachedContents": {
+                "largest": "Ground Plane",
+                "non_null": "2959",
+                "null": "64",
+                "top": [
+                    {
+                        "item": "Ground Plane",
+                        "count": "2116"
+                    },
+                    {
+                        "item": "Above Ground",
+                        "count": "843"
+                    }
+                ],
+                "smallest": "Above Ground",
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060275,
+            "name": "Above Ground Sighter Measurement",
+            "dataTypeName": "text",
+            "description": "For squirrel sightings on the ground plane, fields were populated with a value of \u201cFALSE.\u201d",
+            "fieldName": "above_ground_sighter",
+            "position": 14,
+            "renderTypeName": "text",
+            "tableColumnId": 89149329,
+            "cachedContents": {
+                "largest": "FALSE",
+                "non_null": "2909",
+                "null": "114",
+                "top": [
+                    {
+                        "item": "FALSE",
+                        "count": "2116"
+                    },
+                    {
+                        "item": "10",
+                        "count": "116"
+                    },
+                    {
+                        "item": "20",
+                        "count": "84"
+                    },
+                    {
+                        "item": "15",
+                        "count": "71"
+                    },
+                    {
+                        "item": "2",
+                        "count": "55"
+                    },
+                    {
+                        "item": "3",
+                        "count": "52"
+                    },
+                    {
+                        "item": "5",
+                        "count": "51"
+                    },
+                    {
+                        "item": "30",
+                        "count": "44"
+                    },
+                    {
+                        "item": "4",
+                        "count": "42"
+                    },
+                    {
+                        "item": "25",
+                        "count": "33"
+                    },
+                    {
+                        "item": "6",
+                        "count": "32"
+                    },
+                    {
+                        "item": "8",
+                        "count": "30"
+                    },
+                    {
+                        "item": "1",
+                        "count": "30"
+                    },
+                    {
+                        "item": "40",
+                        "count": "25"
+                    },
+                    {
+                        "item": "7",
+                        "count": "19"
+                    },
+                    {
+                        "item": "50",
+                        "count": "19"
+                    },
+                    {
+                        "item": "12",
+                        "count": "16"
+                    },
+                    {
+                        "item": "13",
+                        "count": "11"
+                    },
+                    {
+                        "item": "35",
+                        "count": "10"
+                    },
+                    {
+                        "item": "28",
+                        "count": "7"
+                    }
+                ],
+                "smallest": "0",
+                "count": "3023",
+                "cardinality": "41"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060274,
+            "name": "Specific Location",
+            "dataTypeName": "text",
+            "description": "Sighters occasionally added commentary on the squirrel location. These notes are provided here.",
+            "fieldName": "specific_location",
+            "position": 15,
+            "renderTypeName": "text",
+            "tableColumnId": 89149328,
+            "cachedContents": {
+                "largest": "Woods",
+                "non_null": "476",
+                "null": "2547",
+                "top": [
+                    {
+                        "item": "tree",
+                        "count": "43"
+                    },
+                    {
+                        "item": "in tree",
+                        "count": "32"
+                    },
+                    {
+                        "item": "on fence",
+                        "count": "8"
+                    },
+                    {
+                        "item": "Tree",
+                        "count": "7"
+                    },
+                    {
+                        "item": "treed area",
+                        "count": "6"
+                    },
+                    {
+                        "item": "fence",
+                        "count": "5"
+                    },
+                    {
+                        "item": "Rock",
+                        "count": "4"
+                    },
+                    {
+                        "item": "bush",
+                        "count": "4"
+                    },
+                    {
+                        "item": "under a tree",
+                        "count": "4"
+                    },
+                    {
+                        "item": "THICK UNDERGROWTH",
+                        "count": "3"
+                    },
+                    {
+                        "item": "on a tree",
+                        "count": "3"
+                    },
+                    {
+                        "item": "in a tree",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Behind fence, grass",
+                        "count": "3"
+                    },
+                    {
+                        "item": "In tree",
+                        "count": "3"
+                    },
+                    {
+                        "item": "on tree",
+                        "count": "3"
+                    },
+                    {
+                        "item": "small open area but w/ 7 large oak trees",
+                        "count": "3"
+                    },
+                    {
+                        "item": "on rock",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Woods",
+                        "count": "3"
+                    },
+                    {
+                        "item": "in grass",
+                        "count": "3"
+                    },
+                    {
+                        "item": "Clearing near bike path (bikes active)",
+                        "count": "3"
+                    }
+                ],
+                "smallest": "5, 6, 7 all at same tree trunk base",
+                "count": "3023",
+                "cardinality": "304"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060257,
+            "name": "Running",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen running.",
+            "fieldName": "running",
+            "position": 16,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149311,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2293"
+                    },
+                    {
+                        "item": true,
+                        "count": "730"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060258,
+            "name": "Chasing",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen chasing another squirrel.",
+            "fieldName": "chasing",
+            "position": 17,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149312,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2744"
+                    },
+                    {
+                        "item": true,
+                        "count": "279"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060259,
+            "name": "Climbing",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen climbing a tree or other environmental landmark.",
+            "fieldName": "climbing",
+            "position": 18,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149313,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2365"
+                    },
+                    {
+                        "item": true,
+                        "count": "658"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060260,
+            "name": "Eating",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen eating.",
+            "fieldName": "eating",
+            "position": 19,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149314,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2263"
+                    },
+                    {
+                        "item": true,
+                        "count": "760"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060261,
+            "name": "Foraging",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen foraging for food.",
+            "fieldName": "foraging",
+            "position": 20,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149315,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "1588"
+                    },
+                    {
+                        "item": true,
+                        "count": "1435"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060262,
+            "name": "Other Activities",
+            "dataTypeName": "text",
+            "description": "",
+            "fieldName": "other_activities",
+            "position": 21,
+            "renderTypeName": "text",
+            "tableColumnId": 89149316,
+            "cachedContents": {
+                "largest": "wrestling with mother",
+                "non_null": "437",
+                "null": "2586",
+                "top": [
+                    {
+                        "item": "digging",
+                        "count": "19"
+                    },
+                    {
+                        "item": "sitting",
+                        "count": "16"
+                    },
+                    {
+                        "item": "walking",
+                        "count": "14"
+                    },
+                    {
+                        "item": "burying",
+                        "count": "12"
+                    },
+                    {
+                        "item": "playing",
+                        "count": "11"
+                    },
+                    {
+                        "item": "jumping",
+                        "count": "6"
+                    },
+                    {
+                        "item": "grooming",
+                        "count": "5"
+                    },
+                    {
+                        "item": "nut in mouth",
+                        "count": "4"
+                    },
+                    {
+                        "item": "staring",
+                        "count": "4"
+                    },
+                    {
+                        "item": "hopping",
+                        "count": "4"
+                    },
+                    {
+                        "item": "cleaning",
+                        "count": "4"
+                    },
+                    {
+                        "item": "hiding",
+                        "count": "3"
+                    },
+                    {
+                        "item": "standing",
+                        "count": "3"
+                    },
+                    {
+                        "item": "burying nut",
+                        "count": "3"
+                    },
+                    {
+                        "item": "chasing #3",
+                        "count": "3"
+                    },
+                    {
+                        "item": "chasing (#3)",
+                        "count": "3"
+                    },
+                    {
+                        "item": "chasing #4",
+                        "count": "3"
+                    },
+                    {
+                        "item": "chilling",
+                        "count": "3"
+                    },
+                    {
+                        "item": "watching",
+                        "count": "3"
+                    },
+                    {
+                        "item": "holding nut",
+                        "count": "2"
+                    }
+                ],
+                "smallest": "2/3 chasing each other",
+                "count": "3023",
+                "cardinality": "307"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060263,
+            "name": "Kuks",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was heard kukking, a chirpy vocal communication used for a variety of reasons.",
+            "fieldName": "kuks",
+            "position": 22,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149317,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2921"
+                    },
+                    {
+                        "item": true,
+                        "count": "102"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060264,
+            "name": "Quaas",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was heard quaaing, an elongated vocal communication which can indicate the presence of a ground predator such as a dog.",
+            "fieldName": "quaas",
+            "position": 23,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149318,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2973"
+                    },
+                    {
+                        "item": true,
+                        "count": "50"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060265,
+            "name": "Moans",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was heard moaning, a high-pitched vocal communication which can indicate the presence of an air predator such as a hawk.",
+            "fieldName": "moans",
+            "position": 24,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149319,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "3020"
+                    },
+                    {
+                        "item": true,
+                        "count": "3"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060266,
+            "name": "Tail flags",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen flagging its tail. Flagging is a whipping motion used to exaggerate squirrel's size and confuse rivals or predators. Looks as if the squirrel is scribbling with tail into the air.",
+            "fieldName": "tail_flags",
+            "position": 25,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149320,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2868"
+                    },
+                    {
+                        "item": true,
+                        "count": "155"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060267,
+            "name": "Tail twitches",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen twitching its tail. Looks like a wave running through the tail, like a breakdancer doing the arm wave. Often used to communicate interest, curiosity.",
+            "fieldName": "tail_twitches",
+            "position": 26,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149321,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2589"
+                    },
+                    {
+                        "item": true,
+                        "count": "434"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060268,
+            "name": "Approaches",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen approaching human, seeking food.",
+            "fieldName": "approaches",
+            "position": 27,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149322,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2845"
+                    },
+                    {
+                        "item": true,
+                        "count": "178"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060269,
+            "name": "Indifferent",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was indifferent to human presence.",
+            "fieldName": "indifferent",
+            "position": 28,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149323,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "1569"
+                    },
+                    {
+                        "item": true,
+                        "count": "1454"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060270,
+            "name": "Runs from",
+            "dataTypeName": "checkbox",
+            "description": "Squirrel was seen running from humans, seeing them as a threat.",
+            "fieldName": "runs_from",
+            "position": 29,
+            "renderTypeName": "checkbox",
+            "tableColumnId": 89149324,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": false,
+                        "count": "2345"
+                    },
+                    {
+                        "item": true,
+                        "count": "678"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "2"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060271,
+            "name": "Other Interactions",
+            "dataTypeName": "text",
+            "description": "Sighter notes on other types of interactions between squirrels and humans.",
+            "fieldName": "other_interactions",
+            "position": 30,
+            "renderTypeName": "text",
+            "tableColumnId": 89149325,
+            "cachedContents": {
+                "largest": "w/ dog",
+                "non_null": "240",
+                "null": "2783",
+                "top": [
+                    {
+                        "item": "runs from (dog)",
+                        "count": "9"
+                    },
+                    {
+                        "item": "curious",
+                        "count": "6"
+                    },
+                    {
+                        "item": "runs from (me)",
+                        "count": "5"
+                    },
+                    {
+                        "item": "stared",
+                        "count": "4"
+                    },
+                    {
+                        "item": "me",
+                        "count": "4"
+                    },
+                    {
+                        "item": "avoided people",
+                        "count": "3"
+                    },
+                    {
+                        "item": "ran up tree when approached",
+                        "count": "3"
+                    },
+                    {
+                        "item": "indifferent then runs from",
+                        "count": "2"
+                    },
+                    {
+                        "item": "ran up tree",
+                        "count": "2"
+                    },
+                    {
+                        "item": "could not get close due to fences",
+                        "count": "2"
+                    },
+                    {
+                        "item": "dog chased",
+                        "count": "2"
+                    },
+                    {
+                        "item": "unaware of",
+                        "count": "2"
+                    },
+                    {
+                        "item": "in fenced in lawn (chill)",
+                        "count": "2"
+                    },
+                    {
+                        "item": "looked at us from tree",
+                        "count": "2"
+                    },
+                    {
+                        "item": "runs from (ran from base of tree into bushes)",
+                        "count": "2"
+                    },
+                    {
+                        "item": "watching",
+                        "count": "2"
+                    },
+                    {
+                        "item": "stared at me",
+                        "count": "2"
+                    },
+                    {
+                        "item": "watching me from tree - curious",
+                        "count": "2"
+                    },
+                    {
+                        "item": "freezes",
+                        "count": "2"
+                    },
+                    {
+                        "item": "dog",
+                        "count": "2"
+                    }
+                ],
+                "smallest": "acknowledged",
+                "count": "3023",
+                "cardinality": "197"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060287,
+            "name": "Lat/Long",
+            "dataTypeName": "point",
+            "description": "Latitude and longitude",
+            "fieldName": "geocoded_column",
+            "position": 31,
+            "renderTypeName": "point",
+            "tableColumnId": 89149341,
+            "cachedContents": {
+                "non_null": "3023",
+                "null": "0",
+                "top": [
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9689504114652,
+                                40.7766770153764
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9619673317128,
+                                40.7924176673037
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9769693140651,
+                                40.7684390015166
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9729394928432,
+                                40.7743256716496
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9609704650925,
+                                40.7938786854735
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9682144039334,
+                                40.7773070675393
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9538867186376,
+                                40.7941409434007
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9578924882613,
+                                40.789806297824
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9594986107981,
+                                40.7840083040604
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9749469566854,
+                                40.7667805367199
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9705092958892,
+                                40.7761092972965
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.97971223228342,
+                                40.7678347587435
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9754270368984,
+                                40.7702411502308
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9676529780724,
+                                40.7823206990549
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9690082314914,
+                                40.7738993942891
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9619609976132,
+                                40.7922824443528
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9738817388158,
+                                40.7712709366093
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9529060669193,
+                                40.7927909735388
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9563203089105,
+                                40.7906275357726
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    },
+                    {
+                        "item": {
+                            "coordinates": [
+                                -73.9519387881692,
+                                40.7936273636929
+                            ],
+                            "type": "Point"
+                        },
+                        "count": "1"
+                    }
+                ],
+                "count": "3023",
+                "cardinality": "3023"
+            },
+            "format": {}
+        },
+        {
+            "id": 433060288,
+            "name": "Zip Codes",
+            "dataTypeName": "number",
+            "description": "",
+            "fieldName": ":@computed_region_efsh_h5xi",
+            "position": 32,
+            "renderTypeName": "number",
+            "tableColumnId": 89149342,
+            "computationStrategy": {
+                "source_columns": [
+                    "geocoded_column"
+                ],
+                "type": "georegion_match_on_point",
+                "parameters": {
+                    "region": "_efsh-h5xi",
+                    "primary_key": "_feature_id"
+                }
+            },
+            "format": {}
+        },
+        {
+            "id": 433060289,
+            "name": "Community Districts",
+            "dataTypeName": "number",
+            "description": "",
+            "fieldName": ":@computed_region_f5dn_yrer",
+            "position": 33,
+            "renderTypeName": "number",
+            "tableColumnId": 89149343,
+            "computationStrategy": {
+                "source_columns": [
+                    "geocoded_column"
+                ],
+                "type": "georegion_match_on_point",
+                "parameters": {
+                    "region": "_f5dn-yrer",
+                    "primary_key": "_feature_id"
+                }
+            },
+            "format": {}
+        },
+        {
+            "id": 433060290,
+            "name": "Borough Boundaries",
+            "dataTypeName": "number",
+            "description": "",
+            "fieldName": ":@computed_region_yeji_bk3q",
+            "position": 34,
+            "renderTypeName": "number",
+            "tableColumnId": 89149344,
+            "computationStrategy": {
+                "source_columns": [
+                    "geocoded_column"
+                ],
+                "type": "georegion_match_on_point",
+                "parameters": {
+                    "region": "_yeji-bk3q",
+                    "primary_key": "_feature_id"
+                }
+            },
+            "format": {}
+        },
+        {
+            "id": 433060291,
+            "name": "City Council Districts",
+            "dataTypeName": "number",
+            "description": "",
+            "fieldName": ":@computed_region_92fq_4b7q",
+            "position": 35,
+            "renderTypeName": "number",
+            "tableColumnId": 89149345,
+            "computationStrategy": {
+                "source_columns": [
+                    "geocoded_column"
+                ],
+                "type": "georegion_match_on_point",
+                "parameters": {
+                    "region": "_92fq-4b7q",
+                    "primary_key": "_feature_id"
+                }
+            },
+            "format": {}
+        },
+        {
+            "id": 433060292,
+            "name": "Police Precincts",
+            "dataTypeName": "number",
+            "description": "",
+            "fieldName": ":@computed_region_sbqj_enih",
+            "position": 36,
+            "renderTypeName": "number",
+            "tableColumnId": 89149346,
+            "computationStrategy": {
+                "source_columns": [
+                    "geocoded_column"
+                ],
+                "type": "georegion_match_on_point",
+                "parameters": {
+                    "region": "_sbqj-enih",
+                    "primary_key": "_feature_id"
+                }
+            },
+            "format": {}
+        }
+    ],
+    "grants": [
+        {
+            "inherited": false,
+            "type": "viewer",
+            "flags": [
+                "public"
+            ]
+        }
+    ],
+    "metadata": {
+        "rdfClass": "",
+        "rdfSubject": "0",
+        "attachments": [
+            {
+                "filename": "User Guide _ Central Park Squirrel Census Data Collection.docx",
+                "assetId": "038f2dd2-2eb6-4152-968a-b075705c9986",
+                "blobId": "",
+                "name": "User Guide _ Central Park Squirrel Census Data Collection.docx"
+            }
+        ],
+        "custom_fields": {
+            "Data Collection": {
+                "Data Collection": "2018 Central Park Squirrel Census"
+            },
+            "Update": {
+                "Automation": "No",
+                "Date Made Public": "10/15/2019",
+                "Update Frequency": "Historical data"
+            },
+            "Dataset Information": {
+                "Agency": "Other"
+            }
+        },
+        "rowLabel": "Squirrel",
+        "availableDisplayTypes": [
+            "table",
+            "fatrow",
+            "page"
+        ]
+    },
+    "owner": {
+        "id": "5fuc-pqz2",
+        "displayName": "NYC OpenData",
+        "profileImageUrlLarge": "/api/users/5fuc-pqz2/profile_images/LARGE",
+        "profileImageUrlMedium": "/api/users/5fuc-pqz2/profile_images/THUMB",
+        "profileImageUrlSmall": "/api/users/5fuc-pqz2/profile_images/TINY",
+        "screenName": "NYC OpenData",
+        "type": "interactive",
+        "flags": [
+            "acceptedEula",
+            "mayBeStoriesCoOwner"
+        ]
+    },
+    "query": {},
+    "rights": [
+        "read"
+    ],
+    "tableAuthor": {
+        "id": "5fuc-pqz2",
+        "displayName": "NYC OpenData",
+        "profileImageUrlLarge": "/api/users/5fuc-pqz2/profile_images/LARGE",
+        "profileImageUrlMedium": "/api/users/5fuc-pqz2/profile_images/THUMB",
+        "profileImageUrlSmall": "/api/users/5fuc-pqz2/profile_images/TINY",
+        "screenName": "NYC OpenData",
+        "type": "interactive",
+        "flags": [
+            "acceptedEula",
+            "mayBeStoriesCoOwner"
+        ]
+    },
+    "tags": [
+        "squirrel census"
+    ],
+    "flags": [
+        "default",
+        "ownerMayBeContacted",
+        "restorable",
+        "restorePossibleForType"
+    ]
+}

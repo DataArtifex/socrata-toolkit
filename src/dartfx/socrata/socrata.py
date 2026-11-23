@@ -4,6 +4,7 @@ import os
 import typing
 from datetime import datetime
 from typing import Any
+from urllib.parse import quote
 from xml.sax.saxutils import escape
 
 import mlcroissant as mlc
@@ -143,9 +144,8 @@ class SocrataServer(BaseModel):
             return typing.cast(dict[str, Any], self.memory_cache[dataset_id])
         # init local file if cache is enabled
         file_name = f"{dataset_id}.json"
-        if self.disk_cache_dir:
-            file_path = os.path.join(self.disk_cache_dir, file_name)
-        if self.disk_cache_dir and os.path.isfile(file_path) and not refresh:
+        file_path = os.path.join(self.disk_cache_dir, file_name) if self.disk_cache_dir else None
+        if file_path and os.path.isfile(file_path) and not refresh:
             # load from disk cache
             logging.debug(f"Loading from disk cache {file_path}")
             with open(file_path) as f:
@@ -159,7 +159,7 @@ class SocrataServer(BaseModel):
             if results.status_code == 200:
                 data = typing.cast(dict[str, Any], results.json())
                 # save to disk cache if enabled
-                if self.disk_cache_dir:  # save to local cache if enabled
+                if file_path:  # save to local cache if enabled
                     with open(file_path, "w") as f:
                         json.dump(data, f, indent=4)
                 # save to in memory cache
@@ -171,12 +171,15 @@ class SocrataServer(BaseModel):
 
     def search_datasets(
         self,
+        q: str | None = None,
         limit: int | None = None,
         offset: int | None = None,
         order: str | None = None,
         sort_order: str | None = None,
+        categories: str | None = None,
+        domains: str | None = None,
     ) -> dict[str, Any]:
-        """Calls the Socrata Discovery API
+        """Calls the Socrata Discovery API.
 
         See https://dev.socrata.com/docs/other/discovery
 
@@ -185,6 +188,12 @@ class SocrataServer(BaseModel):
         """
         # use search_context= , not domain=
         url = f"https://{self.host}/api/catalog/v1?search_context={self.host}&only=datasets"
+        if q:
+            url += f"&q={quote(q)}"
+        if categories:
+            url += f"&categories={quote(categories)}"
+        if domains:
+            url += f"&domains={quote(domains)}"
         if limit:
             url += f"&limit={limit}"
         if offset:
@@ -356,26 +365,13 @@ class SocrataDataset(BaseModel):
             selected_variables.append(variable)
             selected_variables_names.append(variable.name)
         # metadata
-        publishers = []
-        for publisher in self.server.publisher:
-            publishers.append(mlc.Organization(name=publisher, url=self.server.host))
+        publishers: list[mlc.Organization | mlc.Person] = [
+            mlc.Organization(name=pub, url=self.server.host) for pub in self.server.publisher
+        ]
         rows_updated_at = self.rows_updated_at
         publication_date = self.publication_date
         metadata_version = int(rows_updated_at.timestamp()) if rows_updated_at else int(datetime.now().timestamp())
-        metadata = mlc.Metadata(
-            ctx=context,
-            id=self.id,
-            name=self.name,
-            description=markdownify(self.description) if self.description else None,
-            cite_as=f"{self.name}, {self.server.name}, {self.landing_page}",
-            date_modified=rows_updated_at,
-            date_published=publication_date,
-            license=self.license,
-            publisher=publishers,
-            version=metadata_version,
-        )
         # distribution
-        distribution = []
         content_url = self.csv_download_url
         if not include_computed:
             content_url += f"?$select={','.join(selected_variables_names)}"
@@ -384,22 +380,35 @@ class SocrataDataset(BaseModel):
             id=self.id + ".csv",
             name=self.name + ".csv",
             content_url=content_url,
-            encoding_formats=mlc.EncodingFormat.CSV,
+            encoding_formats=[mlc.EncodingFormat.CSV],
         )
-        distribution.append(csv_file)
-        metadata.distribution = distribution
+        distribution: list[mlc.FileObject | mlc.FileSet] = [csv_file]
+        metadata = mlc.Metadata(
+            ctx=context,
+            id=self.id,
+            name=self.name,
+            description=markdownify(self.description) if self.description else None,
+            cite_as=f"{self.name}, {self.server.name}, {self.landing_page}",
+            date_modified=rows_updated_at,
+            date_published=publication_date,
+            license=[self.license] if self.license else None,
+            publisher=publishers,
+            version=str(metadata_version),
+            distribution=distribution,
+        )
         # fields and record set
         fields = []
         classifications_record_sets = []
         for variable in selected_variables:
+            croissant_dt = variable.croissant_data_type
             field = mlc.Field(
                 ctx=context,
                 id=variable.name,
                 name=variable.name,
                 description=variable.label,
+                data_types=[croissant_dt] if croissant_dt else None,
                 source=mlc.Source(file_object=csv_file.id, extract=mlc.Extract(ctx=context, column=variable.name)),
             )
-            field.data_types.append(variable.croissant_data_type)
             fields.append(field)
             # classifications
             if include_codes:
