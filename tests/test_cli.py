@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -10,20 +11,26 @@ from dartfx.socrata.cli import app
 runner = CliRunner()
 
 
+def _strip_ansi(text: str) -> str:
+    return re.sub(r"\x1b\[[0-9;]*[mK]", "", text)
+
+
 def test_cli_no_args_shows_help() -> None:
-    result = runner.invoke(app, [])
-    assert "Usage: dartfx-socrata [OPTIONS] COMMAND [ARGS]..." in result.stdout
-    assert "CLI for discovering, searching, and exporting catalog metadata" in result.stdout
-    assert "Commands" in result.stdout
-    assert "servers" in result.stdout
-    assert "dataset" in result.stdout
+    result = runner.invoke(app, [], env={"NO_COLOR": "1", "TERM": "dumb"})
+    output = _strip_ansi(result.stdout)
+    assert "Usage: dartfx-socrata [OPTIONS] COMMAND [ARGS]..." in output
+    assert "CLI for discovering, searching, and exporting catalog metadata" in output
+    assert "Commands" in output
+    assert "servers" in output
+    assert "dataset" in output
 
 
 def test_cli_help() -> None:
-    result = runner.invoke(app, ["--help"])
+    result = runner.invoke(app, ["--help"], env={"NO_COLOR": "1", "TERM": "dumb"})
     assert result.exit_code == 0
-    assert "Usage: dartfx-socrata [OPTIONS] COMMAND [ARGS]..." in result.stdout
-    assert "CLI for discovering, searching, and exporting catalog metadata" in result.stdout
+    output = _strip_ansi(result.stdout)
+    assert "Usage: dartfx-socrata [OPTIONS] COMMAND [ARGS]..." in output
+    assert "CLI for discovering, searching, and exporting catalog metadata" in output
 
 
 def test_cli_version() -> None:

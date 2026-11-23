@@ -20,7 +20,7 @@ uv run pre-commit install
 
 ### 2. Standards
 - **Linting & Formatting**: We use [Ruff](https://docs.astral.sh/ruff/). Run `uv run ruff check .` and `uv run ruff format .` before committing.
-- **Type Checking**: We use [Pyrefly](https://pyrefly.org/). Run `uv run pyrefly check src tests` or `hatch run types:check`.
+- **Type Checking**: We use [Pyrefly](https://pyrefly.org/). Run `uv run pyrefly check src tests`.
 - **Testing**: We use [Pytest](https://docs.pytest.org/). Run `uv run pytest`.
 
 ## Contribution Process
@@ -33,7 +33,7 @@ uv run pre-commit install
 
 ## Documentation
 - Documentation is located in `docs/source`.
-- Build the docs locally using `hatch run docs:build`.
+- Build the docs locally using `uv run --group docs sphinx-build -b html docs/source docs/build/html`.
 - Ensure new features are documented in both the code (docstrings) and the Sphinx pages.
 
 ## Getting Help

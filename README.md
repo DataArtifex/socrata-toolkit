@@ -37,25 +37,22 @@ The **Socrata Toolkit** (`dartfx-socrata`) is a Python library for working with 
 
 ## Installation
 
-### PyPI Release
+### Using uv (Recommended)
 
-Once stable, this package will be officially released and distributed through [PyPI](https://pypi.org/).
-
-**Using uv (recommended):**
+Once published to [PyPI](https://pypi.org/), you can add the library to a project or install the CLI globally using [uv](https://github.com/astral-sh/uv):
 
 ```bash
+# Add to an existing uv project
+uv add dartfx-socrata
+
+# Or install the CLI globally
+uv tool install dartfx-socrata
+
+# Or install into an environment with uv pip
 uv pip install dartfx-socrata
 ```
 
-**Using pip:**
-
-```bash
-pip install dartfx-socrata
-```
-
-### Local Installation
-
-For development or early access, install the package locally:
+### Local Development Installation
 
 1. **Clone the Repository:**
 
@@ -64,21 +61,19 @@ For development or early access, install the package locally:
    cd socrata-toolkit
    ```
 
-2. **Install the Package:**
-
-   **Using uv (recommended):**
+2. **Sync Dependencies with uv:**
 
    ```bash
-   uv pip install -e .
+   uv sync --group dev
    ```
 
-   **Using pip:**
+   You can then run the CLI or Python scripts directly with `uv run`:
 
    ```bash
-   pip install -e .
+   uv run dartfx-socrata --help
    ```
 
-> **Why uv?** [uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver written in Rust. It's significantly faster than pip and provides better dependency resolution. Install uv with: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+> **Why uv?** [uv](https://github.com/astral-sh/uv) is an extremely fast Python package and project manager written in Rust. Install it with: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 
 ### Dependencies
 
@@ -209,10 +204,12 @@ This approach provides:
 
 ## Testing
 
-Run the test suite:
+Run the test suite and checks with `uv`:
 
 ```bash
-pytest tests/
+uv run pytest tests/
+uv run ruff check src tests
+uv run pyrefly check src tests
 ```
 
 Test coverage includes:
@@ -239,7 +236,7 @@ Here's how to get started:
 1. Fork the repository
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Make your changes and add tests
-4. Ensure all tests pass: `pytest tests/`
+4. Ensure all tests pass: `uv run pytest tests/`
 5. Commit your changes: `git commit -am 'Add some feature'`
 6. Push to the branch: `git push origin my-new-feature`
 7. Submit a pull request

@@ -41,17 +41,18 @@ Quick Start
 Installation
 ~~~~~~~~~~~~
 
-**Using uv (recommended):**
+Install using `uv <https://github.com/astral-sh/uv>`_ (recommended):
 
 .. code-block:: bash
 
+   # Add to a uv project
+   uv add dartfx-socrata
+
+   # Or install the CLI globally
+   uv tool install dartfx-socrata
+
+   # Or install into the active environment
    uv pip install dartfx-socrata
-
-**Using pip:**
-
-.. code-block:: bash
-
-   pip install dartfx-socrata
 
 Basic Usage
 ~~~~~~~~~~~
