@@ -18,6 +18,82 @@ from pydantic import BaseModel, Field, PrivateAttr
 
 jinja_env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")))
 
+CODE_ENVIRONMENTS: dict[str, tuple[str, str, str]] = {
+    "python": ("python-pandas", "python", "py"),
+    "python-pandas": ("python-pandas", "python", "py"),
+    "pandas": ("python-pandas", "python", "py"),
+    "py": ("python-pandas", "python", "py"),
+    "polars": ("python-polars", "python", "py"),
+    "python-polars": ("python-polars", "python", "py"),
+    "pl": ("python-polars", "python", "py"),
+    "requests": ("python-requests", "python", "py"),
+    "python-requests": ("python-requests", "python", "py"),
+    "r": ("r-socrata", "r", "R"),
+    "r-socrata": ("r-socrata", "r", "R"),
+    "rsocrata": ("r-socrata", "r", "R"),
+    "curl": ("curl", "bash", "sh"),
+    "sh": ("curl", "bash", "sh"),
+    "bash": ("curl", "bash", "sh"),
+    "javascript": ("javascript", "javascript", "js"),
+    "js": ("javascript", "javascript", "js"),
+    "fetch": ("javascript", "javascript", "js"),
+    "jquery": ("jquery", "javascript", "js"),
+    "duckdb": ("duckdb", "sql", "sql"),
+    "sql": ("duckdb", "sql", "sql"),
+    "ruby": ("soda-ruby", "ruby", "rb"),
+    "soda-ruby": ("soda-ruby", "ruby", "rb"),
+    "rb": ("soda-ruby", "ruby", "rb"),
+    "dotnet": ("soda-dotnet", "csharp", "cs"),
+    "soda-dotnet": ("soda-dotnet", "csharp", "cs"),
+    "csharp": ("soda-dotnet", "csharp", "cs"),
+    "cs": ("soda-dotnet", "csharp", "cs"),
+    ".net": ("soda-dotnet", "csharp", "cs"),
+    "stata": ("stata", "stata", "do"),
+    "do": ("stata", "stata", "do"),
+    "sas": ("sas", "sas", "sas"),
+    "powershell": ("powershell", "powershell", "ps1"),
+    "ps": ("powershell", "powershell", "ps1"),
+    "ps1": ("powershell", "powershell", "ps1"),
+}
+
+
+def resolve_code_environment(environment: str) -> tuple[str, str, str]:
+    """Resolve an environment name or alias into ``(template_name, lexer_name, file_extension)``."""
+    cleaned = environment.strip().lower()
+    if cleaned not in CODE_ENVIRONMENTS:
+        supported = ", ".join(sorted({v[0] for v in CODE_ENVIRONMENTS.values()}))
+        raise ValueError(f"Unsupported environment: {environment}. Supported: {supported}")
+    return CODE_ENVIRONMENTS[cleaned]
+
+
+def render_code_template(
+    host: str,
+    dataset_id: str,
+    environment: str,
+    dataset_name: str | None = None,
+    landing_page: str | None = None,
+    options: dict[str, Any] | None = None,
+) -> str:
+    """Render a Jinja2 client code snippet for a Socrata dataset."""
+    target_env, _lexer, _ext = resolve_code_environment(environment)
+    template_file = f"generate_{target_env}.j2"
+    template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
+    if not os.path.isfile(template_path):
+        raise ValueError(f"Unsupported environment: {environment}.")
+    opts = options or {}
+    template = jinja_env.get_template(template_file)
+    return template.render(
+        host=host,
+        dataset_id=dataset_id,
+        dataset_name=dataset_name,
+        landing_page=landing_page,
+        limit=opts.get("limit", 5000),
+        app_token=opts.get("app_token"),
+        where=opts.get("where"),
+        select=opts.get("select"),
+        options=opts,
+    )
+
 
 class SocrataApiError(Exception):
     """Custom exception for Socrata API errors."""
@@ -451,14 +527,14 @@ class SocrataDataset(BaseModel):
 
     def get_code(self, environment: str, options: dict[str, Any] | None = None, *_args: Any, **_kwargs: Any) -> str:
         """Generates code/script for a given environment."""
-        template_file = f"generate_{environment}.j2"
-        template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates", template_file)
-        if os.path.isfile(template_path):
-            template = jinja_env.get_template(template_file)
-            code = template.render(host=self.server.host, dataset_id=self.id, options=options)
-        else:
-            raise ValueError(f"Unsupported environment: {environment}.")
-        return code
+        return render_code_template(
+            host=self.server.host,
+            dataset_id=self.id,
+            environment=environment,
+            dataset_name=self.name,
+            landing_page=self.landing_page,
+            options=options,
+        )
 
     def get_cdif(
         self,

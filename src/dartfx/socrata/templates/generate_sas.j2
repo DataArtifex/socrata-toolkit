@@ -1,4 +1,6 @@
-filename datain url 'http://{{host}}/resource/{{dataset_id}}.csv?$limit=5000&$$app_token=YOURAPPTOKENHERE';
+{% if dataset_name %}/* Dataset: {{ dataset_name }} ({{ dataset_id }}) */
+{% endif %}{% if landing_page %}/* Source:  {{ landing_page }} */
+{% endif %}filename datain url "https://{{ host }}/resource/{{ dataset_id }}.csv?$limit={{ limit | default(5000) }}{% if select %}&$select={{ select | urlencode }}{% endif %}{% if where %}&$where={{ where | urlencode }}{% endif %}{% if app_token %}&$$app_token={{ app_token }}{% endif %}";
 proc import datafile=datain out=dataout dbms=csv replace;
   getnames=yes;
 run;

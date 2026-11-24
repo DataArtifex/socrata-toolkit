@@ -1,11 +1,15 @@
-$.ajax({
-    url: "https://{{host}}/resource/{{dataset_id}}.json",
-    type: "GET",
-    data: {
-      "$limit" : 5000,
-      "$$app_token" : "YOURAPPTOKENHERE"
-    }
+{% if dataset_name %}// Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}// Source:  {{ landing_page }}
+{% endif %}$.ajax({
+  url: "https://{{ host }}/resource/{{ dataset_id }}.json",
+  type: "GET",
+  data: {
+    "$limit": {{ limit | default(5000) }}{% if select %},
+    "$select": "{{ select }}"{% endif %}{% if where %},
+    "$where": "{{ where }}"{% endif %}{% if app_token %},
+    "$$app_token": "{{ app_token }}"{% endif %}
+  }
 }).done(function(data) {
-  alert("Retrieved " + data.length + " records from the dataset!");
+  console.log("Retrieved " + data.length + " records from the dataset!");
   console.log(data);
 });

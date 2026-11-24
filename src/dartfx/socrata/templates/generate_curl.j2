@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+{% if dataset_name %}# Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}# Source:  {{ landing_page }}
+{% endif %}
+curl -sS -G "https://{{ host }}/resource/{{ dataset_id }}.json" \
+  -H "Accept: application/json" \{% if app_token %}
+  -H "X-App-Token: {{ app_token }}" \{% endif %}
+  --data-urlencode "\$limit={{ limit | default(5000) }}"{% if select %} \
+  --data-urlencode "\$select={{ select }}"{% endif %}{% if where %} \
+  --data-urlencode "\$where={{ where }}"{% endif %}

@@ -1,0 +1,9 @@
+{% if dataset_name %}-- Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}-- Source:  {{ landing_page }}
+{% endif %}-- Run with DuckDB CLI: duckdb -c ".read query.sql"
+SELECT *
+FROM read_csv(
+    'https://{{ host }}/resource/{{ dataset_id }}.csv?$limit={{ limit | default(5000) }}{% if select %}&$select={{ select | urlencode }}{% endif %}{% if where %}&$where={{ where | urlencode }}{% endif %}{% if app_token %}&$$app_token={{ app_token }}{% endif %}',
+    auto_detect = true,
+    header = true
+);

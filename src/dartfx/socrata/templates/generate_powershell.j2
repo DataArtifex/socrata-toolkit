@@ -1,9 +1,12 @@
-$url = "https://{{host}}/resource/{{dataset_id}}"
-$apptoken = "YOURAPPTOKENHERE"
+{% if dataset_name %}# Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}# Source:  {{ landing_page }}
+{% endif %}$url = "https://{{ host }}/resource/{{ dataset_id }}.json?`$limit={{ limit | default(5000) }}{% if select %}&`$select={{ select | urlencode }}{% endif %}{% if where %}&`$where={{ where | urlencode }}{% endif %}"
 
-# Set header to accept JSON
-$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
-$headers.Add("Accept","application/json")
-$headers.Add("X-App-Token",$apptoken)
+$headers = @{
+    "Accept" = "application/json"{% if app_token %}
+    "X-App-Token" = "{{ app_token }}"{% endif %}
+}
 
-$results = Invoke-RestMethod -Uri $url -Method get -Headers $headers
+$results = Invoke-RestMethod -Uri $url -Method Get -Headers $headers
+Write-Output ("Retrieved {0} records." -f $results.Count)
+$results | Select-Object -First 5 | Format-Table -AutoSize

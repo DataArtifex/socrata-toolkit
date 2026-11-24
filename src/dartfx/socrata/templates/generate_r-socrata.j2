@@ -1,11 +1,23 @@
-## Install the required package with:
-## install.packages("RSocrata")
+{% if dataset_name %}# Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}# Source:  {{ landing_page }}
+{% endif %}# Install the required package with:
+# install.packages("RSocrata")
 
 library("RSocrata")
 
+url <- "https://{{ host }}/resource/{{ dataset_id }}.json?$limit={{ limit | default(5000) }}{% if select %}&$select={{ select | urlencode }}{% endif %}{% if where %}&$where={{ where | urlencode }}{% endif %}"
+
 df <- read.socrata(
-  "https://{{host}}/resource/{{dataset_id}}.json",
-  app_token = "YOURAPPTOKENHERE",
-  email     = "user@example.com",
-  password  = "fakepassword"
-)            
+  url{% if app_token %},
+  app_token = "{{ app_token }}"{% endif %}
+)
+
+# For private datasets, also pass email and password:
+# df <- read.socrata(
+#   url,
+#   app_token = "YOUR_APP_TOKEN",
+#   email     = "user@example.com",
+#   password  = "YOUR_PASSWORD"
+# )
+
+head(df)

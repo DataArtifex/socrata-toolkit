@@ -17,11 +17,13 @@ from dartfx.socrata.__about__ import __version__
 from dartfx.socrata.cdif import CdifGenerator, resolve_serialization_flavor
 from dartfx.socrata.dcat import DcatGenerator, DcatProfile
 from dartfx.socrata.socrata import (
+    CODE_ENVIRONMENTS,
     SERVERS,
     SocrataDataset,
     SocrataServer,
     get_known_servers,
-    jinja_env,
+    render_code_template,
+    resolve_code_environment,
 )
 
 load_dotenv(find_dotenv(usecwd=True))
@@ -124,31 +126,7 @@ class DataFormat(StrEnum):
     JSON = "json"
 
 
-ENV_MAP: dict[str, tuple[str, str, str]] = {
-    "python": ("python-pandas", "python", "py"),
-    "python-pandas": ("python-pandas", "python", "py"),
-    "pandas": ("python-pandas", "python", "py"),
-    "py": ("python-pandas", "python", "py"),
-    "r": ("r-socrata", "r", "R"),
-    "r-socrata": ("r-socrata", "r", "R"),
-    "ruby": ("soda-ruby", "ruby", "rb"),
-    "soda-ruby": ("soda-ruby", "ruby", "rb"),
-    "rb": ("soda-ruby", "ruby", "rb"),
-    "dotnet": ("soda-dotnet", "csharp", "cs"),
-    "soda-dotnet": ("soda-dotnet", "csharp", "cs"),
-    "csharp": ("soda-dotnet", "csharp", "cs"),
-    "cs": ("soda-dotnet", "csharp", "cs"),
-    ".net": ("soda-dotnet", "csharp", "cs"),
-    "stata": ("stata", "stata", "do"),
-    "do": ("stata", "stata", "do"),
-    "sas": ("sas", "sas", "sas"),
-    "powershell": ("powershell", "powershell", "ps1"),
-    "ps": ("powershell", "powershell", "ps1"),
-    "ps1": ("powershell", "powershell", "ps1"),
-    "jquery": ("jquery", "javascript", "js"),
-    "javascript": ("jquery", "javascript", "js"),
-    "js": ("jquery", "javascript", "js"),
-}
+ENV_MAP: dict[str, tuple[str, str, str]] = CODE_ENVIRONMENTS
 
 
 def _resolve_enum_prefix[E: StrEnum](value: str, enum_cls: type[E], param_name: str = "--format") -> E:
@@ -1175,9 +1153,19 @@ def generate_code(
         typer.Option(
             "--env",
             "-e",
-            help="Target language/tool (python-pandas, r-socrata, stata, sas, ruby, dotnet, ps1, jquery)",
+            help=(
+                "Target language/tool (python-pandas, python-polars, python-requests, r-socrata, "
+                "curl, javascript, jquery, duckdb, stata, sas, soda-ruby, soda-dotnet, powershell)"
+            ),
         ),
     ] = "python-pandas",
+    limit: Annotated[int, typer.Option("--limit", "-l", help="Maximum number of rows in generated query")] = 5000,
+    where: Annotated[str | None, typer.Option("--where", "-w", help="Optional SoQL $where filter clause")] = None,
+    select: Annotated[str | None, typer.Option("--select", help="Optional SoQL $select column list")] = None,
+    app_token: Annotated[
+        str | None,
+        typer.Option("--app-token", envvar="SOCRATA_APP_TOKEN", help="Optional Socrata App Token"),
+    ] = None,
     server: Annotated[
         str | None,
         typer.Option("--server", "-s", envvar="SOCRATA_SERVER", help="Socrata server hostname"),
@@ -1188,23 +1176,31 @@ def generate_code(
     """Generate client data access code for a dataset across supported programming environments."""
     server_client = get_server(server, disk_cache_dir=cache_dir)
 
-    env_clean = env.lower().strip()
-    if env_clean not in ENV_MAP:
-        valid_envs = sorted({v[0] for v in ENV_MAP.values()})
-        console.print(f"[bold red]Error:[/] Unknown environment '{env}'. Supported: {', '.join(valid_envs)}")
-        raise typer.Exit(code=1)
+    try:
+        target_env, _lexer_name, file_ext = resolve_code_environment(env)
+    except ValueError as e:
+        console.print(f"[bold red]Error:[/] {e}")
+        raise typer.Exit(code=1) from e
 
-    target_env, _lexer_name, file_ext = ENV_MAP[env_clean]
+    code_options: dict[str, Any] = {
+        "limit": limit,
+        "where": where,
+        "select": select,
+        "app_token": app_token,
+    }
 
     with console.status(f"[bold green]Generating {target_env} code for {identifier}..."):
         try:
             try:
                 dataset = SocrataDataset(server=server_client, id=identifier)
-                code_text = dataset.get_code(target_env)
+                code_text = dataset.get_code(target_env, options=code_options)
             except Exception:
-                template_file = f"generate_{target_env}.j2"
-                template = jinja_env.get_template(template_file)
-                code_text = template.render(host=server_client.host, dataset_id=identifier)
+                code_text = render_code_template(
+                    host=server_client.host,
+                    dataset_id=identifier,
+                    environment=target_env,
+                    options=code_options,
+                )
         except Exception as e:
             console.print(f"[bold red]Code generation error:[/] {e}")
             raise typer.Exit(code=1) from e

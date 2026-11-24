@@ -428,6 +428,28 @@ def test_cli_code_r() -> None:
     assert "RSocrata" in result.stdout or "read.socrata" in result.stdout
 
 
+def test_cli_code_polars_with_options() -> None:
+    result = runner.invoke(
+        app,
+        [
+            "code",
+            "vw6y-z8j6",
+            "-e",
+            "polars",
+            "--limit",
+            "250",
+            "--where",
+            "status='Open'",
+            "-s",
+            "data.sfgov.org",
+        ],
+    )
+    assert result.exit_code == 0
+    assert "import polars as pl" in result.stdout
+    assert "250" in result.stdout
+    assert "status='Open'" in result.stdout
+
+
 def test_cli_code_file(tmp_path: Path) -> None:
     out_script = tmp_path / "fetch.py"
     result = runner.invoke(app, ["code", "vw6y-z8j6", "-e", "python", "-o", str(out_script), "-s", "data.sfgov.org"])
@@ -439,7 +461,7 @@ def test_cli_code_file(tmp_path: Path) -> None:
 def test_cli_code_invalid_env() -> None:
     result = runner.invoke(app, ["code", "vw6y-z8j6", "-e", "cobol", "-s", "data.sfgov.org"])
     assert result.exit_code != 0
-    assert "Unknown environment 'cobol'" in result.stdout
+    assert "Unsupported environment: cobol" in result.stdout
 
 
 def test_cli_dataset_not_found() -> None:

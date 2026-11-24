@@ -1,12 +1,21 @@
 #!/usr/bin/env ruby
+{% if dataset_name %}# Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}# Source:  {{ landing_page }}
+{% endif %}# Install gem: gem install soda-ruby
 
-require 'soda/client'
+require "soda/client"
 
-client = SODA::Client.new({:domain => "{{host}}", :app_token => "YOURAPPTOKENHERE"})
+client = SODA::Client.new(
+  domain: "{{ host }}"{% if app_token %},
+  app_token: "{{ app_token }}"{% endif %}
+)
 
-results = client.get("{{dataset_id}}", :$limit => 5000)
+results = client.get("{{ dataset_id }}", "$limit" => {{ limit | default(5000) }}{% if select %}, "$select" => "{{ select }}"{% endif %}{% if where %}, "$where" => "{{ where }}"{% endif %})
 
-puts "Got #{results.count} results. Dumping first results:"
-results.first.each do |k, v|
-  puts "#{key}: #{value}"
+puts "Got #{results.count} results."
+unless results.empty?
+  puts "Dumping first result:"
+  results.first.each do |k, v|
+    puts "#{k}: #{v}"
+  end
 end

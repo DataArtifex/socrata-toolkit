@@ -1,27 +1,30 @@
-#!/usr/bin/env python
-
-# make sure to install these packages before running:
-# pip install pandas
-# pip install sodapy
+#!/usr/bin/env python3
+{% if dataset_name %}# Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}# Source:  {{ landing_page }}
+{% endif %}# Install dependencies: uv add pandas sodapy  (or: pip install pandas sodapy)
 
 import pandas as pd
 from sodapy import Socrata
 
-# Unauthenticated client only works with public data sets. Note 'None'
-# in place of application token, and no username or password:
-client = Socrata("{{host}}", None)
+# Unauthenticated client only works with public datasets.
+# Pass an App Token (or set username/password) for higher rate limits or private datasets:
+client = Socrata("{{ host }}", {{ '"' ~ app_token ~ '"' if app_token else "None" }})
 
-# Example authenticated client (needed for non-public datasets):
-# client = Socrata({host},
-#                  MyAppToken,
-#                  username="user@example.com",
-#                  password="AFakePassword")
+# Example authenticated client:
+# client = Socrata(
+#     "{{ host }}",
+#     "YOUR_APP_TOKEN",
+#     username="user@example.com",
+#     password="YOUR_PASSWORD",
+# )
 
-# First 2000 results, returned as JSON from API / converted to Python list of
-# dictionaries by sodapy.
-results = client.get("{{dataset_id}}", limit=2000)
-
-# Convert to pandas DataFrame
+# Retrieve results as JSON from SODA API and convert to a pandas DataFrame
+results = client.get(
+    "{{ dataset_id }}",
+    limit={{ limit | default(5000) }},{% if select %}
+    select="{{ select }}",{% endif %}{% if where %}
+    where="{{ where }}",{% endif %}
+)
 results_df = pd.DataFrame.from_records(results)
 
-print(results_df)
+print(results_df.head())

@@ -1,0 +1,24 @@
+{% if dataset_name %}// Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}// Source:  {{ landing_page }}
+{% endif %}const params = new URLSearchParams({
+  $limit: "{{ limit | default(5000) }}",{% if select %}
+  $select: "{{ select }}",{% endif %}{% if where %}
+  $where: "{{ where }}",{% endif %}
+});
+
+const url = `https://{{ host }}/resource/{{ dataset_id }}.json?${params.toString()}`;
+
+const response = await fetch(url, {
+  headers: {
+    Accept: "application/json",{% if app_token %}
+    "X-App-Token": "{{ app_token }}",{% endif %}
+  },
+});
+
+if (!response.ok) {
+  throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+}
+
+const data = await response.json();
+console.log(`Retrieved ${data.length} records from {{ dataset_id }}`);
+console.log(data.slice(0, 5));

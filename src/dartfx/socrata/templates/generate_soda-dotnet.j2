@@ -1,24 +1,26 @@
-using System;
+{% if dataset_name %}// Dataset: {{ dataset_name }} ({{ dataset_id }})
+{% endif %}{% if landing_page %}// Source:  {{ landing_page }}
+{% endif %}using System;
+using System.Collections.Generic;
 using System.Linq;
 
-// Install the package from Nuget first:
-// PM> Install-Package CSM.SodaDotNet
+// Install the package from NuGet first:
+// dotnet add package CSM.SodaDotNet
 using SODA;
 
-var client = new SodaClient("https://{{host}}", "YOURAPPTOKENHERE");
+var client = new SodaClient("https://{{ host }}"{% if app_token %}, "{{ app_token }}"{% endif %});
 
 // Get a reference to the resource itself
-// The result (a Resource object) is a generic type
-// The type parameter represents the underlying rows of the resource
-// and can be any JSON-serializable class
-var dataset = client.GetResource("{{dataset_id}}");
+var dataset = client.GetResource<Dictionary<string, object>>("{{ dataset_id }}");
 
-// Resource objects read their own data
-var rows = dataset.GetRows(limit: 5000);
+// Read rows from the dataset
+var rows = dataset.GetRows(limit: {{ limit | default(5000) }}).ToList();
 
-Console.WriteLine("Got {0} results. Dumping first results:", rows.Count());
-
-foreach (var keyValue in rows.First())
+Console.WriteLine("Got {0} results. Dumping first result:", rows.Count);
+if (rows.Any())
 {
-    Console.WriteLine(keyValue);
-}            
+    foreach (var keyValue in rows.First())
+    {
+        Console.WriteLine($"{keyValue.Key}: {keyValue.Value}");
+    }
+}
