@@ -11,8 +11,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
-**This project is in its early development stages, so stability is not guaranteed, and documentation is limited. We welcome your feedback and contributions as we refine and expand this project together!**
-
 ## Overview
 
 The **Socrata Toolkit** (`dartfx-socrata`) is a Python library for working with Socrata open data platforms. It provides a comprehensive set of tools to interact with Socrata datasets and generate rich metadata in multiple standardized formats.
@@ -30,6 +28,7 @@ The **Socrata Toolkit** (`dartfx-socrata`) is a Python library for working with 
 ### Recent Updates
 
 **Pydantic RDF Integration** (February 2026): The DCAT generator has been refactored to use Pydantic-based RDF models from `dartfx-rdf`, providing:
+
 - Enhanced type safety and validation
 - Cleaner, more maintainable code
 - Automatic RDF serialization via `RdfBaseModel`
@@ -78,6 +77,7 @@ uv pip install dartfx-socrata
 ### Dependencies
 
 The toolkit requires Python 3.12+ and depends on:
+
 - `dartfx-cdif` - CDIF Discovery and Data Description models
 - `dartfx-dcat` - DCAT vocabulary support
 - `dartfx-rdf` - RDF and Pydantic integration
@@ -198,6 +198,7 @@ class Dataset(RdfBaseModel):
 ```
 
 This approach provides:
+
 - **Type Safety**: Full Pydantic validation
 - **RDF Mapping**: Automatic serialization to RDF graphs
 - **Maintainability**: Clear, declarative model definitions
@@ -213,6 +214,7 @@ uv run pyrefly check src tests
 ```
 
 Test coverage includes:
+
 - DCAT generation and RDF validation
 - DDI-Codebook XML schema validation
 - Croissant metadata generation
